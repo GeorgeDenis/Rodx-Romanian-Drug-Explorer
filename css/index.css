@@ -1,0 +1,131 @@
+:root {
+  --primary: #3c6255;
+  --light: #eeeeee;
+  --dark: #61876e;
+  --lightgreen: #a6bb8d;
+  font-size: 16px;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Fira sans", sans-serif;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 3.75rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 0.0625rem solid green;
+}
+
+.logo-container img {
+  width: 100%;
+  height: 43.75rem;
+}
+.rectangles {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 1.25rem;
+}
+
+.rectangle {
+  flex-basis: calc(33.33% - 1.25rem);
+  background-color: var(--light);
+  padding: 1.875rem;
+  border-radius: 0.625rem;
+  box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.2);
+  height: 18rem;
+  overflow: hidden;
+}
+
+.rectangle h2 {
+  font-size: 1.75rem;
+  margin-bottom: 0.625rem;
+}
+
+.rectangle p {
+  font-size: 1.125rem;
+  line-height: 1.4;
+  margin-bottom: 1.25rem;
+  margin-top: 0.625rem;
+  max-height: calc(21.875rem - 5rem);
+  overflow: hidden;
+}
+
+.rectangle:hover p {
+  overflow: visible;
+}
+
+.content-container {
+  display: flex;
+  align-items: center;
+  max-width: 70%;
+  margin: 2.5rem auto;
+}
+
+.text-image .text-content,
+.image-text .text-content {
+  flex: 1;
+  padding: 1.25rem;
+}
+
+.text-image .image-content,
+.image-text .image-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-text .image-content {
+  order: -1;
+}
+
+.text-image img,
+.image-text img {
+  max-width: 100%;
+  height: auto;
+}
+
+.header-img {
+  font-family: "Raleway", sans-serif;
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.description-img {
+  font-family: "Roboto", sans-serif;
+  line-height: 1.6;
+  text-align: justify;
+  text-indent: 2rem;
+}
+
+@media (max-width: 768px) {
+  .rectangles {
+    flex-direction: column;
+  }
+
+  .rectangle {
+    flex-basis: 100%;
+    height: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .rectangle p {
+    max-height: none;
+    overflow: visible;
+  }
+  .logo-container img {
+    height: 18.75rem;
+  }
+  .header-img {
+    font-size: 1.5rem;
+  }
+  .text-image {
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+}
