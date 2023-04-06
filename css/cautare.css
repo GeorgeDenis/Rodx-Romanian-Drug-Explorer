@@ -68,4 +68,8 @@ footer {
   color: #fff;
 }
 
+.search-button:hover {
+  background-color: #2d4c42; 
+  color: #f1f1f1; 
+}
 
