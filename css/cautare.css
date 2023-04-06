@@ -73,3 +73,12 @@ footer {
   color: #f1f1f1; 
 }
 
+select:required:invalid {
+  color: gray;
+}
+option[value=""][disabled] {
+  display: none;
+}
+option {
+  color: black;
+}

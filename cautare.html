@@ -38,7 +38,7 @@
     <main>
       <div class="search-filter-container">
         <select class="filter-select">
-          <option value="an">An</option>
+          <option value="" disabled selected>An</option>
           <option value="2023">2023</option>
           <option value="2022">2022</option>
           <option value="2021">2021</option>
@@ -54,8 +54,10 @@
           <option value="2011">2011</option>
           <option value="2010">2010</option>
         </select>
-        <select class="filter-select">
-          <option value="tipul de drog">Tipul de drog</option>
+        
+        <select class="filter-select" required>
+          <option value="Tipul de drog">Tipul de drog</option>
+
           <option value="canabis">Canabis</option>
           <option value="Cocaina">Cocaina</option>
           <option value="ecstasy">Ecstasy</option>
@@ -117,7 +119,6 @@
           <option value="urgente_medicale">Urgențe medicale</option>
         </select>
         <select class="filter-select">
-          <option value="tipul de vizualizare">Tipul de vizualizare</option>
           <option value="grafic">Grafic</option>
           <option value="tabel">Tabel</option>
           <option value="harta">Hartă</option>
