@@ -11,3 +11,61 @@
   box-sizing: border-box;
   font-family: "Fira sans", sans-serif;
 }
+
+
+main {
+  padding-top: 4rem;
+}
+
+.search-filter-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.search-input,
+.filter-select {
+  font-size: 1rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 250px;
+}
+
+.search-button:hover{
+  stroke-width: 12;
+}
+
+.search-button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex-grow: 1;
+}
+
+footer {
+  padding: 1rem 0;
+  text-align: center;
+  background-color: var(--primary);
+  color: #fff;
+}
+
+
