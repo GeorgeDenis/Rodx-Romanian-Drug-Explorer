@@ -38,6 +38,7 @@
     <main>
       <div class="search-filter-container">
         <select class="filter-select">
+          <option value="an">An</option>
           <option value="2023">2023</option>
           <option value="2022">2022</option>
           <option value="2021">2021</option>
@@ -54,8 +55,9 @@
           <option value="2010">2010</option>
         </select>
         <select class="filter-select">
+          <option value="tipul de drog">Tipul de drog</option>
           <option value="canabis">Canabis</option>
-          <option value="cocaina">Cocaina</option>
+          <option value="Cocaina">Cocaina</option>
           <option value="ecstasy">Ecstasy</option>
           <option value="heroina">Heroina</option>
           <option value="metamfetamina">Metamfetamina</option>
@@ -65,8 +67,6 @@
           <option value="ketamina">Ketamina</option>
           <option value="PCP">PCP</option>
           <option value="steroid">Steroid</option>
-          
-       
         </select>
         <select class="filter-select">
           <option value="alba">Alba</option>
@@ -111,27 +111,28 @@
           <option value="vrancea">Vrancea</option>
         </select>
         <select class="filter-select">
-          <option value="">Categorie</option>
+          <option value="categorie">Categorie</option>
           <option value="infractiuni">Infracțiuni</option>
           <option value="confiscari">Confiscări</option>
           <option value="urgente_medicale">Urgențe medicale</option>
-          
         </select>
         <select class="filter-select">
-          <option value="">Tipul de vizualizare</option>
+          <option value="tipul de vizualizare">Tipul de vizualizare</option>
           <option value="grafic">Grafic</option>
           <option value="tabel">Tabel</option>
           <option value="harta">Hartă</option>
         </select>
 
         <span class="custom-arrow"></span>
-        <button class="search-button">Caută</button>
+        <button class="search-button" id="search-button">Caută</button>
+        <div id="results-container"></div>
       </div>
     </main>
 
     <footer>
       <p>@Drugs&Prevention</p>
     </footer>
+    <script src="search.js"></script>
     <script src="main.js"></script>
   </body>
 </html>
