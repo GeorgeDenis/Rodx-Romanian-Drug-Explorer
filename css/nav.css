@@ -136,11 +136,14 @@ nav h1 {
   background-color: white;
 }
 footer {
+  bottom: 0;
+  left: 0;
+  width: 100%;
   background-color: var(--primary);
   color: #fff;
   padding: 1.25rem;
   text-align: center;
-  border-top: 1.25rem;
+  border-top: 2rem;
 }
 @media (min-width: 768px) {
   .hamburger {
