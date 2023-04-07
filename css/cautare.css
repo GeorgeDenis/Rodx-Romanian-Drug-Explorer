@@ -38,6 +38,7 @@ main {
 
 .search-button:hover{
   stroke-width: 12;
+  
 }
 
 .search-button {
@@ -68,6 +69,8 @@ footer {
   color: #fff;
 }
 
+
+
 .search-button:hover {
   background-color: #2d4c42; 
   color: #f1f1f1; 
@@ -81,4 +84,5 @@ option[value=""][disabled] {
 }
 option {
   color: black;
+  animation-duration: 10000ms;
 }
