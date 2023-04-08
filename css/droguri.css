@@ -5,6 +5,7 @@
   --lightgreen: #a6bb8d;
   font-size: 16px;
 }
+
 * {
   margin: 0;
   padding: 0;
@@ -12,104 +13,18 @@
   font-family: "Fira sans", sans-serif;
 }
 
-@import url("https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400|Roboto:300,400,500");
-
-html,
-body,
-div,
-span,
-applet,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
-center,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
-footer,
-header,
-hgroup,
-menu,
-nav,
-output,
-ruby,
-section,
-summary,
-time,
-mark,
-audio,
-*/
-
-video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
-}
-
 
 html {
   box-sizing: border-box;
   scroll-behavior: smooth;
   overflow-x: hidden !important;
+}
+
+
+video {
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
 }
 
 
@@ -127,11 +42,10 @@ body {
   padding-top: 50px;
   padding-left: 70px;
 }
-/* deci pe aici se aplica fonturile, culoarea la tot cum arata pagina gen cu text si background*/*/
+
+/* pe aici se aplica fonturile, culoarea la tot cum arata pagina gen cu text si background*/
 body {
-  position: relative;
- 
-  /*font-family: "Roboto", "-apple-system", BlinkMacSystemFont, Arial, sans-serif;*/
+  position: relative; 
  font-family: "Fira sans", sans-serif;
   font-size: 1rem;
   line-height: 1.467;
@@ -144,7 +58,6 @@ body {
   color: #EAE7B1;
   background: radial-gradient(ellipse at center, #3C6255 0%, rgba(0, 0, 0, 0.9) 80%) fixed;
 }
-
 ::-webkit-scrollbar {
   width: 1rem;
   background: radial-gradient(ellipse at center, #EAE7B1 0%, rgba(172, 238, 163, 0.85) 80%) fixed;

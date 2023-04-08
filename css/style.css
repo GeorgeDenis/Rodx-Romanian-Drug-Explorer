@@ -3,7 +3,6 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
-  
 }
 
 header{
@@ -14,9 +13,6 @@ header{
     height: 50px;
     opacity: 0;
     z-index: 9999;
-    margin: 0;
-    padding: 0;
-    display: block;
 
 }
 
@@ -52,7 +48,7 @@ font-size: 1.6rem;
     transform:translate(-50%,-50%);
     color: #ff0000;
     font-size: 5rem;
-      text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+     text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
 
 }
 
@@ -74,6 +70,7 @@ font-size: 1.6rem;
     bottom: 150px;
     opacity: 0;
     transition: ease-in-out 0.5s;
+    
 
 }
 
@@ -92,8 +89,4 @@ font-size: 1.6rem;
     outline: none;
     display: block;
 
-  }
-
-  .backgroundimg {
-    margin-top: -50px;
   }

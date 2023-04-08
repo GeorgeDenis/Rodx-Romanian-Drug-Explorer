@@ -12,14 +12,16 @@
   font-family: "Fira sans", sans-serif;
 }
 
+
 .backgroundimg {
   position: relative;
   display: flex;
   justify-content: center;
-  margin-top: 3.75rem;
+  margin-top: 1.5rem;
   margin-bottom: 1.25rem;
   border-bottom: 0.0625rem solid green;
 }
+
 .backgroundtext {
   position: absolute;
   top: 50%;
