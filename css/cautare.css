@@ -12,7 +12,6 @@
   font-family: "Fira sans", sans-serif;
 }
 
-
 main {
   padding-top: 4rem;
 }
@@ -36,9 +35,8 @@ main {
   max-width: 250px;
 }
 
-.search-button:hover{
+.search-button:hover {
   stroke-width: 12;
-  
 }
 
 .search-button {
@@ -50,7 +48,6 @@ main {
   border-radius: 4px;
   cursor: pointer;
 }
-
 
 body {
   display: flex;
@@ -69,11 +66,9 @@ footer {
   color: #fff;
 }
 
-
-
 .search-button:hover {
-  background-color: #2d4c42; 
-  color: #f1f1f1; 
+  background-color: #2d4c42;
+  color: #f1f1f1;
 }
 
 select:required:invalid {
@@ -93,7 +88,6 @@ option {
   padding: 16px;
   font-size: 16px;
   border: none;
-  
 }
 
 /* The container <div> - needed to position the dropup content */
@@ -109,10 +103,9 @@ option {
   bottom: 50px;
   background-color: #f1f1f1;
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
-
 
 .dropup-content a {
   color: black;
@@ -121,16 +114,15 @@ option {
   display: block;
 }
 
-
-.dropup-content a:hover {background-color: #ddd}
-
+.dropup-content a:hover {
+  background-color: #ddd;
+}
 
 .dropup:hover .dropup-content {
   display: block;
 }
 
-
 .dropup:hover .dropbtn {
-  background-color: #2d4c42; 
-  color: #f1f1f1
+  background-color: #2d4c42;
+  color: #f1f1f1;
 }
