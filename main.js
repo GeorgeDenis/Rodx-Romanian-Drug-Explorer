@@ -15,7 +15,7 @@ function generateChart() {
     { label: "Cocaina", y: 15 },
     { label: "Ecstasy", y: 25 },
     { label: "Heroina", y: 20 },
-    { label: "Metamfetamina", y: 5 },
+    { label: "LSD", y: 20 },
   ];
 
   // Definește opțiunile pentru grafic
@@ -25,6 +25,7 @@ function generateChart() {
     },
     width: 800,
     height: 600,
+    
     data: [
       {
         type: "column",
