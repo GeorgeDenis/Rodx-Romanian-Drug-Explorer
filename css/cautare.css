@@ -99,6 +99,7 @@ option {
 /* The container <div> - needed to position the dropup content */
 .dropup {
   position: relative;
+  width: 69px;
 }
 
 /* Dropup content (Hidden by Default) */
