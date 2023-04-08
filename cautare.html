@@ -126,7 +126,7 @@
           <option value="harta">Hartă</option>
         </select>
         <span class="custom-arrow"></span>
-        <button class="search-button" id="search-button">Caută</button>
+        <button class="search-button" id="search-button" onclick="generateCanvas()">Caută</button>
         <div id="results-container"></div>
       </div>
     </main>
@@ -140,9 +140,11 @@
       </div>
     </div>
 
+    <div id="chartContainer" class="Chart"></div>
     <footer>
       <p>@Drugs&Prevention</p>
     </footer>
     <script src="main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
   </body>
 </html>

@@ -126,3 +126,17 @@ option {
   background-color: #2d4c42;
   color: #f1f1f1;
 }
+
+footer {
+  margin-top: auto;
+}
+
+#results-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  height: 600px;
+}
+
