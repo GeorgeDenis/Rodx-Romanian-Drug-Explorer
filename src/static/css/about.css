@@ -11,3 +11,43 @@
   box-sizing: border-box;
   font-family: "Fira sans", sans-serif;
 }
+
+.about-us-container {
+  margin-top: 100px;
+  display: grid;
+  place-items: center;
+  gap: 20px;
+  padding: 40px 0;
+}
+
+.about-us-card {
+  background-color: #f0f0f0;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  max-width: 700px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0)
+  );
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.about-us-card img {
+  max-width: 150px;
+  height: 200px;
+  margin-right: 20px;
+}
+
+.about-us-card h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
