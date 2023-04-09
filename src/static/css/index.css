@@ -26,7 +26,7 @@
   left: 50%;
   font-family: "Gambetta", serif;
   text-transform: uppercase;
-  font-size: 3.5rem;
+  font-size: 3rem;
   border: solid 2px;
   font-weight: 700;
   transition: 700ms ease;
@@ -34,6 +34,7 @@
   background: linear-gradient(to right, var(--lightgreen), var(--primary));
   text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
   transform: translate(-50%, -50%);
+  white-space: nowrap;
 }
 
 .backgroundtext:hover {
@@ -62,7 +63,9 @@
   height: 18rem;
   overflow: hidden;
 }
-
+.rectangle:nth-child(even) {
+  background: var(--lightgreen);
+}
 .rectangle h2 {
   font-size: 1.75rem;
   margin-bottom: 0.625rem;
@@ -123,8 +126,14 @@
   line-height: 1.6;
   text-align: justify;
   text-indent: 2rem;
+  background-color: var(--light);
+  padding: 1.875rem;
+  border-radius: 0.625rem;
+  box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.2);
 }
-
+.description-img:nth-child(2) {
+  background: var(--lightgreen);
+}
 @media (max-width: 768px) {
   .header-img {
     text-align: center;
