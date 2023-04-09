@@ -14,14 +14,6 @@
   justify-content: space-between;
 }
 
-nav h1 {
-  color: #fff;
-  font-size: 1.75rem;
-  font-weight: 900;
-  letter-spacing: 0.125rem;
-  text-transform: uppercase;
-}
-
 nav {
   position: fixed;
   top: 0;
@@ -37,7 +29,6 @@ nav h1 {
   font-size: 1.75rem;
   font-weight: 900;
   letter-spacing: 0.125rem;
-  text-transform: uppercase;
 }
 .hamburger {
   display: block;
@@ -153,6 +144,14 @@ footer {
     display: flex;
   }
   .mobile-menu {
+    display: none;
+  }
+  .menu a {
+    padding: 0.5rem 0.5rem;
+  }
+}
+@media (max-width: 800px) {
+  nav h1 {
     display: none;
   }
 }
