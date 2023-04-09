@@ -3,7 +3,7 @@
   --light: #eeeeee;
   --dark: #61876e;
   --lightgreen: #a6bb8d;
-   font-size: 16px;
+  font-size: 16px;
 }
 
 * {
@@ -13,13 +13,11 @@
   font-family: "Fira sans", sans-serif;
 }
 
-
 html {
   box-sizing: border-box;
   scroll-behavior: smooth;
   overflow-x: hidden !important;
 }
-
 
 video {
   font-size: 100%;
@@ -27,35 +25,25 @@ video {
   vertical-align: baseline;
 }
 
-
 *,
 *::before,
 *::after {
   box-sizing: inherit;
 }
 
-
-
 html,
 body {
   height: 100%;
   padding-top: 50px;
-  padding-left: 70px;
   font-size: 1vw;
-}
-
-@media (max-width: 768px) {
-  body {
-    padding-left: 20px;
-    font-size: 2vw;
-  }
+  margin-top: 20px;
 }
 
 
 
 /* pe aici se aplica fonturile, culoarea la tot cum arata pagina gen cu text si background*/
 body {
-  position: relative; 
+  position: relative;
   font-size: 1rem;
   line-height: 1.467;
   font-weight: 300;
@@ -64,32 +52,49 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #EAE7B1;
-  background: radial-gradient(ellipse at center, #3C6255 0%, rgba(0, 0, 0, 0.9) 80%) fixed;
+  color: #eae7b1;
+  background: radial-gradient(
+      ellipse at center,
+      #3c6255 0%,
+      rgba(0, 0, 0, 0.9) 80%
+    )
+    fixed;
 }
 ::-webkit-scrollbar {
   width: 1rem;
-  background: radial-gradient(ellipse at center, #EAE7B1 0%, rgba(172, 238, 163, 0.85) 80%) fixed;
+  background: radial-gradient(
+      ellipse at center,
+      #eae7b1 0%,
+      rgba(172, 238, 163, 0.85) 80%
+    )
+    fixed;
   transition: 0.3s;
-  background: radial-gradient(ellipse at center, #EAE7B1 0%, rgba(172, 238, 163, 0.85) 80%) fixed;
+  background: radial-gradient(
+      ellipse at center,
+      #eae7b1 0%,
+      rgba(172, 238, 163, 0.85) 80%
+    )
+    fixed;
   transition: background-color 0.3s ease-out;
 }
 ::-webkit-scrollbar-track {
   box-shadow: inset 0 0 6px rgba(172, 238, 163, 0.85);
-  background: radial-gradient(ellipse at center, #EAE7B1 0%, rgba(32, 38, 46, 0.9) 80%) fixed;
+  background: radial-gradient(
+      ellipse at center,
+      #eae7b1 0%,
+      rgba(32, 38, 46, 0.9) 80%
+    )
+    fixed;
 }
 
 ::-webkit-scrollbar-thumb {
   border-radius: 1rem;
-  background: #EAE7B1;
+  background: #eae7b1;
   box-shadow: inset 0 0 0.5rem rgba(172, 238, 163, 0.85);
 }
 
-
 :hover::-webkit-scrollbar-thumb {
-    background: #EAE7B1;
-
-
+  background: #eae7b1;
 }
 
 [tabindex="-1"]:focus {
@@ -115,7 +120,7 @@ h6 {
 }
 
 h1 {
-  font-size: 2.625em;
+  font-size: 50px;
   line-height: 1.2;
 }
 h2 {
@@ -198,14 +203,12 @@ a {
 .btn:active {
   transform: translateY(1px);
   filter: saturate(150%);
-  
 }
 
 .btn:hover {
   color: #3266d5;
   border-color: currentColor;
   background-color: transparent;
-  
 }
 
 .btn::-moz-focus-inner {
@@ -224,34 +227,25 @@ a {
 
 /*riiple e cand dau pe buton si sa face sto animatii vrajeli hau miau*/
 .ripple {
-    background-position: center;
-    transition: background-image 0.8s;
-    background-image: radial-gradient(ellipse at center, #20262e 0%, rgba(32, 38, 46, 0.9) 80%);
-  }
+  background-position: center;
+  transition: background-image 0.8s;
+  background-image: radial-gradient(
+    ellipse at center,
+    #20262e 0%,
+    rgba(32, 38, 46, 0.9) 80%
+  );
+}
 
 .ripple:hover {
   background: #47a7f5 radial-gradient(circle, transparent 1%, #47a7f5 1%)
     center/15000%;
 }
- 
-.ripple:active {
-    background-color: #6eb9f7;
-    background-size: 100%;
-    transition: background-image 0s;
-    background-image: radial-gradient(ellipse at center, #20262e 0%, #20262e 80%);
-  }
- 
-button {
-  border: none;
-  border-radius: 2px;
-  padding: 1em 1.5em;
 
-  text-transform: uppercase;
-  cursor: pointer;
-  color: #fff;
-background-color: rgba(32, 38, 46, 0.9);
-  box-shadow: 0 0 4px #999;
-  outline: none;
+.ripple:active {
+  background-color: #6eb9f7;
+  background-size: 100%;
+  transition: background-image 0s;
+  background-image: radial-gradient(ellipse at center, #20262e 0%, #20262e 80%);
 }
 
 input[type="text"],
@@ -261,14 +255,11 @@ textarea {
   font-size: 16px;
 }
 
-
-  /* schimb pozitia pozelor in pagina*/
-
-
+/* schimb pozitia pozelor in pagina*/
 .img-wrapper {
   position: relative;
   width: 100%;
-  padding-top: 56.25%; 
+  padding-top: 56.25%;
   overflow: hidden;
 }
 
@@ -276,7 +267,7 @@ textarea {
   position: absolute;
   top: 0;
   left: 0;
-  height:50vh;
+  height: 50vh;
   width: 100%;
   object-fit: cover;
   object-position: center;
@@ -287,13 +278,20 @@ textarea {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-}
-
-
-.scroll-list {
   overflow: auto;
   padding-bottom: 20px;
+}
 
+.scroll-list {
+  justify-content: center;
+  display: flex;
+  overflow: auto;
+  padding-bottom: 20px;
+}
+.scroll-list__wrp{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .scroll-list__item {
@@ -303,32 +301,29 @@ textarea {
   margin-bottom: 20px;
   vertical-align: top;
 }
-  
-  .scroll-list__item .image img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
- 
-  .scroll-list__item .desc {
-    padding: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  
-  
-  
-  .scroll-list__item .desc h4 {
-    font-size: 20px;
-    margin: 0 0 10px;
-  }
- 
-  .scroll-list__item .desc p {
-    font-size: 14px;
-    line-height: 1.5;
-    margin: 0 0 10px;
-  }
-   
+
+.scroll-list__item .image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.scroll-list__item .desc {
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.scroll-list__item .desc h4 {
+  font-size: 20px;
+  margin: 0 0 10px;
+}
+
+.scroll-list__item .desc p {
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0 0 10px;
+}
+
 .scroll-list__item .desc .btn {
   background-color: #2c313a;
   color: #fff;
@@ -337,71 +332,65 @@ textarea {
   text-decoration: none;
   transition: all 0.2s ease-in-out;
 }
-/* ok la asta daca schimb culoarea se vede hover-ul cu alta
-.scroll-list__item .desc .btn:hover {
-  color: rgba(255, 255, 255, 0.75);
-  background-color: transparent;
-}
-  
 
 
    /* asta imi face sa nu mai fie totul pe un rand*/
-  .scroll-list {
-    overflow: auto;
-    /* asta imi pune totu pe un rand white-space: nowrap;*/
-    padding-bottom: 20px;
-  }
-  
-   /*asta imi pune cumva totu pe pagina*/
-  .scroll-list__item {
-    display: inline-block;
-    width: 300px;
-    margin-right: 20px;
-    vertical-align: top;
-  }
-  
-  .scroll-list__item .image img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-  
-  .scroll-list__item .desc {
-    padding: 10px;  /* aici tre sa vad cum fac sa diferentieze un pic doar */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  
-  .scroll-list__item .desc h4 {
-    font-size: 20px;
-    margin: 0 0 10px;
-  }
-  
-  .scroll-list__item .desc p {
-    font-size: 14px;
-    line-height: 1.5;
-    margin: 0 0 10px;
-  }
- /* aici se vede */
-  .scroll-list__item .desc .btn {
-    display: inline-block;
-    background-color: var(--primary);
-    color: var(--light);
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: all 0.3s;
-  }
-  
-  .scroll-list__item .desc .btn:hover {
-    background-color: var(--dark);
-    color:var(--lightgreen)
-  }
 
-  @media (max-width: 768px) {
-    body {
-      padding-left: 20px;
-      font-size: 2vw;
-    }
+
+/*asta imi pune cumva totu pe pagina*/
+.scroll-list__item {
+  display: inline-block;
+  width: 300px;
+  margin-right: 20px;
+  vertical-align: top;
+}
+
+.scroll-list__item .image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.scroll-list__item .desc {
+  padding: 10px; /* aici tre sa vad cum fac sa diferentieze un pic doar */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.scroll-list__item .desc h4 {
+  font-size: 20px;
+  margin: 0 0 10px;
+}
+
+.scroll-list__item .desc p {
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0 0 10px;
+}
+/* aici se vede */
+.scroll-list__item .desc .btn {
+  display: inline-block;
+  background-color: var(--primary);
+  color: var(--light);
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+
+.scroll-list__item .desc .btn:hover {
+  background-color: var(--dark);
+  color: var(--lightgreen);
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-left: 20px;
+    font-size: 2vw;
   }
-  
+}
+@media (max-width: 768px) {
+  body {
+    padding-left: 20px;
+    font-size: 2vw;
+  }
+}
