@@ -137,6 +137,9 @@ footer {
   border-top: 2rem;
 }
 @media (min-width: 768px) {
+  nav h1 {
+    font-size: 2rem;
+  }
   .hamburger {
     display: none;
   }
@@ -150,8 +153,14 @@ footer {
     padding: 0.5rem 0.5rem;
   }
 }
-@media (max-width: 800px) {
+
+@media (max-width: 840px) {
   nav h1 {
-    display: none;
+    font-size: 1rem;
+  }
+}
+@media (max-width: 785px) {
+  nav h1 {
+    font-size: 0.6rem;
   }
 }
