@@ -157,11 +157,12 @@ footer {
 
 @media (max-width: 840px) {
   nav h1 {
-    font-size: 0.6rem;
+    font-size: 1rem;
   }
 }
 @media (max-width: 785px) {
   nav h1 {
     font-size: 0.6rem;
   }
+
 }
