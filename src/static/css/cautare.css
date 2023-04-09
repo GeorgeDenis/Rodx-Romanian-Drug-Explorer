@@ -152,19 +152,19 @@ footer {
   }
 
   #results-container {
-    width: 100%;
-    height: auto;
+    width: 30%;
+    height: 20%;
   }
 
   #chartContainer {
-    width: 100% !important;
-    height: auto !important;
+    width: 100% ;
+    height: auto ;
   }
 }
 
 @media screen and (max-width: 767px) {
   .dropup-content {
-    font-size: 0.8rem;
+    font-size: 1rem;
   }
 }
 
