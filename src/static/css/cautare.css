@@ -34,6 +34,10 @@ main {
   width: 100%;
   max-width: 250px;
 }
+.filter-select {
+  width: 11rem; /* Modifică această valoare în funcție de dimensiunea dorită */
+  height: 40px;
+}
 
 .search-button:hover {
   stroke-width: 12;
@@ -56,6 +60,15 @@ main {
   visibility: hidden;
   margin-top: 600px;
   margin-bottom: 40px;
+}
+#infractiuni_options,
+#confiscari_options,
+#urgente_options {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 }
 
 #piechart {
@@ -164,6 +177,12 @@ footer {
 
 @media screen and (max-width: 767px) {
   .search-filter-container {
+    flex-direction: column;
+  }
+  .search-filter-container,
+  #infractiuni_options,
+  #confiscari_options,
+  #urgente_options {
     flex-direction: column;
   }
 

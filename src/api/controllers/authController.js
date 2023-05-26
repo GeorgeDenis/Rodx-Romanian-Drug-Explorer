@@ -6,8 +6,7 @@ const catchAsync = require("../utils/catchAsync");
 const users = require("../model/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const {promisify} = require('util');
-
+const { promisify } = require("util");
 
 const generateToken = (name, email) => {
   let jwtSecretKey = process.env.JWT_SECRET_KEY;
@@ -21,6 +20,7 @@ const generateToken = (name, email) => {
   const token = jwt.sign(data, jwtSecretKey, options);
   return token;
 };
+
 const verifyToken = catchAsync(async (req, res) => {
   let token;
   if (
@@ -37,10 +37,12 @@ const verifyToken = catchAsync(async (req, res) => {
     return null;
   }
 
-  const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET_KEY);
-  
-  const freshUser = await users.findUserByUser(decoded.name);
+  const decoded = await promisify(jwt.verify)(
+    token,
+    process.env.JWT_SECRET_KEY
+  );
 
+  const freshUser = await users.findUserByUser(decoded.name);
   if (!freshUser) {
     errorController(res, new AppError("The user does not longer exists!", 401));
     return null;
@@ -49,22 +51,44 @@ const verifyToken = catchAsync(async (req, res) => {
   return freshUser;
 });
 
+const verifyRole = (res, user, ...roles) => {
+  if (!roles.includes(user.role)) {
+    errorController(
+      res,
+      new AppError("You do not have the rights to do this!", 403)
+    );
+    return false;
+  }
+  return true;
+};
+
 const signup = catchAsync(async (req, res) => {
   const user = await parseRequestBody(req);
   if (!user) {
-    errorController(res, new AppError("Please provide a user data", 400));
+    errorController(
+      res,
+      new AppError("Va rog sa introduceti un utilizator", 400)
+    );
   }
   if (!user.name || !user.email || !user.password) {
-    errorController(res, new AppError("Provide all required fields", 400));
+    errorController(
+      res,
+      new AppError("Trebuie sa introduceti toate datele!", 400)
+    );
   }
-  if (await users.validateUsername(user.name)) {
-    errorController(res, new AppError("Name already exists", 400));
+  if (user.role) {
+    errorController(res, new AppError("Nu va puteti seta singur rolul!", 400));
     return;
   }
-  if (await users.validateEmail(user.email)) {
-    errorController(res, new AppError("Email already exists", 400));
+  if (await users.checkUsername(user.name)) {
+    errorController(res, new AppError("Numele exista deja!", 400));
     return;
   }
+  if (await users.checkEmail(user.email)) {
+    errorController(res, new AppError("Email-ul exista deja!", 400));
+    return;
+  }
+  user.role = "user";
   user.password = await bcrypt.hash(user.password, 10);
   const result = await users.createUser(user);
 
@@ -85,18 +109,21 @@ const login = catchAsync(async (req, res) => {
   const { email, password } = await parseRequestBody(req);
 
   if (!email || !password) {
-    errorController(res, new AppError("Provide all required fields", 400));
+    errorController(
+      res,
+      new AppError("Introduceti toate campurile necesare", 400)
+    );
   }
 
   const user = await users.findUserByEmail(email);
   if (!user) {
-    errorController(res, new AppError("Invalid email or password", 401));
+    errorController(res, new AppError("Email sau parola incorecte", 401));
     return;
   }
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) {
-    errorController(res, new AppError("Invalid email or password", 401));
+    errorController(res, new AppError("Parola incorecta", 401));
     return;
   }
 
@@ -108,7 +135,7 @@ const login = catchAsync(async (req, res) => {
     },
   };
 
-  res.statusCode = 201;
+  res.statusCode = 200;
   res.end(JSON.stringify(response));
 });
 
@@ -122,4 +149,4 @@ const authController = catchAsync(async (req, res) => {
   }
 });
 
-module.exports = { authController, verifyToken };
+module.exports = { authController, verifyToken, verifyRole };

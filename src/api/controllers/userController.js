@@ -3,7 +3,7 @@ const AppError = require("../utils/appError");
 const errorController = require("../controllers/errorController");
 const parseRequestBody = require("../utils/parseReq");
 const catchAsync = require("../utils/catchAsync");
-const { verifyToken } = require("../controllers/authController");
+const { verifyToken, verifyRole } = require("../controllers/authController");
 const user = require("../model/user");
 const jwt = require("jsonwebtoken");
 const util = require("util");
@@ -27,7 +27,9 @@ const userController = catchAsync(async (req, res) => {
     if (!logUser) {
       return;
     }
-
+    if (!verifyRole(res, logUser, "admin")) {
+      return;
+    }
     getAllUsers(req, res);
   } else if (url === "/api/users" && method === "POST") {
     createUser(req, res);

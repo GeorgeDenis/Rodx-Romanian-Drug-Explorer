@@ -6,12 +6,12 @@ exports.getAllUsers = async () => {
   return result.rows;
 };
 exports.createUser = async (userData) => {
-  const { name, email, password } = userData;
+  const { name, email, password, role } = userData;
 
   console.log(password);
   const queryText =
-    "INSERT INTO users (name,email,password) VALUES ($1,$2,$3) RETURNING *";
-  const values = [name, email, password];
+    "INSERT INTO users (name,email,password,role) VALUES ($1,$2,$3,$4) RETURNING *";
+  const values = [name, email, password, role];
   try {
     const result = await pool.query(queryText, values);
     return result.rows[0]; // returneaza utilizatorul creat
@@ -20,7 +20,7 @@ exports.createUser = async (userData) => {
     throw err;
   }
 };
-exports.validateUsername = async (name) => {
+exports.checkUsername = async (name) => {
   try {
     const queryText = "SELECT name FROM users WHERE name =$1";
     const result = await pool.query(queryText, [name]);
@@ -30,7 +30,7 @@ exports.validateUsername = async (name) => {
     throw new Error("Database query failed");
   }
 };
-exports.validateEmail = async (email) => {
+exports.checkEmail = async (email) => {
   try {
     const queryText = "SELECT email FROM users WHERE email =$1";
     const result = await pool.query(queryText, [email]);
@@ -62,11 +62,16 @@ exports.findUserByEmail = async (email) => {
 };
 exports.findUserByUser = async (username) => {
   try {
-    // Only select the fields you need
-    const queryText = "SELECT name FROM users WHERE name =$1";
+    const queryText = "SELECT * FROM users WHERE name =$1";
     const result = await pool.query(queryText, [username]);
     if (result.rows.length > 0) {
-      return result.rows[0];
+      return {
+        id: result.rows[0].user_id,
+        name: result.rows[0].name,
+        email: result.rows[0].email,
+        password: result.rows[0].password,
+        role: result.rows[0].role,
+      };
     } else {
       return null;
     }
