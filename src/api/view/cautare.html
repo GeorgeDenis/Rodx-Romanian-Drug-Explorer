@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <link rel="stylesheet" href="../static/css/cautare.css">
+  <link rel="stylesheet" href="../static/css/nav.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://www.gstatic.com/charts/loader.js"></script>
+  <script>
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ['Consum Droguri', 'Pe zi'],
+        ['LSD', 11],
+        ['Ciuperci', 2],
+        ['Codeina', 2],
+        ['Speed', 2],
+      ]);
+
+      var options = {
+        title: 'Cosum de droguri',
+        chartArea: { width: '100%', height: '80%' },
+        legend: { position: 'bottom', textStyle: { fontSize: 12 } }
+      };
+
+      var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+      chart.draw(data, options);
+      document.querySelector("#wrapper").style.visibility = "visible";
+    }
+
+    function init() {
+      google.charts.load('current', { 'packages': ['corechart'] });
+      google.charts.setOnLoadCallback(() => {
+        const generateBtn = document.getElementById("search-button");
+        generateBtn.addEventListener("click", drawChart);
+      });
+    }
+    init();
+  </script>
+  <style>
+
+  </style>
+  <title>Cautare</title>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <div class="container">
+        <h1>RoDX</h1>
+        <div class="menu">
+          <a href="index.html">Acasa</a>
+          <a href="#" class="is-active">Cautare&filtrare</a>
+          <a href="droguri.html">Droguri</a>
+          <a href="campanii.html">Campanii</a>
+          <a href="about.html">About us</a>
+
+          <a href="login.html">Login</a>
+        </div>
+        <button class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </nav>
+    <div class="mobile-menu">
+      <a href="index.html">Acasa</a>
+      <a href="#">Cautare&filtrare</a>
+      <a href="droguri.html">Droguri</a>
+      <a href="campanii.html">Campanii</a>
+      <a href="about.html">About us</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="search-filter-container">
+      <select class="filter-select" id="categorie_select" required>
+        <option value="" disabled selected>Categorie</option>
+        <option value="infractiuni">Infracțiuni</option>
+        <option value="confiscari">Confiscări</option>
+        <option value="urgente_medicale">Urgențe medicale</option>
+      </select>
+
+      <div id="infractiuni_options" style="display: none;">
+        <select class="filter-select">
+          <option value="" disabled selected>Categorie</option>
+          <option value="sex">Sex</option>
+          <option value="grupari">Grupari</option>
+          <option value="Pedepse">Pedepse</option>
+          <option value="cercetari">Cercetari</option>
+        </select>
+        <select class="filter-select">
+          <option value="" disabled selected>An</option>
+          <option value="2022">2022</option>
+          <option value="2021">2021</option>
+          <option value="2020">2020</option>
+        </select>
+        <!-- ...restul selectoarelor... -->
+      </div>
+      <div id="confiscari_options" style="display: none;">
+        <select class="filter-select">
+          <option value="" disabled selected>Categorie</option>
+          <option value="cantitate">Cantitate</option>
+          <option value="capturi">Capturi</option>
+        </select>
+        <select class="filter-select">
+          <option value="" disabled selected>An</option>
+          <option value="2022">2022</option>
+          <option value="2021">2021</option>
+          <option value="2020">2020</option>
+        </select>
+
+
+        <!-- ...restul selectoarelor... -->
+      </div>
+      <div id="urgente_options" style="display: none;">
+        <select class="filter-select">
+          <option value="" disabled selected>Drog</option>
+          <option value="canabis">Canabis</option>
+          <option value="stimulanti">Stimulanti</option>
+          <option value="opiacee">Opiacee</option>
+          <option value="nsp">NSP</option>
+
+        </select>
+        <select class="filter-select">
+          <option value="" disabled selected>Categorie</option>
+          <option value="sex">Sex</option>
+          <option value="varsta">Varsta</option>
+          <option value="administrare">Administrare</option>
+          <option value="model">Model consum</option>
+        </select>
+
+      </div>
+      <select class="filter-select" id="reprezentare_select" required>
+        <option value="" disabled selected>Reprezentare</option>
+        <option value="grafic">Grafic</option>
+        <option value="tabel">Tabel</option>
+        <option value="harta">Hartă</option>
+      </select>
+      <span class="custom-arrow"></span>
+      <button class="search-button" id="search-button">Caută</button>
+    </div>
+    <div id="wrapper">
+      <div id="piechart"></div>
+    </div>
+    </div>
+
+  </main>
+
+  <div class="dropup">
+    <button class="dropbtn">Save</button>
+    <div class="dropup-content">
+      <a href="#">PNG</a>
+      <a href="#">CSV</a>
+      <a href="#">PDF</a>
+    </div>
+  </div>
+  <div id="chartContainer" class="Chart"></div>
+  <footer>
+    <p>@Drugs&Prevention</p>
+  </footer>
+  <script src="../static/js/main.js"></script>
+  <script src="../static/js/filterButoane.js"></script>
+  <script src="../static/js/filterBtnShows.js"></script>
+
+
+
+
+
+</body>
+
+</html>

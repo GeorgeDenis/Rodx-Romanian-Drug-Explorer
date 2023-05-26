@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="../../public/css/login.css">
+  <link rel="stylesheet" href="../../public/css/nav.css">
+
+  <style>
+    body {
+      background: url("../public/poze/background.jpg");
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <div class="container">
+        <h1>RoDX</h1>
+        <div class="menu">
+          <a href="acasa">Acasa</a>
+          <a href="cautare.html">Cautare&filtrare</a>
+          <a href="droguri.html">Droguri</a>
+          <a href="campanii">Campanii</a>
+          <a href="about.html">About us</a>
+          <a href="#" class="is-active">Login</a>
+        </div>
+        <button class=" hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </nav>
+    <div class="mobile-menu">
+      <a href="index.html">Acasa</a>
+      <a href="cautare.html">Cautare&filtrare</a>
+      <a href="droguri.html">Droguri</a>
+      <a href="campanii.html">Campanii</a>
+      <a href="about.html">About us</a>
+      <a href="login.html">Login</a>
+    </div>
+  </header>
+  <div class="wrapper">
+    <div class="form-box login">
+      <h2>Login</h2>
+      <form action="#">
+        <div class="input-box email-input">
+          <span class="icon">
+            <ion-icon name="mail"></ion-icon>
+          </span>
+          <input type="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+          <label>Email</label>
+        </div>
+        <div class="input-box">
+          <span class="icon">
+            <ion-icon name="lock-closed"></ion-icon></span>
+          <input type="password" required>
+          <label>Parolă</label>
+        </div>
+        <div class="forgot">
+          <a href="#">Ați uitat parola?</a>
+        </div>
+        <button type="submit" class="btn">Login</button>
+        <div class="login-register">
+          <p>Nu aveți cont? <a href="#" class="register-link">Register</a></p>
+        </div>
+      </form>
+    </div>
+    <div class="form-box register">
+      <h2>Register</h2>
+      <form action="#">
+        <div class="input-box">
+          <span class="icon">
+            <ion-icon name="person"></ion-icon>
+          </span>
+          <input type="text" required>
+          <label>Nume de utilizator</label>
+        </div>
+        <div class="input-box email-input">
+          <span class="icon">
+            <ion-icon name="mail"></ion-icon>
+          </span>
+          <input type="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="">
+          <label>Email</label>
+        </div>
+        <div class="input-box">
+          <span class="icon">
+            <ion-icon name="lock-closed"></ion-icon></span>
+          <input type="password" required>
+          <label>Parolă</label>
+        </div>
+        <div class="input-box">
+          <span class="icon">
+            <ion-icon name="lock-closed"></ion-icon></span>
+          <input type="password" required>
+          <label>Confirmați parola</label>
+        </div>
+
+        <button type="submit" class="btn">Register</button>
+        <div class="login-register">
+          <p>Aveți deja cont? <a href="#" class="login-link">Login</a></p>
+        </div>
+
+      </form>
+    </div>
+  </div>
+  <script src="../public/js/main.js"></script>
+  <script src="../public/js/login.js"></script>
+  <script src="../public/js/loginBtn.js"></script>
+
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

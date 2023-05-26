@@ -1,0 +1,204 @@
+:root {
+  --primary: #3c6255;
+  --light: #eeeeee;
+  --dark: #61876e;
+  --lightgreen: #a6bb8d;
+  font-size: 16px;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Fira sans", sans-serif;
+}
+
+main {
+  padding-top: 4rem;
+}
+
+.search-filter-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.search-input,
+.filter-select {
+  font-size: 1rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 250px;
+}
+.filter-select {
+  width: 11rem; /* Modifică această valoare în funcție de dimensiunea dorită */
+  height: 40px;
+}
+
+.search-button:hover {
+  stroke-width: 12;
+}
+
+.search-button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: var(--primary);
+  color: #eee;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#wrapper {
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  position: fixed;
+  visibility: hidden;
+  margin-top: 600px;
+  margin-bottom: 40px;
+}
+#infractiuni_options,
+#confiscari_options,
+#urgente_options {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+#piechart {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex-grow: 1;
+}
+
+footer {
+  padding: 1rem 0;
+  text-align: center;
+  background-color: var(--primary);
+  color: #fff;
+}
+
+.search-button:hover {
+  background-color: #2d4c42;
+  color: #f1f1f1;
+}
+
+select:required:invalid {
+  color: gray;
+}
+option[value=""][disabled] {
+  display: none;
+}
+option {
+  color: black;
+  animation-duration: 10000ms;
+}
+
+.dropbtn {
+  font-size: 1rem;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 16px;
+}
+
+/* The container <div> - needed to position the dropup content */
+.dropup {
+  position: relative;
+  width: 69px;
+}
+
+/* Dropup content (Hidden by Default) */
+.dropup-content {
+  display: none;
+  position: absolute;
+  bottom: 50px;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropup-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropup-content a:hover {
+  background-color: #ddd;
+}
+
+.dropup:hover .dropup-content {
+  display: block;
+}
+
+.dropup:hover .dropbtn {
+  background-color: #2d4c42;
+  color: #f1f1f1;
+}
+
+footer {
+  margin-top: auto;
+}
+
+#results-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  height: 600px;
+}
+
+@media screen and (max-width: 767px) {
+  .search-filter-container {
+    flex-direction: column;
+  }
+  .search-filter-container,
+  #infractiuni_options,
+  #confiscari_options,
+  #urgente_options {
+    flex-direction: column;
+  }
+
+  #results-container {
+    width: 30%;
+    height: 20%;
+  }
+
+  #chartContainer {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .dropup-content {
+    font-size: 1rem;
+  }
+}
