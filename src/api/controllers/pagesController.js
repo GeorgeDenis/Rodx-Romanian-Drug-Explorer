@@ -38,7 +38,10 @@ const handleViewRequest = (req, res) => {
     filePath = "./view/campanii.html";
   } else if (url === "/login") {
     filePath = "./view/login.html";
-  } else {
+  }else if (url === "/cautare") {
+    filePath = "./view/cautare.html";
+  } 
+  else {
     filePath = path.resolve("." + req.url);
   }
   respondFile(req, res, filePath);
