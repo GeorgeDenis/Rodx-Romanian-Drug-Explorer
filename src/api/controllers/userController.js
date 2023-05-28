@@ -23,11 +23,11 @@ const userController = catchAsync(async (req, res) => {
   const { url, method } = req;
   res.setHeader("Content-Type", "application/json");
   if (url === "/api/users" && method === "GET") {
-    const logUser = await verifyToken(req, res);
-    if (!logUser) {
+    const response = await verifyToken(req, res);
+    if (!response) {
       return;
     }
-    if (!verifyRole(res, logUser, "admin")) {
+    if (!verifyRole(res, response, "admin")) {
       return;
     }
     getAllUsers(req, res);

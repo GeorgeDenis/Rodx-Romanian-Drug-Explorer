@@ -8,10 +8,11 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { promisify } = require("util");
 
-const generateToken = (name, email) => {
+const generateToken = (name, role, email) => {
   let jwtSecretKey = process.env.JWT_SECRET_KEY;
   let data = {
     name: name,
+    role: role,
     email: email,
   };
   let options = {
@@ -41,26 +42,32 @@ const verifyToken = catchAsync(async (req, res) => {
     token,
     process.env.JWT_SECRET_KEY
   );
-
   const freshUser = await users.findUserByUser(decoded.name);
   if (!freshUser) {
     errorController(res, new AppError("The user does not longer exists!", 401));
     return null;
   }
-  req.currentUser = freshUser;
-  return freshUser;
+  req.currentToken = decoded;
+  return decoded;
 });
 
-const verifyRole = (res, user, ...roles) => {
-  if (!roles.includes(user.role)) {
-    errorController(
-      res,
-      new AppError("You do not have the rights to do this!", 403)
-    );
+const verifyRole = (res, response, ...roles) => {
+  if (!roles.includes(response.role)) {
+    errorController(res, new AppError("Nu ai permisiunea sa faci asta!", 403));
     return false;
   }
   return true;
 };
+
+const permission = catchAsync(async (req, res) => {
+  const response = await verifyToken(req, res);
+  if (!response) {
+    return;
+  }
+  if (!verifyRole(res, response, "admin")) {
+    return;
+  }
+});
 
 const signup = catchAsync(async (req, res) => {
   const user = await parseRequestBody(req);
@@ -91,8 +98,7 @@ const signup = catchAsync(async (req, res) => {
   user.role = "user";
   user.password = await bcrypt.hash(user.password, 10);
   const result = await users.createUser(user);
-
-  let token = generateToken(user.name, user.email);
+  let token = generateToken(user.name, user.role, user.email);
 
   const response = {
     status: "success",
@@ -126,8 +132,7 @@ const login = catchAsync(async (req, res) => {
     errorController(res, new AppError("Parola incorecta", 401));
     return;
   }
-
-  let token = generateToken(user.name, user.email);
+  let token = generateToken(user.name, user.role, user.email);
   const response = {
     status: "success",
     data: {
@@ -149,4 +154,4 @@ const authController = catchAsync(async (req, res) => {
   }
 });
 
-module.exports = { authController, verifyToken, verifyRole };
+module.exports = { authController, verifyToken, verifyRole, permission };

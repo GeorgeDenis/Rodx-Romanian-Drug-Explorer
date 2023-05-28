@@ -44,7 +44,8 @@ exports.checkEmail = async (email) => {
 exports.findUserByEmail = async (email) => {
   try {
     // Only select the fields you need
-    const queryText = "SELECT name, email, password FROM users WHERE email =$1";
+    const queryText =
+      "SELECT name, email, password,role FROM users WHERE email =$1";
     const result = await pool.query(queryText, [email]);
 
     if (result.rows.length > 0) {
@@ -78,5 +79,21 @@ exports.findUserByUser = async (username) => {
   } catch (err) {
     console.error(err);
     throw new Error(`Database query failed: ${err.message}`);
+  }
+};
+
+exports.deleteUser = async (email) => {
+  try {
+    const queryText = "DELETE FROM users WHERE email=$1";
+    const result = await pool.query(queryText, [email]);
+
+    if (result.rowCount === 0) {
+      return false;
+    }
+
+    return true;
+  } catch (err) {
+    console.error(err);
+    throw new Error("Database query failed");
   }
 };
