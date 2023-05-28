@@ -1,0 +1,14 @@
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(
+    100vh - 50px - 50px
+  ); /* Ajustați în funcție de înălțimea header-ului și a footer-ului */
+}
+
+#logout-button {
+  padding: 10px 20px;
+  font-size: 1.2em;
+  cursor: pointer;
+}

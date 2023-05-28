@@ -38,10 +38,15 @@ const handleViewRequest = (req, res) => {
     filePath = "./view/campanii.html";
   } else if (url === "/login") {
     filePath = "./view/login.html";
-  }else if (url === "/cautare") {
+  } else if (url === "/cautare") {
     filePath = "./view/cautare.html";
-  } 
-  else {
+  } else if (url === "/about") {
+    filePath = "./view/about.html";
+  } else if (url === "/droguri") {
+    filePath = "./view/droguri.html";
+  } else if (url === "/myaccount") {
+    filePath = "./view/myaccount.html";
+  } else {
     filePath = path.resolve("." + req.url);
   }
   respondFile(req, res, filePath);
