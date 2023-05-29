@@ -46,9 +46,25 @@ body {
 
 .my-navbar {
   background-color: #3c6255; 
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  padding: 1rem 2rem !important;
+  
+  
 }
 
+.menu a:hover {
+  color:#eeeeee;
+  background-color: #a6bb8d;
+}
 
+.menu a.is-active,
+.menu a:hover {
+  background-color: #497867;
+}
 
 .form-group {
 	margin-bottom: 1.5rem;
@@ -90,15 +106,16 @@ body {
 }
 
 .my-footer {
+  margin-top: 10px;
   bottom: 0;
   left: 0;
   width: 100%;
   background-color:#3c6255 ;
   color: #fff;
-  padding: 1.25rem;
+  padding: 1.75rem;
   text-align: center;
-  border-top: 2rem;
-  height: 4rem;
+  border-top: 5rem;
+  height: 6rem;
 }
 
 
