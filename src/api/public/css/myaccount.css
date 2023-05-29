@@ -1,14 +1,104 @@
-main {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: calc(
-    100vh - 50px - 50px
-  ); /* Ajustați în funcție de înălțimea header-ului și a footer-ului */
+:root {
+  --primary: #3c6255;
+  --light: #eeeeee;
+  --dark: #61876e;
+  --lightgreen: #a6bb8d;
+  font-size: 16px;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Fira sans", sans-serif;
 }
 
-#logout-button {
-  padding: 10px 20px;
-  font-size: 1.2em;
-  cursor: pointer;
+
+
+
+@import url("https://fonts.googleapis.com/css?family=Fira sans:300,400,500,700&display=swap");
+body {
+	background: #f9f9f9;
+	font-family: "Fira sans", sans-serif;
 }
+
+
+
+.profile-tab-nav {
+	min-width: 250px;
+}
+
+.tab-content {
+	flex: 1;
+  
+}
+.py-5{
+  margin-left: 100px;
+  color: black;
+  
+}
+
+.tab-pane {
+  margin-left:0px ;
+  height: 600px;
+  width: 600px;
+  
+}
+
+.my-navbar {
+  background-color: #3c6255; 
+}
+
+
+
+.form-group {
+	margin-bottom: 1.5rem;
+}
+
+
+/*SIDEBAR */
+
+.nav-link.active {
+  background-color:#3c6255 !important ;
+}
+
+
+.nav-pills a.nav-link {
+	padding: 15px 20px;
+	border-bottom: 1px solid #ddd;
+	border-radius: 0;
+	color: #3c6255;
+}
+.nav-pills a.nav-link i {
+	width: 20px;
+}
+
+.img-circle img {
+	height: 100px;
+	width: 100px;
+	border-radius: 100%;
+	border: 5px solid #fff;
+}
+
+/*UPDATE BUTTON */
+.btn.btn-primary {
+  background-color: #3c6255;  
+  border-color: #354458;     
+}
+
+.btn.btn-primary:hover {
+  background-color: #61876e;  
+}
+
+.my-footer {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color:#3c6255 ;
+  color: #fff;
+  padding: 1.25rem;
+  text-align: center;
+  border-top: 2rem;
+  height: 4rem;
+}
+
+
