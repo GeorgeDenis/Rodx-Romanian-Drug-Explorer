@@ -7,20 +7,37 @@ const users = require("../model/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { promisify } = require("util");
+const fetch = require("node-fetch");
 
-const generateToken = (name, role, email) => {
-  let jwtSecretKey = process.env.JWT_SECRET_KEY;
-  let data = {
-    name: name,
-    role: role,
-    email: email,
-  };
-  let options = {
-    expiresIn: process.env.EXPIRATION,
-  };
-  const token = jwt.sign(data, jwtSecretKey, options);
-  return token;
-};
+// const generateToken = (name, role, email) => {
+//   let jwtSecretKey = process.env.JWT_SECRET_KEY;
+//   let data = {
+//     name: name,
+//     role: role,
+//     email: email,
+//   };
+//   let options = {
+//     expiresIn: process.env.EXPIRATION,
+//   };
+//   const token = jwt.sign(data, jwtSecretKey, options);
+//   return token;
+// };
+
+const generateToken = catchAsync(async (user) => {
+  const response = await fetch("http://localhost:5000/token", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: `sharedKey=${process.env.SHARED_KEY}&name=${user.name}&role=${user.role}&email=${user.email}`,
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to generate token");
+  }
+
+  const data = await response.json();
+
+  return data.token;
+});
 
 const verifyToken = catchAsync(async (req, res) => {
   let token;
@@ -98,7 +115,7 @@ const signup = catchAsync(async (req, res) => {
   user.role = "user";
   user.password = await bcrypt.hash(user.password, 10);
   const result = await users.createUser(user);
-  let token = generateToken(user.name, user.role, user.email);
+  let token = await generateToken(user);
 
   const response = {
     status: "success",
@@ -132,7 +149,10 @@ const login = catchAsync(async (req, res) => {
     errorController(res, new AppError("Parola incorecta", 401));
     return;
   }
-  let token = generateToken(user.name, user.role, user.email);
+  //let token = generateToken(user.name, user.role, user.email);
+
+  const token = await generateToken(user);
+
   const response = {
     status: "success",
     data: {

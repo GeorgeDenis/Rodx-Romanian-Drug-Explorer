@@ -9,11 +9,18 @@ hamburger.addEventListener("click", function () {
 });
 window.onload = function () {
   const token = localStorage.getItem("token");
-  if (token) {
-    loginLink.textContent = "MyAccount";
-    loginLink.href = "myaccount";
+  const loginLink = document.querySelector(".menu #login-link");
+  const mobileLoginLink = document.querySelector(".mobile-menu #login-link");
 
-    mobileLoginLink.textContent = "MyAccount";
-    mobileLoginLink.href = "myaccount";
+  if (token) {
+    if (loginLink) {
+      loginLink.textContent = "MyAccount";
+      loginLink.href = "myaccount";
+    }
+
+    if (mobileLoginLink) {
+      mobileLoginLink.textContent = "MyAccount";
+      mobileLoginLink.href = "myaccount";
+    }
   }
 };
