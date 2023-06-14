@@ -2,7 +2,7 @@ const errorController = require("./errorController");
 const { authController } = require("./authController");
 const userController = require("./userController");
 const adminController = require("./adminController");
-
+const filterController = require("./filterController");
 const AppError = require("../utils/appError");
 
 const apiRequest = (req, res) => {
@@ -13,6 +13,8 @@ const apiRequest = (req, res) => {
     userController(req, res);
   } else if (url.startsWith("/api/admin")) {
     adminController(req, res);
+  } else if (url.startsWith("/api/filter")) {
+    filterController(req, res);
   } else {
     errorController(res, new AppError("Not found", 404));
   }

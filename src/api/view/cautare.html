@@ -48,21 +48,21 @@
   <main>
     <div class="search-filter-container">
       <select class="filter-select" id="categorie_select" required>
-        <option value="" disabled selected>Categorie</option>
+        <option value="" disabled selected>Tip</option>
         <option value="infractiuni">Infracțiuni</option>
         <option value="confiscari">Confiscări</option>
-        <option value="urgente_medicale">Urgențe medicale</option>
+        <option value="urgente">Urgențe medicale</option>
       </select>
 
       <div id="infractiuni_options" style="display: none;">
-        <select class="filter-select">
+        <select class="filter-select" id="infractiuni_subcategorie">
           <option value="" disabled selected>Categorie</option>
-          <option value="sex">Sex</option>
+          <option value="Gen">Gen</option>
           <option value="grupari">Grupari</option>
           <option value="Pedepse">Pedepse</option>
           <option value="cercetari">Cercetari</option>
         </select>
-        <select class="filter-select">
+        <select class="filter-select" id="infractiuni_an">
           <option value="" disabled selected>An</option>
           <option value="2022">2022</option>
           <option value="2021">2021</option>
@@ -71,37 +71,56 @@
         <!-- ...restul selectoarelor... -->
       </div>
       <div id="confiscari_options" style="display: none;">
-        <select class="filter-select">
+        <select class="filter-select" id="confiscari_subcategorie">
           <option value="" disabled selected>Categorie</option>
           <option value="cantitate">Cantitate</option>
           <option value="capturi">Capturi</option>
         </select>
-        <select class="filter-select">
+        <select class="filter-select" id="confiscari_an">
           <option value="" disabled selected>An</option>
           <option value="2022">2022</option>
           <option value="2021">2021</option>
           <option value="2020">2020</option>
         </select>
-
         <!-- ...restul selectoarelor... -->
       </div>
       <div id="urgente_options" style="display: none;">
-        <select class="filter-select">
+        <select class="filter-select" id="urgente_drog">
           <option value="" disabled selected>Drog</option>
           <option value="canabis">Canabis</option>
           <option value="stimulanti">Stimulanti</option>
           <option value="opiacee">Opiacee</option>
           <option value="nsp">NSP</option>
-
         </select>
-        <select class="filter-select">
+        <select class="filter-select" id="urgente_filtru">
           <option value="" disabled selected>Categorie</option>
-          <option value="sex">Sex</option>
-          <option value="varsta">Varsta</option>
-          <option value="administrare">Administrare</option>
-          <option value="model">Model consum</option>
+          <option value="Gen">Gen</option>
+          <option value="Varsta">Varsta</option>
+          <option value="Administrare">Administrare</option>
+          <option value="Consum">Model consum</option>
+          <option value="Diagnostic">Diagnostic</option>
         </select>
-
+        <select class="filter-select" id="gen_filtru" style="display: none;">
+          <option value="" disabled selected>Alegeți genul</option>
+          <option value="masculin">Masculin</option>
+          <option value="feminin">Feminin</option>
+          <option value="ambele">Ambele</option>
+      </select>
+      
+      <select class="filter-select" id="varsta_filtru" style="display: none;">
+          <option value="" disabled selected>Alegeți vârsta</option>
+          <option value="<25">Mai mic de 25</option>
+          <option value="25-34">25 - 34</option>
+          <option value=">35">Mai mare de 35</option>
+      </select>
+      
+      <select class="filter-select" id="administrare_filtru" style="display: none;">
+          <option value="" disabled selected>Alegeți metoda de administrare</option>
+          <option value="oral_fumat_prizat">Oral/fumat/prizat</option>
+          <option value="injectabil">Injectabil</option>
+          <option value="altele">Altele</option>
+      </select>
+        <!-- ...restul selectoarelor... -->
       </div>
       <select class="filter-select" id="reprezentare_select" required>
         <option value="" disabled selected>Reprezentare</option>
@@ -111,9 +130,10 @@
       </select>
       <span class="custom-arrow"></span>
       <button class="search-button" id="search-button">Caută</button>
+      <button class="search-button" id="favorite-button" style="display: none;">Preferate</button>
     </div>
-
   </main>
+
   <div id="chartContainer" style="position: relative; height:60vh; width:80vw;margin: auto;">
     <canvas id="myChart"></canvas>
   </div>
