@@ -1,6 +1,5 @@
 const postFilterData = async (data) => {
   const token = localStorage.getItem("token");
-
   const response = await fetch("http://localhost:3000/api/filter", {
     method: "POST",
     headers: {
@@ -14,16 +13,15 @@ const postFilterData = async (data) => {
 
   if (response.ok) {
     console.log("Cererea POST a fost executată cu succes");
-    // Aici puteți adăuga cod pentru a trata răspunsul sau a afișa un mesaj de succes către utilizator
   } else {
-    console.log("Cererea POST a eșuat");
-    // Aici puteți trata cazul în care cererea a eșuat, cum ar fi afișarea unui mesaj de eroare către utilizator
+    alert(result.message);
   }
 };
 // Funcția pentru a obține valorile selectate dintr-un grup de selectoare
 function getSelectedValues(selectors) {
   const values = {};
   for (let i = 0; i < selectors.length; i++) {
+    if (selectors[i].style.display === "none") continue;
     if (selectors[i].value === "") {
       alert("Toate câmpurile trebuie să fie selectate!");
       return null;
@@ -114,8 +112,9 @@ function handleSearchButtonClick(event) {
   const token = localStorage.getItem("token");
   // Creăm obiectul final care va conține toate valorile selectate
   const allSelectedValues = {
-    ...specificValues,
-    tip: categorieSelectValue,
+    categorie: categorieSelectValue,
+    an: specificValues.infractiuni_an,
+    tip: specificValues.infractiuni_subcategorie,
     reprezentare: reprezentareSelectValue,
     token: token,
   };
