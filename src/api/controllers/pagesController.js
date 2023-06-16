@@ -47,7 +47,27 @@ const handleViewRequest = (req, res) => {
     filePath = "./view/droguri.html";
   } else if (url === "/myaccount") {
     filePath = "./view/myaccount.html";
-  } else {
+  } else if(url ==="/alcool"){
+      filePath="./view/Droguri/Alcool.html";
+  }else if(url ==="/marijuana"){
+      filePath="./view/Droguri/Marijuana.html";
+  }else if(url ==="/ciuperca"){
+      filePath="./view/Droguri/Ciupearca.html";
+  }else if(url ==="/lsd"){
+      filePath="./view/Droguri/LSD.html";
+  }else if(url ==="/cocaina"){
+    filePath="./view/Droguri/Cocaina.html";
+  }else if(url ==="/heroina"){
+    filePath="./view/Droguri/Heroina.html";
+  }else if(url ==="/ecstasy"){
+    filePath="./view/Droguri/Ecstasy.html";
+  }else if(url ==="/opium"){
+    filePath="./view/Droguri/Opium.html";
+  }else if(url ==="/metamfetamina"){
+    filePath="./view/Droguri/Metamfetamina.html";
+  }else if(url ==="/fenciclidina"){
+    filePath="./view/Droguri/Fenciclidina.html";
+  }else {
     filePath = path.resolve("." + req.url);
   }
   respondFile(req, res, filePath);
