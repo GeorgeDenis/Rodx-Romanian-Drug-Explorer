@@ -1,9 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // selectăm formularele de login și register
   const loginForm = document.querySelector(".form-box.login form");
   const registerForm = document.querySelector(".form-box.register form");
 
-  // event listener pentru submit pe formularul de login
   loginForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
@@ -39,7 +37,6 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   });
 
-  // event listener pentru submit pe formularul de register
   registerForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
@@ -71,12 +68,11 @@ document.addEventListener("DOMContentLoaded", function () {
           .then((data) => ({ status: response.status, body: data }))
       )
       .then((data) => {
-        if (data.status !== 200) {
+        if (data.status !== 201) {
           throw new Error(data.body.message || "Unknown error");
         }
-        // tratați răspunsul aici, de exemplu setați un token JWT în localStorage
         console.log("Success:", data);
-        localStorage.setItem("token", data.data.token);
+        localStorage.setItem("token", data.body.data.token);
         window.location.href = "/";
       })
       .catch((error) => {

@@ -20,6 +20,11 @@ const postFilterData = async (data) => {
 function getSelectedValues(selectors) {
   let values = {};
 
+  if (!selectors) {
+    alert("Toate câmpurile trebuie să fie selectate!");
+    return null;
+  }
+
   for (let i = 0; i < selectors.length; i++) {
     let selector = selectors[i];
     let value = selector.value;
@@ -91,21 +96,50 @@ function createChartForUrgente(type, labels, data, backgroundColors) {
   if (chartCurent != null) {
     chartCurent.destroy();
   }
+
+  let datasets = [];
+  if (type === "pie") {
+    datasets = [
+      {
+        data: data,
+        backgroundColor: backgroundColors,
+        borderWidth: 1,
+        borderColor: "#777",
+        hoverBorderWidth: 3,
+        hoverBorderColor: "#000",
+      },
+    ];
+  } else if (type === "bar") {
+    datasets = labels.map((label, i) => {
+      return {
+        label: label,
+        data: [data[i]],
+        backgroundColor: backgroundColors[i],
+        borderWidth: 1,
+        borderColor: "#777",
+        hoverBorderWidth: 3,
+        hoverBorderColor: "#000",
+      };
+    });
+  } else if (type === "line") {
+    datasets = [
+      {
+        label: "Urgente",
+        data: data,
+        backgroundColor: backgroundColors,
+        borderWidth: 1,
+        borderColor: "#777",
+        hoverBorderWidth: 3,
+        hoverBorderColor: "#000",
+      },
+    ];
+  }
+
   chartCurent = new Chart(ctx, {
     type: type,
     data: {
-      labels: labels,
-      datasets: [
-        {
-          label: "Urgente",
-          data: data,
-          backgroundColor: backgroundColors,
-          borderWidth: 1,
-          borderColor: "#777",
-          hoverBorderWidth: 3,
-          hoverBorderColor: "#000",
-        },
-      ],
+      labels: type === "pie" || type === "line" ? labels : ["Urgente"],
+      datasets: datasets,
     },
     options: {
       maintainAspectRatio: false,
@@ -134,6 +168,7 @@ function createChartForUrgente(type, labels, data, backgroundColors) {
           enabled: false,
         },
       },
+      plugins: [ChartDataLabels],
     },
   });
   return chartCurent;
@@ -257,7 +292,6 @@ async function handleSearchButtonClick(event) {
     const urgenteSelects = document.querySelectorAll("#urgente_options select");
     const urgenteValues = getSelectedValues(urgenteSelects);
     if (!urgenteValues) return;
-
     fetchUrgenteData(urgenteValues)
       .then((response) => {
         chartData = {
