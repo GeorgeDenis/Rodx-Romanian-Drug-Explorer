@@ -1,12 +1,9 @@
 require("dotenv").config();
 const AppError = require("../utils/appError");
 const errorController = require("../controllers/errorController");
-const parseRequestBody = require("../utils/parseReq");
 const catchAsync = require("../utils/catchAsync");
 const { verifyToken, verifyRole } = require("../controllers/authController");
 const user = require("../model/user");
-const jwt = require("jsonwebtoken");
-const util = require("util");
 
 const getAllUsers = catchAsync(async (req, res) => {
   const result = await user.getAllUsers();

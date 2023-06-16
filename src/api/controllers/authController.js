@@ -47,7 +47,7 @@ const verifyToken = catchAsync(async (req, res) => {
   ) {
     token = req.headers.authorization.split(" ")[1];
   }
-  if (!token) {
+  if (!token || token === "null") {
     errorController(
       res,
       new AppError("You are not logged in! Please log in!", 401)
@@ -140,7 +140,7 @@ const login = catchAsync(async (req, res) => {
 
   const user = await users.findUserByEmail(email);
   if (!user) {
-    errorController(res, new AppError("Email sau parola incorecte", 401));
+    errorController(res, new AppError("Email-ul nu exista!", 401));
     return;
   }
 

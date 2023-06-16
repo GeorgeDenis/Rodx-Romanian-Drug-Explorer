@@ -1,5 +1,6 @@
 const fs = require("fs").promises;
 const path = require("path");
+const { verifyToken } = require("../controllers/authController");
 
 const mimeTypes = {
   ".js": "application/javascript",

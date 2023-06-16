@@ -20,15 +20,22 @@ document.addEventListener("DOMContentLoaded", function () {
         password: passwordInput.value,
       }),
     })
-      .then((response) => response.json())
+      .then((response) =>
+        response
+          .json()
+          .then((data) => ({ status: response.status, body: data }))
+      )
       .then((data) => {
-        // tratați răspunsul aici, de exemplu setați un token JWT în localStorage
-        console.log("Success:", data);
-        localStorage.setItem("token", data.data.token);
+        if (data.status !== 200) {
+          throw new Error(data.body.message || "Unknown error");
+        }
+
+        console.log("Success:", data.body.message);
+        localStorage.setItem("token", data.body.data.token);
         window.location.href = "/";
       })
       .catch((error) => {
-        console.error("Error:", error);
+        alert("Error: " + error.message);
       });
   });
 
@@ -58,15 +65,22 @@ document.addEventListener("DOMContentLoaded", function () {
         password: passwordInputs[0].value,
       }),
     })
-      .then((response) => response.json())
+      .then((response) =>
+        response
+          .json()
+          .then((data) => ({ status: response.status, body: data }))
+      )
       .then((data) => {
+        if (data.status !== 200) {
+          throw new Error(data.body.message || "Unknown error");
+        }
         // tratați răspunsul aici, de exemplu setați un token JWT în localStorage
         console.log("Success:", data);
         localStorage.setItem("token", data.data.token);
         window.location.href = "/";
       })
       .catch((error) => {
-        console.error("Error:", error);
+        alert("Error: " + error.message);
       });
   });
 });
