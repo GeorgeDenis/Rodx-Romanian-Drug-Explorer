@@ -17,22 +17,25 @@ const postFilterData = async (data) => {
     alert(result.message);
   }
 };
-// Funcția pentru a obține valorile selectate dintr-un grup de selectoare
 function getSelectedValues(selectors) {
-  const values = {};
+  let values = {};
+
   for (let i = 0; i < selectors.length; i++) {
-    if (selectors[i].style.display === "none") continue;
-    if (selectors[i].value === "") {
+    let selector = selectors[i];
+    let value = selector.value;
+    let id = selector.id;
+
+    if (!value) {
       alert("Toate câmpurile trebuie să fie selectate!");
       return null;
     }
-    // Aici, numele selectoarelor sunt folosite ca proprietăți ale obiectului "values"
-    values[selectors[i].id] = selectors[i].value;
+
+    values[id] = value;
   }
+
   return values;
 }
 
-// Funcția pentru a crea și afișa un grafic
 function createChart(type, labels, data, backgroundColors) {
   const ctx = document.getElementById("myChart").getContext("2d");
 
@@ -82,9 +85,93 @@ function createChart(type, labels, data, backgroundColors) {
     },
   });
 }
+let chartCurent;
+function createChartForUrgente(type, labels, data, backgroundColors) {
+  const ctx = document.getElementById("myChart").getContext("2d");
+  if (chartCurent != null) {
+    chartCurent.destroy();
+  }
+  chartCurent = new Chart(ctx, {
+    type: type,
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: "Urgente",
+          data: data,
+          backgroundColor: backgroundColors,
+          borderWidth: 1,
+          borderColor: "#777",
+          hoverBorderWidth: 3,
+          hoverBorderColor: "#000",
+        },
+      ],
+    },
+    options: {
+      maintainAspectRatio: false,
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: "Urgente per category",
+          fontSize: 25,
+        },
+        legend: {
+          position: "right",
+          labels: {
+            fontColor: "#000",
+          },
+        },
+        layout: {
+          padding: {
+            left: 50,
+            right: 0,
+            bottom: 0,
+            top: 0,
+          },
+        },
+        tooltips: {
+          enabled: false,
+        },
+      },
+    },
+  });
+  return chartCurent;
+}
 
-// Funcția pentru manipularea evenimentului de click pe butonul de căutare
-function handleSearchButtonClick(event) {
+var subcategories = {
+  infractiuni: ["Gen", "Grupari", "Pedepse", "Cercetari"],
+  confiscari: ["Cantitate", "Capturi"],
+  urgente: ["Gen", "Varsta", "Administrare", "Consum", "Diagnostic"],
+};
+
+async function fetchUrgenteData(urgenteValues) {
+  const response = await fetch("/api/filter/urgente", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(urgenteValues),
+  });
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  } else {
+    return await response.json();
+  }
+}
+
+const predefinedColors = [
+  "#5FAD56",
+  "#F2C14E",
+  "#F78154",
+  "#4D9078",
+  "#B4436C",
+  "#9FC490",
+  "#0E7C7B",
+  "#17BEBB",
+];
+
+async function handleSearchButtonClick(event) {
   event.preventDefault();
 
   const categorieSelectValue =
@@ -93,33 +180,31 @@ function handleSearchButtonClick(event) {
     "reprezentare_select"
   ).value;
 
-  // Selectoarele specifice pentru fiecare categorie
   let specificSelectors = null;
 
   if (categorieSelectValue === "infractiuni") {
     specificSelectors = document.querySelectorAll(
       "#infractiuni_options select"
     );
+    specificSelectorIds = ["infractiuni_an", "infractiuni_subcategorie"];
   } else if (categorieSelectValue === "confiscari") {
     specificSelectors = document.querySelectorAll("#confiscari_options select");
+    specificSelectorIds = ["confiscari_an", "confiscari_subcategorie"];
   } else if (categorieSelectValue === "urgente") {
     specificSelectors = document.querySelectorAll("#urgente_options select");
+    specificSelectorIds = ["urgente_an", "urgente_drog", "urgente_filtru"];
   }
 
-  // Obținem valorile selectate din selectoarele specifice
   const specificValues = getSelectedValues(specificSelectors);
   if (!specificValues) return;
   const token = localStorage.getItem("token");
-  // Creăm obiectul final care va conține toate valorile selectate
+
   const allSelectedValues = {
     categorie: categorieSelectValue,
-    an: specificValues.infractiuni_an,
-    tip: specificValues.infractiuni_subcategorie,
     reprezentare: reprezentareSelectValue,
     token: token,
+    ...specificValues,
   };
-
-  console.log(allSelectedValues);
 
   let chartData = null;
 
@@ -173,31 +258,28 @@ function handleSearchButtonClick(event) {
     const urgenteValues = getSelectedValues(urgenteSelects);
     if (!urgenteValues) return;
 
-    chartData = {
-      type: reprezentareSelectValue,
-      labels: [
-        "Boston",
-        "Worcester",
-        "Springfield",
-        "Lowell",
-        "Cambridge",
-        "New Bedford",
-      ],
-      data: [617, 181, 153, 106, 105, 95],
-      backgroundColors: ["green", "red", "blue"],
-    };
+    fetchUrgenteData(urgenteValues)
+      .then((response) => {
+        chartData = {
+          type: reprezentareSelectValue,
+          labels: response.data.map((item) => item.label),
+          data: response.data.map((item) => item.cantitate),
+          backgroundColors: response.data.map(
+            (item, index) => predefinedColors[index % predefinedColors.length]
+          ),
+        };
+        if (chartData) {
+          createChartForUrgente(
+            chartData.type,
+            chartData.labels,
+            chartData.data,
+            chartData.backgroundColors
+          );
+        }
+      })
+      .catch((error) => console.error(error));
   }
 
-  if (chartData) {
-    createChart(
-      chartData.type,
-      chartData.labels,
-      chartData.data,
-      chartData.backgroundColors
-    );
-  }
-
-  // Afișează butonul de favorite
   const favoriteButton = document.getElementById("favorite-button");
   favoriteButton.style.display = "inline-block";
   favoriteButton.addEventListener("click", async () => {
@@ -205,7 +287,6 @@ function handleSearchButtonClick(event) {
   });
 }
 
-// Adaugă un eveniment de click pentru butonul de căutare
 document
   .getElementById("search-button")
   .addEventListener("click", handleSearchButtonClick);

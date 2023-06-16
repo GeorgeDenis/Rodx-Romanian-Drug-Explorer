@@ -2,13 +2,11 @@ const pool = require("../database/connection");
 
 exports.getAllUsers = async () => {
   const result = await pool.query("SELECT * FROM users");
-  console.log(result.rows);
   return result.rows;
 };
 exports.createUser = async (userData) => {
   const { name, email, password, role } = userData;
 
-  console.log(password);
   const queryText =
     "INSERT INTO users (name,email,password,role) VALUES ($1,$2,$3,$4) RETURNING *";
   const values = [name, email, password, role];
@@ -43,21 +41,17 @@ exports.checkEmail = async (email) => {
 
 exports.findUserByEmail = async (email) => {
   try {
-    // Only select the fields you need
     const queryText =
       "SELECT name, email, password,role FROM users WHERE email =$1";
     const result = await pool.query(queryText, [email]);
 
     if (result.rows.length > 0) {
-      // Return the actual user object
       return result.rows[0];
     } else {
-      // If no user found, return null
       return null;
     }
   } catch (err) {
     console.error(err);
-    // Provide a more specific error message
     throw new Error(`Database query failed: ${err.message}`);
   }
 };

@@ -8,6 +8,24 @@ const filters = require("../model/filter");
 const jwt = require("jsonwebtoken");
 const { promisify } = require("util");
 
+const getUrgente = catchAsync(async (req, res) => {
+  const urgenteData = await parseRequestBody(req);
+  if (!urgenteData) {
+    return errorController(
+      res,
+      new AppError("Introduceti datele pentru filtru!", 400)
+    );
+  }
+  if (!urgenteData.urgente_an || !urgenteData.urgente_drog) {
+    return errorController(
+      res,
+      new AppError("Trebuie sa introduceti anul si drogul!", 400)
+    );
+  }
+  const urgente = await filters.getUrgenteByFilter(urgenteData);
+  res.statusCode = 200;
+  res.end(JSON.stringify({ data: urgente }));
+});
 const saveFilter = catchAsync(async (req, res) => {
   const filter = await parseRequestBody(req);
   if (!filter) {
@@ -60,7 +78,9 @@ const saveFilter = catchAsync(async (req, res) => {
 const filterController = catchAsync(async (req, res) => {
   const { url, method } = req;
   res.setHeader("Content-Type", "application/json");
-  if (url === "/api/filter" && method === "POST") {
+  if (url === "/api/filter/urgente" && method === "POST") {
+    getUrgente(req, res);
+  } else if (url === "/api/filter" && method === "POST") {
     const response = await verifyToken(req, res);
     if (!response) {
       return;
