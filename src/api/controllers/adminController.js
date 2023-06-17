@@ -67,7 +67,7 @@ const adminController = catchAsync(async (req, res) => {
       return;
     }
     getAllUsers(req, res);
-  } else if (url === "/api/admin" && method === "DELETE") {
+  } else if (url.startsWith("/api/admin") && method === "DELETE") {
     const response = await verifyToken(req, res);
     if (!response) {
       return;
