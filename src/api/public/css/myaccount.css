@@ -17,11 +17,27 @@
 
 @import url("https://fonts.googleapis.com/css?family=Fira sans:300,400,500,700&display=swap");
 body {
-	background: #f9f9f9;
+	
 	font-family: "Fira sans", sans-serif;
 }
 
+.menu a:hover,
+.mobile-menu a:hover {
+  text-decoration: none !important;
+}
 
+
+section.py-5 {
+  padding-top: 5rem !important;  /* ajustați această valoare în funcție de cât spațiu doriți */
+}
+
+
+
+.mobile-menu{
+  padding-top: 7.75rem !important;
+  background-color: #61876e !important;
+  
+}
 
 .profile-tab-nav {
 	min-width: 250px;
@@ -30,10 +46,12 @@ body {
 .tab-content {
 	flex: 1;
   
+  
 }
 .py-5{
   margin-left: 100px;
-  color: black;
+  color: #3c6255;
+ 
   
 }
 
@@ -41,6 +59,7 @@ body {
   margin-left:0px ;
   height: 600px;
   width: 600px;
+  
   
 }
 
@@ -63,11 +82,12 @@ body {
 
 .menu a.is-active,
 .menu a:hover {
-  background-color: #497867;
+  background-color: #497867 !important;
 }
 
 .form-group {
 	margin-bottom: 1.5rem;
+  
 }
 
 
@@ -86,19 +106,19 @@ body {
 }
 .nav-pills a.nav-link i {
 	width: 20px;
+  background-color: #3c6255;
 }
 
 .img-circle img {
 	height: 100px;
 	width: 100px;
 	border-radius: 100%;
-	border: 5px solid #fff;
+
 }
 
-/*UPDATE BUTTON */
 .btn.btn-primary {
   background-color: #3c6255;  
-  border-color: #354458;     
+  border-color: #3c6255;     
 }
 
 .btn.btn-primary:hover {
@@ -116,6 +136,75 @@ body {
   text-align: center;
   border-top: 5rem;
   height: 6rem;
+}
+
+.custom-input {
+  width: 100%; 
+}
+
+
+@media (min-width: 768px) and (max-width: 1184px) {
+  .custom-input {
+    width: 63% !important; 
+  }
+}
+
+
+@media (min-width: 1185px) and (max-width: 1199px){
+  .custom-input {
+    width: 63% !important; 
+  }
+}
+
+.my-navbar{
+  height: 120px !important;
+}
+
+@media (min-width:769px) and (max-width: 991px) {
+  .my-navbar h1 {
+    font-size: 30px;  /* ajustează dimensiunea fontului pentru titlul navbar-ului */
+}
+.my-navbar .menu a {
+    font-size: 16px;  /* ajustează dimensiunea fontului pentru link-urile din meniu */
+    margin-right: 10px;  /* reduce spațiul dintre link-uri */
+}
+}
+
+
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-top: 30px !important;
+    margin-right: auto;
+    margin-left: auto;
+    display: inline;
+  }
+
+  .tab-pane {
+    margin: auto;
+    height: auto;
+    width: 100%;
+  }
+
+  .py-5 {
+    margin-left: 0;
+  }
+
+  .profile-tab-nav {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .my-navbar {
+    padding: 1rem !important;
+    padding-right: 10% !important;
+    
+  }
+  .my-navbar h1 {
+    font-size: 30px;  /* ajustează dimensiunea fontului pentru titlul navbar-ului */
+}
 }
 
 
