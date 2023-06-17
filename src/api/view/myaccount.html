@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="ro">
 
-
 <head>
   <link rel="stylesheet" href="../../public/css/nav.css">
   <link rel="stylesheet" href="../../public/css/myaccount.css">
-  <link rel="stylesheet" type="text/css"
-    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,7 +16,6 @@
     background-size: cover;
   }
 </style>
-
 <body>
   <header>
     <nav class="navbar my-navbar">
@@ -31,7 +28,6 @@
           <a href="/campanii">Campanii</a>
           <a href="/about">About us</a>
           <a href="#" class="is-active" id="login-link">Login</a>
-
         </div>
         <button class="hamburger">
           <span></span>
@@ -47,143 +43,89 @@
       <a href="/campanii">Campanii</a>
       <a href="/about">About us</a>
       <a href="#" id="login-link">Login</a>
-
     </div>
   </header>
-
   <body>
     <section class="py-5 my-5">
       <div class="container">
         <div class="bg-white shadow rounded-lg d-block d-sm-flex">
           <div class="row">
-            <div class="col-lg-3 col-md-4 col-sm-12">
-              <div class="profile-tab-nav border-right">
-                <div class="p-4">
-                  <div class="img-circle text-center mb-3">
+           <div class="col-lg-3 col-md-4 col-sm-12">
+          <div class="profile-tab-nav border-right">
+            <div class="p-4">
+              <div class="img-circle text-center mb-3">
+              </div>
+              <h4 class="text-center">Mihai</h4>
+            </div>
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+              <a class="nav-link active" id="account-tab" data-tab="pill" href="#account" role="tab" aria-controls="account" aria-selected="true">
+                <i class="fa fa-home text-center mr-1"></i> 
+                Account
+              </a>
+              <a class="nav-link" id="password-tab" data-tab="pill" href="#password" role="tab" aria-controls="password" aria-selected="false">
+                <i class="fa fa-key text-center mr-1"></i> 
+                Password
+              </a>
+              <a class="nav-link" id="history-tab" data-tab="pill" href="#history" role="tab" aria-controls="security" aria-selected="false">
+                <i class="fa fa-history text-center mr-1"></i>
+                History
+              </a>
+              <a class="nav-link" id="logout-button" role="tab" aria-controls="logout" aria-selected="false">
+                <i class="fa fa-sign-out text-center mr-1"></i>
+                Logout
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-9 col-md-8 col-sm-12">
+          <div class="tab-content" id="v-pills-tabContent">
+            <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
+              <div class="p-4">
+                <form>
+                  <div class="form-group">
+                    <label for="username">Nume de utilizator</label>
+                    <input type="text" class="form-control" id="username-input" placeholder="Nume de utilizator">
                   </div>
-                  <h4 class="text-center">Mihai</h4>
-                </div>
-                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                  <a class="nav-link active" id="account-tab" data-toggle="pill" href="#account" role="tab"
-                    aria-controls="account" aria-selected="true">
-                    <i class="fa fa-home text-center mr-1"></i>
-                    Account
-                  </a>
-                  <a class="nav-link" id="password-tab" data-toggle="pill" href="#password" role="tab"
-                    aria-controls="password" aria-selected="false">
-                    <i class="fa fa-key text-center mr-1"></i>
-                    Password
-                  </a>
-                  <a class="nav-link" id="history-tab" data-toggle="pill" href="#history" role="tab"
-                    aria-controls="security" aria-selected="false">
-                    <i class="fa fa-user text-center mr-1"></i>
-                    History
-                  </a>
-
-                  <a class="nav-link" id="logout-button" data-toggle="pill" href="#security" role="tab"
-                    aria-controls="security" aria-selected="false">
-                    <i class="fa fa-user text-center mr-1"></i>
-                    Logout
-                  </a>
-                </div>
+                  <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email-input" placeholder="Email">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Actualizează</button>
+                </form>
               </div>
             </div>
-            <div class="col-lg-9 col-md-8 col-sm-12">
-              <div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
-                <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
-                  <h3 class="mb-4">Account Settings</h3>
-                  <div class="row">
-                    <div class="col-xl-6 col-12">
-                      <div class="form-group">
-                        <label>Username</label>
-                        <input type="text" class="form-control custom-input" id="username-input" value="">
-                      </div>
-                    </div>
-                    <div class="col-xl-6 col-12">
-                      <div class="form-group">
-                        <label>Email</label>
-                        <input type="text" class="form-control custom-input" id="email-input" value="">
-                      </div>
-                    </div>
-                    <div class="col-xl-6 col-12">
-                      <div class="form-group">
-
-                      </div>
-                    </div>
-                    <div class="col-xl-6 col-12">
-                      <div class="form-group">
-
-                      </div>
-                    </div>
+            <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
+              <div class="p-4">
+                <form>
+                  <div class="form-group">
+                    <label for="currentPassword">Parola curentă</label>
+                    <input type="password" class="form-control" id="currentPassword" placeholder="Parola curentă">
                   </div>
-
-                  <div>
-                    <button class="btn btn-primary">Update</button>
-                    <button class="btn btn-light">Cancel</button>
+                  <div class="form-group">
+                    <label for="newPassword">Parola nouă</label>
+                    <input type="password" class="form-control" id="newPassword" placeholder="Parola nouă">
                   </div>
-                </div>
-                <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
-                  <h3 class="mb-4">Password Settings</h3>
-                  <div class="row">
-                    <div class="col-xl-6 col-12">
-                      <div class="form-group">
-                        <label>Old password</label>
-                        <input type="password" class="form-control custom-input">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-xl-6 col-12">
-                      <div class="form-group">
-                        <label>New password</label>
-                        <input type="password" class="form-control custom-input">
-                      </div>
-                    </div>
-                    <div class="col-xl-6 col-12">
-                      <div class="form-group">
-                        <label>Confirm new password</label>
-                        <input type="password" class="form-control custom-input">
-                      </div>
-                    </div>
-                  </div>
-
-
-
-
-                  <div>
-                    <button class="btn btn-primary">Update</button>
-                    <button class="btn btn-light">Cancel</button>
-                  </div>
-                </div>
-                <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
-                  <h3 class="mb-4">History </h3>
-                  <div class="row">
-                  </div>
-
-                </div>
-
+                  <button type="submit" class="btn btn-primary">Schimbă parola</button>
+                </form>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
+              <div class="p-4">
+                <h5>Istoric activități</h5>
+                <!-- Puteți adăuga aici elemente din istoricul activităților -->
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
-
-    <footer class="my-footer">
-      <p>@Drugs&Prevention</p>
-    </footer>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  </body>
-
-
-
-
-
-  <script src="../public/js/main.js"></script>
-  <script src="../public/js/myaccount.js"></script>
-
+    </div>
+  </div>
+</section>
+<footer class="my-footer">
+  <p>@Drugs&Prevention</p>
+</footer>
 </body>
-
+<script src="../public/js/navAccount.js"></script>
+<script src="../public/js/myaccount.js"></script>
+</body>
 </html>
