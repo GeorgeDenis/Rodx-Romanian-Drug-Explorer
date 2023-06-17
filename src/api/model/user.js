@@ -1,7 +1,7 @@
 const pool = require("../database/connection");
 
 exports.getAllUsers = async () => {
-  const result = await pool.query("SELECT * FROM users");
+  const result = await pool.query("SELECT user_id,name FROM users");
   return result.rows;
 };
 exports.createUser = async (userData) => {
