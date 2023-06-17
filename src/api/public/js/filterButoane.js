@@ -1,3 +1,5 @@
+Chart.register(ChartDataLabels);
+
 const postFilterData = async (data) => {
   const token = localStorage.getItem("token");
   const response = await fetch("http://localhost:3000/api/filter", {
@@ -168,7 +170,22 @@ function createChartForUrgente(type, labels, data, backgroundColors) {
           enabled: false,
         },
       },
-      plugins: [ChartDataLabels],
+      plugins: {
+        datalabels: {
+          anchor: type === "pie" ? "center" : "end",
+          align: type === "pie" ? "center" : "top",
+          formatter:
+            type === "pie"
+              ? function (value, context) {
+                  return value === 0 ? null : Math.round(value);
+                }
+              : Math.round(),
+          font: {
+            weight: "bold",
+            size: 13,
+          },
+        },
+      },
     },
   });
   return chartCurent;
