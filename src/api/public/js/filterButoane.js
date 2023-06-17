@@ -31,6 +31,9 @@ function getSelectedValues(selectors) {
     let selector = selectors[i];
     let value = selector.value;
     let id = selector.id;
+    if (selector.style.display === "none") {
+      continue;
+    }
 
     if (!value) {
       alert("Toate câmpurile trebuie să fie selectate!");
@@ -211,6 +214,20 @@ async function fetchUrgenteData(urgenteValues) {
     return await response.json();
   }
 }
+async function fetchUrgenteIntervalData(urgenteValues) {
+  const response = await fetch("/api/filter/urgente/interval", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(urgenteValues),
+  });
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  } else {
+    return await response.json();
+  }
+}
 
 const predefinedColors = [
   "#5FAD56",
@@ -308,27 +325,51 @@ async function handleSearchButtonClick(event) {
   } else if (categorieSelectValue === "urgente") {
     const urgenteSelects = document.querySelectorAll("#urgente_options select");
     const urgenteValues = getSelectedValues(urgenteSelects);
+
     if (!urgenteValues) return;
-    fetchUrgenteData(urgenteValues)
-      .then((response) => {
-        chartData = {
-          type: reprezentareSelectValue,
-          labels: response.data.map((item) => item.label),
-          data: response.data.map((item) => item.cantitate),
-          backgroundColors: response.data.map(
-            (item, index) => predefinedColors[index % predefinedColors.length]
-          ),
-        };
-        if (chartData) {
-          createChartForUrgente(
-            chartData.type,
-            chartData.labels,
-            chartData.data,
-            chartData.backgroundColors
-          );
-        }
-      })
-      .catch((error) => console.error(error));
+    if (urgenteValues.urgente_an !== "interval") {
+      fetchUrgenteData(urgenteValues)
+        .then((response) => {
+          chartData = {
+            type: reprezentareSelectValue,
+            labels: response.data.map((item) => item.label),
+            data: response.data.map((item) => item.cantitate),
+            backgroundColors: response.data.map(
+              (item, index) => predefinedColors[index % predefinedColors.length]
+            ),
+          };
+          if (chartData) {
+            createChartForUrgente(
+              chartData.type,
+              chartData.labels,
+              chartData.data,
+              chartData.backgroundColors
+            );
+          }
+        })
+        .catch((error) => console.error(error));
+    } else {
+      fetchUrgenteIntervalData(urgenteValues)
+        .then((response) => {
+          chartData = {
+            type: reprezentareSelectValue,
+            labels: response.data.map((item) => item.label),
+            data: response.data.map((item) => item.cantitate),
+            backgroundColors: response.data.map(
+              (item, index) => predefinedColors[index % predefinedColors.length]
+            ),
+          };
+          if (chartData) {
+            createChartForUrgente(
+              chartData.type,
+              chartData.labels,
+              chartData.data,
+              chartData.backgroundColors
+            );
+          }
+        })
+        .catch((error) => console.error(error));
+    }
   }
 
   const favoriteButton = document.getElementById("favorite-button");

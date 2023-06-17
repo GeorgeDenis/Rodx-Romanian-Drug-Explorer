@@ -86,7 +86,7 @@
           <option value="2021">2021</option>
           <option value="2020">2020</option>
         </select>
-        <!-- ...restul selectoarelor... -->
+
       </div>
       <div id="urgente_options" style="display: none;">
         <select class="filter-select" id="urgente_an">
@@ -94,6 +94,7 @@
           <option value="2022">2022</option>
           <option value="2021">2021</option>
           <option value="2020">2020</option>
+          <option value="interval">Interval</option>
         </select>
         <select class="filter-select" id="urgente_drog">
           <option value="" disabled selected>Drog</option>
@@ -111,10 +112,10 @@
           <option value="Consum">Model consum</option>
           <option value="Diagnostic">Diagnostic</option>
         </select>
-        <!-- <select class="filter-select" id="gen_filtru" style="display: none;">
+        <select class="filter-select" id="gen_filtru" style="display: none;">
           <option value="" disabled selected>Alegeți genul</option>
-          <option value="masculin">Masculin</option>
-          <option value="feminin">Feminin</option>
+          <option value="Masculin">Masculin</option>
+          <option value="Feminin">Feminin</option>
           <option value="ambele">Ambele</option>
         </select>
 
@@ -126,12 +127,27 @@
         </select>
 
         <select class="filter-select" id="administrare_filtru" style="display: none;">
-          <option value="" disabled selected>Alegeți metoda de administrare</option>
-          <option value="oral_fumat_prizat">Oral/fumat/prizat</option>
-          <option value="injectabil">Injectabil</option>
-          <option value="altele">Altele</option>
-        </select> -->
-        <!-- ...restul selectoarelor... -->
+          <option value="" disabled selected>Metoda de administrare</option>
+          <option value="Oral/fumat/prizat">Oral/fumat/prizat</option>
+          <option value="Injectabil">Injectabil</option>
+          <option value="Altele">Altele</option>
+        </select>
+        <select class="filter-select" id="consum_filtru" style="display: none;">
+          <option value="" disabled selected>Metoda de consum</option>
+          <option value="Consum singular">Consum singular</option>
+          <option value="Consum combinat">Consum combinat</option>
+        </select>
+        <select class="filter-select" id="diagnostic_filtru" style="display: none;">
+          <option value="" disabled selected>Diagnostic</option>
+          <option value="Intoxicație">Intoxicație</option>
+          <option value="Utilizare nocivă">Utilizare nocivă</option>
+          <option value="Dependență">Dependență</option>
+          <option value="Sevraj">Sevraj</option>
+          <option value="Tulburări de comportament">Tulburări comportament</option>
+          <option value="Supradoză">Supradoză</option>
+          <option value="Alte diagnostice">Alte diagnostice</option>
+          <option value="Testare toxicologică">Testare toxicologică</option>
+        </select>
       </div>
       <select class="filter-select" id="reprezentare_select" required>
         <option value="" disabled selected>Reprezentare</option>

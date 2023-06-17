@@ -54,3 +54,40 @@ exports.getUrgenteByFilter = async (urgenteData) => {
 
   return urgente;
 };
+exports.getUrgenteIntervalBd = async (urgenteData) => {
+  const {
+    startYear,
+    urgente_drog,
+    gen_filtru,
+    consum_filtru,
+    diagnostic_filtru,
+    varsta_filtru,
+    administrare_filtru,
+    endYear,
+  } = urgenteData;
+  const allowedDrogs = ["canabis", "stimulanti", "opioide", "nsp"];
+
+  if (!allowedDrogs.includes(urgente_drog)) {
+    throw new Error(`Invalid drug: ${urgente_drog}`);
+  }
+  let filtru =
+    gen_filtru ||
+    consum_filtru ||
+    diagnostic_filtru ||
+    varsta_filtru ||
+    administrare_filtru;
+
+  const queryText = {
+    text: `SELECT an, filtru, ${urgente_drog} FROM urgente WHERE an BETWEEN $1 AND $2 AND categorie=$3`,
+    values: [startYear, endYear, filtru],
+  };
+
+  const result = await pool.query(queryText);
+  const urgente = result.rows.map((row) => {
+    return {
+      label: row["an"],
+      cantitate: row[urgente_drog],
+    };
+  });
+  return urgente;
+};
