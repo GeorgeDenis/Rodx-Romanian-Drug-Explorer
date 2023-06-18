@@ -144,8 +144,12 @@ h3 {
     box-sizing: border-box; /* asigură-te că padding-ul este inclus în lățimea totală a containerului */
   }
 
-  .sidebar, .content {
-    width: 100%;
+  .sidebar  {
+    width: 400px;
+  }
+
+  .content{
+    width: fit-content;
   }
 
   .tab-content form {
