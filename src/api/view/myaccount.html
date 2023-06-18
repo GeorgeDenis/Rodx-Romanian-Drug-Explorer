@@ -4,27 +4,27 @@
 <head>
   <link rel="stylesheet" href="../../public/css/nav.css">
   <link rel="stylesheet" href="../../public/css/myaccount.css">
-  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Acasa</title>
+  <style>
+    body {
+      background-image: url("../public/poze/background.jpg");
+      background-size: cover;
+    }
+  </style>
 </head>
-<style>
-  body {
-    background-image: url("../public/poze/background.jpg");
-    background-size: cover;
-  }
-</style>
+
 <body>
   <header>
     <nav class="navbar my-navbar">
       <div class="container">
         <h1>RoDX</h1>
         <div class="menu">
-          <a href="/acasa" ">Acasa</a>
-          <a href=" /cautare">Cautare&filtrare</a>
+          <a href="/acasa">Acasa</a>
+          <a href="/cautare">Cautare&filtrare</a>
           <a href="/droguri">Droguri</a>
           <a href="/campanii">Campanii</a>
           <a href="/about">About us</a>
@@ -46,118 +46,47 @@
       <a href="#" id="login-link">Login</a>
     </div>
   </header>
-  <body>
-    <section class="py-5 my-5">
-      <div class="container">
-        <div class="bg-white shadow rounded-lg d-block d-sm-flex">
-          <div class="row">
-           <div class="col-lg-3 col-md-4 col-sm-12">
-          <div class="profile-tab-nav border-right">
-            <div class="p-4">
-              <div class="img-circle text-center mb-3">
-              </div>
-              <h4 class="text-center">Mihai</h4>
-            </div>
-            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-              <a class="nav-link active" id="account-tab" data-tab="pill" href="#account" role="tab" aria-controls="account" aria-selected="true">
-                <i class="fa fa-home text-center mr-1"></i> 
-                Account
-              </a>
-              <a class="nav-link" id="password-tab" data-tab="pill" href="#password" role="tab" aria-controls="password" aria-selected="false">
-                <i class="fa fa-key text-center mr-1"></i> 
-                Password
-              </a>
-              <a class="nav-link" id="history-tab" data-tab="pill" href="#history" role="tab" aria-controls="security" aria-selected="false">
-                <i class="fa fa-history text-center mr-1"></i>
-                History
-              </a>
-              <a class="nav-link" id="logout-button" role="tab" aria-controls="logout" aria-selected="false">
-                <i class="fa fa-sign-out text-center mr-1"></i>
-                Logout
-              </a>
-            </div>
-          </div>
-        </div>
 
-
-
-        <div class="col-lg-9 col-md-8 col-sm-12">
-          <div class="tab-content" id="v-pills-tabContent">
-            <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
-              <div class="p-4">
-                <form>
-                  <div class="form-group">
-                    <label for="username">Nume de utilizator</label>
-                    <input type="text" class="form-control" id="username-input" placeholder="Nume de utilizator">
-                  </div>
-                  <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email-input" placeholder="Email">
-                  </div>
-                  <button type="submit" class="btn btn-primary">Actualizează</button>
-                </form>
-              </div>
-            </div>
-            <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
-              <div class="p-4">
-                <form>
-                  <div class="form-group">
-                    <label for="currentPassword">Parola curentă</label>
-                    <input type="password" class="form-control" id="currentPassword" placeholder="Parola curentă">
-                  </div>
-                  <div class="form-group">
-                    <label for="newPassword">Parola nouă</label>
-                    <input type="password" class="form-control" id="newPassword" placeholder="Parola nouă">
-                  </div>
-                  <button type="submit" class="btn btn-primary">Schimbă parola</button>
-                </form>
-              </div>
-            </div>
-            
-            <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
-              <div class="p-4">
-                <h5>Istoric activități</h5>
-                <!-- Puteți adăuga aici elemente din istoricul activităților -->
-              </div>
-            </div>
-         
-            <div class="tab-pane fade" id="utilizatori" role="tabpanel" aria-labelledby="utilizatori-tab">
-              <div class="p-4">
-                <div class="table-container">
-
-                <table class="table table-striped" id="usersTable">
-                  <thead>
-                      <tr>
-                          <th>ID</th>
-                          <th>Nume</th>
-                          <th>Sterge</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-
-                  </tbody>
-              </table>
-              <div class="table-container">
-
-          </div>
+  <main>
+    <div class="container2">
+      <div class="sidebar">
+        <h3>Mihai</h3>
+        <ul>
+          <li>Account</li>
+          <li>Password</li>
+          <li>History</li>
+          <li>Admin</li>
+          <li>Campanii</li>
+          <li id="logout-button">Logout</li>
+        </ul>
       </div>
-            <div class="tab-pane fade" id="campanii" role="tabpanel" aria-labelledby="campanii-tab">
-              <div class="p-4">
-                <h5>nu doamne</h5>
-                <!-- Puteți adăuga aici elemente din istoricul activităților -->
-              </div>
-            </div>
-          </div>
+      <div class="content">
+        <div id="account" class="tab-content">
+          <!-- Conținut pentru secțiunea "Account" -->
+          <p>Acesta este conținutul pentru secțiunea Account.</p>
+        </div>
+        <div id="password" class="tab-content" style="display: none;">
+          <!-- Conținut pentru secțiunea "Password" -->
+          <p>Acesta este conținutul pentru secțiunea Password.</p>
+        </div>
+        <div id="history" class="tab-content" style="display: none;">
+          <!-- Conținut pentru secțiunea "History" -->
+          <p>Acesta este conținutul pentru secțiunea History.</p>
+        </div>
+        <div id="admin" class="tab-content">
+          <!-- Conținut pentru secțiunea "Account" -->
+          <p>Acesta este conținutul pentru secțiunea Admin.</p>
+        </div>
+        <div id="campanii" class="tab-content">
+          <!-- Conținut pentru secțiunea "Account" -->
+          <p>Acesta este conținutul pentru secțiunea Campanii.</p>
         </div>
       </div>
+      
     </div>
-  </div>
-</section>
-<footer class="my-footer">
-  <p>@Drugs&Prevention</p>
-</footer>
-</body>
-<script src="../public/js/navAccount.js"></script>
-<script src="../public/js/myaccount.js"></script>
+  </main>
+
+  <script src="../public/js/navAccount.js"></script>
+  <script src="../public/js/myaccount.js"></script>
 </body>
 </html>

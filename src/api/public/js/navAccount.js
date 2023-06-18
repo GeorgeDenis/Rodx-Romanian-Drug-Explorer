@@ -1,33 +1,28 @@
-// Select all the tab links
-const tabs = document.querySelectorAll('.nav-link');
+// Selectezi toate link-urile din sidebar
+const sidebarLinks = document.querySelectorAll('.sidebar ul li');
 
-tabs.forEach(tab => {
-// Add click event to each tab
-tab.addEventListener('click', function(event) {
-    // Prevent the default action
-    event.preventDefault();
+sidebarLinks.forEach(link => {
+  // Adaugi un event listener pentru click pe fiecare link
+  link.addEventListener('click', function() {
+    // Elimini clasa 'selected' de la toate link-urile
+    sidebarLinks.forEach(l => l.classList.remove('selected'));
 
-    // Remove 'active' class from all tabs and panes
-    tabs.forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('show', 'active'));
+    // Adaugi clasa 'selected' la link-ul pe care s-a dat click
+    this.classList.add('selected');
 
-    // Add 'active' class to clicked tab and corresponding pane
-    this.classList.add('active');
-    document.querySelector(this.getAttribute('href')).classList.add('show', 'active');
+    // Ascunzi toate secțiunile
+    document.querySelectorAll('.tab-content').forEach(content => {
+      content.style.display = 'none';
+    });
+
+    // Afisezi secțiunea corespunzătoare link-ului pe care s-a dat click
+    const contentId = this.textContent.toLowerCase();
+    const contentElement = document.getElementById(contentId);
+    if (contentElement) {
+      contentElement.style.display = 'block';
+    }
+
+    // Daca s-a dat click pe logout, ștergi token-ul din local storage
+   
+  });
 });
-});
-
-// Set the initial tab
-if (window.location.hash) {
-// If there's a hash in the URL (someone could have linked directly to a specific tab), simulate a click on the corresponding tab
-const tabWithHash = document.querySelector(`.nav-link[href="${window.location.hash}"]`);
-if (tabWithHash) {
-    tabWithHash.click();
-} else {
-    // If there's no tab corresponding to the hash, simulate a click on the first tab
-    tabs[0].click();
-}
-} else {
-// If there's no hash, simulate a click on the first tab
-tabs[0].click();
-}
