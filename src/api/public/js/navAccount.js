@@ -23,6 +23,16 @@ sidebarLinks.forEach(link => {
     }
 
     // Daca s-a dat click pe logout, ștergi token-ul din local storage
+    
    
   });
 });
+window.onload = function() {
+  // Ascunzi toate secțiunile
+  document.querySelectorAll('.tab-content').forEach(content => {
+    content.style.display = 'none';
+  });
+
+  // Afisezi secțiunea 'account' la încărcarea paginii
+  document.getElementById('account').style.display = 'block';
+};

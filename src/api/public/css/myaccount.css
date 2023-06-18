@@ -49,6 +49,7 @@ h3 {
 
 
 .sidebar ul li.selected {
+  
   border-top: 1px solid #3c6255; /* Înlocuiește 'blue' cu culoarea dorită */
   border-bottom: 1px solid #3c6255;
 }
@@ -58,19 +59,25 @@ h3 {
   display: flex;
   justify-content: space-around;
   background-color: white;
-  width: 1024px; 
-  height: 700px;
+  width: 95vw; /* schimbă 1024px cu 95vw */
+  max-width: 1024px; /* păstrează lățimea maximă la 1024px */
+  min-height: 70vh;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
 }
 
 .sidebar {
-  width: 300px; 
+  width: 30%; /* schimbă 300px cu 30% */
   border-right: 1px solid #ccc;
 }
 
+.content {
+  width: 70%; /* schimbă calc(100% - 300px) cu 70% */
+  padding: 20px;
+}
 .sidebar ul {
+  list-style: none; 
   padding-left: 0; /* Acest lucru elimină spațiul implicit adăugat de browser pe partea stângă a listelor neordonate */
 }
 
@@ -82,7 +89,77 @@ h3 {
 }
 
 
-.content {
-  width: calc(100% - 300px); 
-  padding: 20px;
+
+
+
+.tab-content form {
+  display: flex;
+  flex-direction: column;
+  width: 100%; /* Modifică acest procentaj pentru a regla lățimea formularului */
+  margin: auto;
+  align-items: flex-start; /* Alinează elementele la stânga */
+}
+
+.tab-content form label {
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.tab-content form input {
+  padding: 5px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.tab-content form input[type="submit"] {
+  background-color: var(--primary);
+  color: var(--light);
+  margin-top: 20px;
+  cursor: pointer;
+  width: 100px; /* Reglează lățimea butonului */
+  height: 30px; /* Reglează înălțimea butonului */
+}
+
+@media  (max-height: 840px) {
+  .container2 {
+    margin-top: 10vh; /* Ajustează această valoare în funcție de înălțimea navbar-ului tău */
+    height: calc(100vh - 100px); /* Ajustează această valoare în funcție de înălțimea navbar-ului tău */
+  }
+}
+
+@media  (max-height: 739px) {
+  .container2 {
+    margin-top: 10vh; /* Ajustează această valoare în funcție de înălțimea navbar-ului tău */
+    height: calc(100vh - 100px); /* Ajustează această valoare în funcție de înălțimea navbar-ului tău */
+  }
+}
+
+@media (max-width: 768px) {
+  .container2 {
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    padding: 10px; /* adaugă spațiu în jurul containerului */
+    box-sizing: border-box; /* asigură-te că padding-ul este inclus în lățimea totală a containerului */
+  }
+
+  .sidebar, .content {
+    width: 100%;
+  }
+
+  .tab-content form {
+    width: 100%;
+  }
+}
+
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .sidebar {
+    width: 40%; /* crește procentajul pentru sidebar pentru a preveni înghesuirea conținutului */
+  }
+
+  .content {
+    width: 60%; /* scade procentajul pentru content pentru a face loc pentru sidebar */
+  }
 }

@@ -19,7 +19,7 @@
 
 <body>
   <header>
-    <nav class="navbar my-navbar">
+    <nav>
       <div class="container">
         <h1>RoDX</h1>
         <div class="menu">
@@ -27,8 +27,8 @@
           <a href="/cautare">Cautare&filtrare</a>
           <a href="/droguri">Droguri</a>
           <a href="/campanii">Campanii</a>
-          <a href="/about">About us</a>
-          <a href="#" class="is-active" id="login-link">Login</a>
+          <a href="#" class="is-active">About us</a>
+          <a href="/login" id="login-link">Login</a>
         </div>
         <button class="hamburger">
           <span></span>
@@ -42,8 +42,8 @@
       <a href="/cautare">Cautare&filtrare</a>
       <a href="/droguri">Droguri</a>
       <a href="/campanii">Campanii</a>
-      <a href="/about">About us</a>
-      <a href="#" id="login-link">Login</a>
+      <a href="#">About us</a>
+      <a href="/login" id="login-link">Login</a>
     </div>
   </header>
 
@@ -52,7 +52,7 @@
       <div class="sidebar">
         <h3>Mihai</h3>
         <ul>
-          <li>Account</li>
+          <li class="selected">Account</li>
           <li>Password</li>
           <li>History</li>
           <li>Admin</li>
@@ -63,24 +63,48 @@
       <div class="content">
         <div id="account" class="tab-content">
           <!-- Conținut pentru secțiunea "Account" -->
-          <p>Acesta este conținutul pentru secțiunea Account.</p>
+          <h2>Account Information</h2>
+        
+          <form id="update-account-form">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username">
+          
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+        
+            <input type="submit" value="Update">
+          </form>
         </div>
+        
         <div id="password" class="tab-content" style="display: none;">
           <!-- Conținut pentru secțiunea "Password" -->
-          <p>Acesta este conținutul pentru secțiunea Password.</p>
+          <h2>Password Settings</h2>
+          <form>
+            <label for="old-password">Old Password</label>
+            <input type="password" id="old-password" name="old-password" required>
+            
+            <label for="new-password">New Password</label>
+            <input type="password" id="new-password" name="new-password" required>
+        
+            <label for="confirm-new-password">Confirm New Password</label>
+            <input type="password" id="confirm-new-password" name="confirm-new-password" required>
+        
+            <input type="submit" value="Update">
+          </form>
         </div>
+        
         <div id="history" class="tab-content" style="display: none;">
-          <!-- Conținut pentru secțiunea "History" -->
-          <p>Acesta este conținutul pentru secțiunea History.</p>
+          <h2>History</h2>
         </div>
-        <div id="admin" class="tab-content">
-          <!-- Conținut pentru secțiunea "Account" -->
+        <div id="admin" class="tab-content" style="display: none;">
+          <!-- Conținut pentru secțiunea "Admin" -->
           <p>Acesta este conținutul pentru secțiunea Admin.</p>
         </div>
-        <div id="campanii" class="tab-content">
-          <!-- Conținut pentru secțiunea "Account" -->
+        <div id="campanii" class="tab-content" style="display: none;">
+          <!-- Conținut pentru secțiunea "Campanii" -->
           <p>Acesta este conținutul pentru secțiunea Campanii.</p>
         </div>
+        
       </div>
       
     </div>
@@ -88,5 +112,6 @@
 
   <script src="../public/js/navAccount.js"></script>
   <script src="../public/js/myaccount.js"></script>
+  <script src="../public/js/main.js"></script>
 </body>
 </html>
