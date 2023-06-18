@@ -14,7 +14,7 @@ const postFilterData = async (data) => {
   const result = await response.json();
 
   if (response.ok) {
-    console.log("Cererea POST a fost executată cu succes");
+    console.log("Cererea POST a fost executată cu succes!");
   } else {
     alert(result.message);
   }
