@@ -46,55 +46,6 @@ function getSelectedValues(selectors) {
   return values;
 }
 
-function createChart(type, labels, data, backgroundColors) {
-  const ctx = document.getElementById("myChart").getContext("2d");
-
-  return new Chart(ctx, {
-    type: type,
-    data: {
-      labels: labels,
-      datasets: [
-        {
-          label: "Population",
-          data: data,
-          backgroundColor: backgroundColors,
-          borderWidth: 1,
-          borderColor: "#777",
-          hoverBorderWidth: 3,
-          hoverBorderColor: "#000",
-        },
-      ],
-    },
-    options: {
-      maintainAspectRatio: false,
-      responsive: true,
-      plugins: {
-        title: {
-          display: true,
-          text: "Largest Citites In Massachusetts",
-          fontSize: 25,
-        },
-        legend: {
-          position: "right",
-          labels: {
-            fontColor: "#000",
-          },
-        },
-        layout: {
-          padding: {
-            left: 50,
-            right: 0,
-            bottom: 0,
-            top: 0,
-          },
-        },
-        tooltips: {
-          enabled: false,
-        },
-      },
-    },
-  });
-}
 let chartCurent;
 function createChartForUrgente(type, labels, data, backgroundColors) {
   const ctx = document.getElementById("myChart").getContext("2d");
@@ -175,8 +126,105 @@ function createChartForUrgente(type, labels, data, backgroundColors) {
       },
       plugins: {
         datalabels: {
-          anchor: type === "pie" ? "center" : "end",
-          align: type === "pie" ? "center" : "top",
+          anchor: type === "bar" ? "center" : type === "pie" ? "center" : "end",
+          align: type === "bar" ? "center" : type === "pie" ? "center" : "top",
+          formatter:
+            type === "pie"
+              ? function (value, context) {
+                  return value === 0 ? null : Math.round(value);
+                }
+              : Math.round(),
+          font: {
+            weight: "bold",
+            size: 13,
+          },
+        },
+      },
+    },
+  });
+  return chartCurent;
+}
+function createChartForConfiscari(type, labels, data, backgroundColors) {
+  const ctx = document.getElementById("myChart").getContext("2d");
+  if (chartCurent != null) {
+    chartCurent.destroy();
+  }
+
+  let datasets = [];
+  if (type === "pie") {
+    datasets = [
+      {
+        data: data,
+        backgroundColor: backgroundColors,
+        borderWidth: 1,
+        borderColor: "#777",
+        hoverBorderWidth: 3,
+        hoverBorderColor: "#000",
+      },
+    ];
+  } else if (type === "bar") {
+    datasets = labels.map((label, i) => {
+      return {
+        label: label,
+        data: [data[i]],
+        backgroundColor: backgroundColors[i],
+        borderWidth: 1,
+        borderColor: "#777",
+        hoverBorderWidth: 3,
+        hoverBorderColor: "#000",
+      };
+    });
+  } else if (type === "line") {
+    datasets = [
+      {
+        label: "Urgente",
+        data: data,
+        backgroundColor: backgroundColors,
+        borderWidth: 1,
+        borderColor: "#777",
+        hoverBorderWidth: 3,
+        hoverBorderColor: "#000",
+      },
+    ];
+  }
+
+  chartCurent = new Chart(ctx, {
+    type: type,
+    data: {
+      labels: type === "pie" || type === "line" ? labels : ["Confiscari"],
+      datasets: datasets,
+    },
+    options: {
+      maintainAspectRatio: false,
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: "Confiscari per category",
+          fontSize: 22,
+        },
+        legend: {
+          position: "right",
+          labels: {
+            fontColor: "#000",
+          },
+        },
+        layout: {
+          padding: {
+            left: 50,
+            right: 0,
+            bottom: 0,
+            top: 0,
+          },
+        },
+        tooltips: {
+          enabled: false,
+        },
+      },
+      plugins: {
+        datalabels: {
+          anchor: type === "bar" ? "center" : type === "pie" ? "center" : "end",
+          align: type === "bar" ? "center" : type === "pie" ? "center" : "top",
           formatter:
             type === "pie"
               ? function (value, context) {
@@ -221,6 +269,20 @@ async function fetchUrgenteIntervalData(urgenteValues) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(urgenteValues),
+  });
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  } else {
+    return await response.json();
+  }
+}
+async function fetchConfiscariIntervalData(confiscariValues) {
+  const response = await fetch("/api/filter/confiscari/interval", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(confiscariValues),
   });
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
@@ -308,28 +370,61 @@ async function handleSearchButtonClick(event) {
     );
     const confiscariValues = getSelectedValues(confiscariSelects);
     if (!confiscariValues) return;
+    fetchConfiscariIntervalData(confiscariValues)
+      .then((response) => {
+        const allZero = response.data.every(
+          (item) => item.cantitate === 0 || item.cantitate === null
+        );
+        if (allZero) {
+          document.getElementById("chartDescription").innerText =
+            "Nu exista valori pentru generarea graficului pentru aceste filtre";
+          return;
+        }
 
-    chartData = {
-      type: reprezentareSelectValue,
-      labels: [
-        "Boston",
-        "Worcester",
-        "Springfield",
-        "Lowell",
-        "Cambridge",
-        "New Bedford",
-      ],
-      data: [617, 181, 153, 106, 105, 95],
-      backgroundColors: ["green", "red", "blue"],
-    };
+        const description = `Confiscari: numarul de ${confiscariValues.confiscari_subcategorie} de ${confiscariValues.drog} intre ${confiscariValues.startYearConfiscari} si ${confiscariValues.endYearConfiscari}.`;
+
+        document.getElementById("chartDescription").innerText = "";
+        document.getElementById("chartDescription").innerText = description;
+
+        chartData = {
+          type: reprezentareSelectValue,
+          labels: response.data.map((item) => item.label),
+          data: response.data.map((item) => item.cantitate),
+          backgroundColors: response.data.map(
+            (item, index) => predefinedColors[index % predefinedColors.length]
+          ),
+        };
+        if (chartData) {
+          createChartForConfiscari(
+            chartData.type,
+            chartData.labels,
+            chartData.data,
+            chartData.backgroundColors
+          );
+        }
+      })
+      .catch((error) => console.error(error));
   } else if (categorieSelectValue === "urgente") {
     const urgenteSelects = document.querySelectorAll("#urgente_options select");
     const urgenteValues = getSelectedValues(urgenteSelects);
-
     if (!urgenteValues) return;
     if (urgenteValues.urgente_an !== "interval") {
       fetchUrgenteData(urgenteValues)
         .then((response) => {
+          const allZero = response.data.every((item) => item.cantitate === 0);
+          if (allZero) {
+            if (chartCurent != null) {
+              chartCurent.destroy();
+            }
+            document.getElementById("chartDescription").innerText =
+              "Nu exista valori pentru generarea graficului pentru aceste filtre";
+            return;
+          }
+
+          const description = `Urgente: cazuri cauzate de ${urgenteValues.urgente_drog} in ${urgenteValues.urgente_an} filtrate dupa ${urgenteValues.urgente_filtru}.`;
+
+          document.getElementById("chartDescription").innerText = "";
+          document.getElementById("chartDescription").innerText = description;
           chartData = {
             type: reprezentareSelectValue,
             labels: response.data.map((item) => item.label),
@@ -351,6 +446,34 @@ async function handleSearchButtonClick(event) {
     } else {
       fetchUrgenteIntervalData(urgenteValues)
         .then((response) => {
+          const allZero = response.data.every((item) => item.cantitate === 0);
+          if (allZero) {
+            if (chartCurent != null) {
+              chartCurent.destroy();
+            }
+            document.getElementById("chartDescription").innerText =
+              "Nu exista valori pentru generarea graficului pentru aceste filtre";
+            return;
+          }
+          let description = `Urgente: cazuri cauzate de ${urgenteValues.urgente_drog} intre ${urgenteValues.startYear} si ${urgenteValues.endYear}`;
+          if (urgenteValues.urgente_filtru) {
+            description += ` filtrate dupa ${urgenteValues.urgente_filtru}`;
+          }
+          if (urgenteValues.administrare_filtru) {
+            description += `, ${urgenteValues.administrare_filtru}.`;
+          }
+          if (urgenteValues.varsta_filtru) {
+            description += `, ${urgenteValues.varsta_filtru}.`;
+          }
+          if (urgenteValues.consum_filtru) {
+            description += `, ${urgenteValues.consum_filtru}.`;
+          }
+          if (urgenteValues.diagnostic_filtru) {
+            description += `, ${urgenteValues.diagnostic_filtru}.`;
+          }
+
+          document.getElementById("chartDescription").innerText = "";
+          document.getElementById("chartDescription").innerText = description;
           chartData = {
             type: reprezentareSelectValue,
             labels: response.data.map((item) => item.label),

@@ -77,14 +77,52 @@
       <div id="confiscari_options" style="display: none;">
         <select class="filter-select" id="confiscari_subcategorie">
           <option value="" disabled selected>Categorie</option>
-          <option value="cantitate">Cantitate</option>
-          <option value="capturi">Capturi</option>
+          <option value="grame">Grame</option>
+          <option value="comprimate">Comprimate</option>
+          <option value="doze">Doze</option>
+          <option value="mililitri">Mililitri</option>
+          <option value="nr_capturi">Capturi</option>
+
         </select>
-        <select class="filter-select" id="confiscari_an">
-          <option value="" disabled selected>An</option>
-          <option value="2022">2022</option>
-          <option value="2021">2021</option>
+        <select class="filter-select" id="startYearConfiscari">
+          <option value="" disabled selected>An început</option>
           <option value="2020">2020</option>
+          <option value="2021">2021</option>
+        </select>
+
+        <select class="filter-select" id="endYearConfiscari">
+          <option value="" disabled selected>An sfârșit</option>
+        </select>
+        <select class="filter-select" id="drog">
+          <option value="" disabled selected>Drog</option>
+          <option value="Heroină">Heroină</option>
+          <option value="Cocaină">Cocaină</option>
+          <option value="Amfetamină">Amfetamină</option>
+          <option value="Metamfetamină">Metamfetamină</option>
+          <option value="MDMA">MDMA</option>
+          <option value="Metadonă">Metadonă</option>
+          <option value="Oxicodonă">Oxicodonă</option>
+          <option value="Morfină">Morfină</option>
+          <option value="LSD">LSD</option>
+          <option value="Codeină">Codeină</option>
+          <option value="Ciuperci halucinogene">Ciuperci halucinogene</option>
+          <option value="Canabinoizi sintetici">Canabinoizi sintetici</option>
+          <option value="Catinone">Catinone</option>
+          <option value="2C-X">2C-X</option>
+          <option value="Cactus/Mescalină">Cactus/Mescalină</option>
+          <option value="Triptamine">Triptamine</option>
+          <option value="ALTELE">ALTELE</option>
+          <option value="Canabis">Canabis</option>
+          <option value="Rezină de canabis">Rezină de canabis</option>
+          <option value="Ulei de canbis">Ulei de canbis</option>
+          <option value="Ketamină">Ketamină</option>
+          <option value="Benzodiazepine">Benzodiazepine</option>
+          <option value="Barbiturice">Barbiturice</option>
+          <option value="Buprenorfină">Buprenorfină</option>
+          <option value="Zolpidem">Zolpidem</option>
+          <option value="Amfepramonă">Amfepramonă</option>
+
+
         </select>
 
       </div>
@@ -127,13 +165,13 @@
         </select>
 
         <select class="filter-select" id="administrare_filtru" style="display: none;">
-          <option value="" disabled selected>Metoda de administrare</option>
+          <option value="" disabled selected>Metoda administrare</option>
           <option value="Oral/fumat/prizat">Oral/fumat/prizat</option>
           <option value="Injectabil">Injectabil</option>
           <option value="Altele">Altele</option>
         </select>
         <select class="filter-select" id="consum_filtru" style="display: none;">
-          <option value="" disabled selected>Metoda de consum</option>
+          <option value="" disabled selected>Metoda consum</option>
           <option value="Consum singular">Consum singular</option>
           <option value="Consum combinat">Consum combinat</option>
         </select>
@@ -156,8 +194,13 @@
         <option value="line">Line</option>
       </select>
       <span class="custom-arrow"></span>
+    </div>
+    <div id="button-container">
       <button class="search-button" id="search-button">Caută</button>
       <button class="search-button" id="favorite-button" style="display: none;">Preferate</button>
+    </div>
+    <div id="description-container">
+      <div id="chartDescription"></div>
     </div>
   </main>
 

@@ -25,7 +25,6 @@ const getAllUsers = catchAsync(async (req, res) => {
 
 const deleteUser = catchAsync(async (req, res) => {
   const request = await parseRequestBody(req);
-  console.log(request.email);
   if (!request) {
     errorController(
       res,

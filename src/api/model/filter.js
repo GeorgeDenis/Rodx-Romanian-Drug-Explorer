@@ -20,7 +20,6 @@ exports.addInfractiuniFilter = async (filterData, email) => {
       return null;
     }
 
-    // Continuați cu inserarea filtrului
     const insertQueryText =
       "INSERT INTO filtru_confiscari (confiscari_subcategorie, confiscari_an, tip, reprezentare, email) VALUES ($1, $2, $3, $4, $5) RETURNING *";
     const insertValues = [categorie, an, tip, reprezentare, email];
@@ -89,5 +88,33 @@ exports.getUrgenteIntervalBd = async (urgenteData) => {
       cantitate: row[urgente_drog],
     };
   });
+
   return urgente;
+};
+
+exports.getConfiscariIntervalBd = async (confiscariDate) => {
+  const {
+    confiscari_subcategorie,
+    drog,
+    endYearConfiscari,
+    startYearConfiscari,
+  } = confiscariDate;
+  const allowed = ["comprimate", "grame", "doze", "mililitri", "nr_capturi"];
+
+  if (!allowed.includes(confiscari_subcategorie)) {
+    throw new Error(`Invalid drug: ${confiscari_subcategorie}`);
+  }
+  const queryText = {
+    text: `SELECT an, ${confiscari_subcategorie} FROM confiscari WHERE an BETWEEN $1 AND $2 AND drog=$3`,
+    values: [startYearConfiscari, endYearConfiscari, drog],
+  };
+
+  const result = await pool.query(queryText);
+  const confiscari = result.rows.map((row) => {
+    return {
+      label: row["an"],
+      cantitate: Math.floor(row[confiscari_subcategorie]),
+    };
+  });
+  return confiscari;
 };

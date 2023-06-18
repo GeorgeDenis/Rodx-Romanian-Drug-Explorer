@@ -6,7 +6,8 @@ document
     document.getElementById("confiscari_options").style.display = "none";
     document.getElementById("urgente_options").style.display = "none";
 
-    // Afiseaza grupul de selectoare specific categoriei selectate
+    document.getElementById("chartDescription").innerText = "";
+
     if (this.value === "infractiuni") {
       document.getElementById("infractiuni_options").style.display = "flex";
     } else if (this.value === "confiscari") {
@@ -15,21 +16,7 @@ document
       document.getElementById("urgente_options").style.display = "flex";
     }
   });
-//   document.getElementById('urgente_filtru').addEventListener('change', function() {
-//     // ascunde toate selectoarele suplimentare
-//     document.getElementById('gen_filtru').style.display = 'none';
-//     document.getElementById('varsta_filtru').style.display = 'none';
-//     document.getElementById('administrare_filtru').style.display = 'none';
 
-//     // arata selectorul corespunzator optiunii alese
-//     if (this.value === 'Gen') {
-//         document.getElementById('gen_filtru').style.display = 'flex';
-//     } else if (this.value === 'Varsta') {
-//         document.getElementById('varsta_filtru').style.display = 'flex';
-//     } else if (this.value === 'Administrare') {
-//         document.getElementById('administrare_filtru').style.display = 'flex';
-//     }
-// });
 document
   .getElementById("urgente_filtru")
   .addEventListener("change", function () {
@@ -118,4 +105,16 @@ document.getElementById("urgente_an").addEventListener("change", function () {
     document.getElementById("consum_filtru").style.display = "none";
     document.getElementById("diagnostic_filtru").style.display = "none";
   }
+});
+const startYearConfiscari = document.getElementById("startYearConfiscari");
+const endYearConfiscari = document.getElementById("endYearConfiscari");
+
+startYearConfiscari.addEventListener("change", function () {
+  let startYear = parseInt(this.value);
+  let endYearOptions = "";
+  for (let i = startYear + 1; i <= 2022; i++) {
+    endYearOptions += `<option value="${i}">${i}</option>`;
+  }
+  endYearConfiscari.innerHTML =
+    `<option value="" disabled selected>An sfârșit</option>` + endYearOptions;
 });

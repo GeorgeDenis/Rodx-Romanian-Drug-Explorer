@@ -38,6 +38,18 @@ const getUrgenteInterval = catchAsync(async (req, res) => {
   res.statusCode = 200;
   res.end(JSON.stringify({ data: urgente }));
 });
+const getConfiscariInterval = catchAsync(async (req, res) => {
+  const intervalData = await parseRequestBody(req);
+  if (!intervalData) {
+    return errorController(
+      res,
+      new AppError("Introduceti datele pentru filtru!", 400)
+    );
+  }
+  const infractiuni = await filters.getConfiscariIntervalBd(intervalData);
+  res.statusCode = 200;
+  res.end(JSON.stringify({ data: infractiuni }));
+});
 const saveFilter = catchAsync(async (req, res) => {
   const filter = await parseRequestBody(req);
   if (!filter) {
@@ -92,9 +104,10 @@ const filterController = catchAsync(async (req, res) => {
   res.setHeader("Content-Type", "application/json");
   if (url === "/api/filter/urgente/interval" && method === "POST") {
     getUrgenteInterval(req, res);
-  }
-  if (url === "/api/filter/urgente" && method === "POST") {
+  } else if (url === "/api/filter/urgente" && method === "POST") {
     getUrgente(req, res);
+  } else if (url === "/api/filter/confiscari/interval" && method === "POST") {
+    getConfiscariInterval(req, res);
   } else if (url === "/api/filter" && method === "POST") {
     const response = await verifyToken(req, res);
     if (!response) {
