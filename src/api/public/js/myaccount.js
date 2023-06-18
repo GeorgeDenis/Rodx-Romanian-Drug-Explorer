@@ -1,73 +1,96 @@
-const logout = document.getElementById("logout-button");
+function attachSidebarLinkHandlers() {
+  const sidebarLinks = document.querySelectorAll('.sidebar ul li');
 
-logout.addEventListener("click", function () {
-  localStorage.clear();
-  window.location.href = "/";
-});
+  sidebarLinks.forEach(link => {
+    link.addEventListener('click', function() {
+      sidebarLinks.forEach(l => l.classList.remove('selected'));
 
-window.onload = async function () {
+      this.classList.add('selected');
+
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.style.display = 'none';
+      });
+
+      const contentId = this.textContent.trim().toLowerCase(); // Call trim() here
+      const contentElement = document.getElementById(contentId);
+    
+      if (contentElement) {
+        contentElement.style.display = 'block';
+      }
+    });
+  });
+}  
+
+
+
+async function setAdmin()
+{
   const getData = async () => {
     const response = await fetch("http://localhost:3000/api/users/self", {
-      method: "GET",
+  
+    method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
+    
     if (!response.ok) {
       window.location.href = "/login";
       return;
     }
     return await response.json();
   };
-
   getData().then((data) => {
     if (data.data.role === "admin") {
       const newElement = `
-        <a class="nav-link" id="utilizatori-tab" data-tab="pill" href="#utilizatori" role="tab" aria-controls="utilizatori">
-          <i class="fa fa-user-shield text-center mr-1"></i> 
+        <li>
           Utilizatori
-        </a>
-        <a class="nav-link" id="admin-campanii-tab" data-tab="pill" href="#campanii" role="tab" aria-controls="admin">
-        <i class="fa fa-user-shield text-center mr-1"></i> 
-        Campanii
-      </a>
-    `;
-      document
-        .getElementById("history-tab")
-        .insertAdjacentHTML("afterend", newElement);
-        
-        const tabs = document.querySelectorAll('.nav-link');
-        tabs.forEach(tab => {
-          tab.addEventListener('click', function(event) {
-            event.preventDefault();
-            tabs.forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('show', 'active'));
-            this.classList.add('active');
-            document.querySelector(this.getAttribute('href')).classList.add('show', 'active');
-          });
-        });
-      }
-   
-   
-      let usernameInput = document.getElementById("username-input");
+        </li>
+        <li>
+          Campanii
+        </li>
+      `;
+
+  
+      
+  const logoutElement = document.getElementById("logout-button");
+  logoutElement.insertAdjacentHTML("beforebegin", newElement);
+  
+  attachSidebarLinkHandlers();
+     
+    }
+
+
+    let usernameInput = document.getElementById("username");
     usernameInput.value = data.data.name;
 
-    let emailInput = document.getElementById("email-input");
+    let emailInput = document.getElementById("email");
     emailInput.value = data.data.email;
+
+    document.querySelectorAll('.tab-content').forEach(content => {
+      content.style.display = 'none';
+    });
+
+    document.getElementById('account').style.display = 'block';
+
+  })
+  .catch((error)=>{
+    console.error(error)
   });
 };
-document.addEventListener('DOMContentLoaded', populateUsersTable);
+document.addEventListener("DOMContentLoaded", setAdmin);
+
 
 async function populateUsersTable() {
   const tbody = document.querySelector("#usersTable tbody");
 
   try {
-    const token = localStorage.getItem('token'); // Or wherever you store your token
+    const token = localStorage.getItem('token'); 
     const response = await fetch("http://localhost:3000/api/admin", {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${token}`, // This is how you include the token in your request
+        'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
       }
     });
@@ -78,7 +101,7 @@ async function populateUsersTable() {
 
     const users = await response.json();
 
-    tbody.innerHTML = ""; // Clear existing table rows before populating
+    tbody.innerHTML = ""; 
 
     users.data.forEach(user => {
       const row = document.createElement("tr");
@@ -96,9 +119,8 @@ async function populateUsersTable() {
       deleteSpan.textContent = "delete";
      
       deleteSpan.addEventListener("click", async function () {
-        console.log(user.email);
         
-        const token = localStorage.getItem('token'); // Or wherever you store your token
+        const token = localStorage.getItem('token'); 
 
         let response =  await fetch("http://localhost:3000/api/admin", {
           method: 'DELETE',
@@ -126,10 +148,21 @@ async function populateUsersTable() {
       row.appendChild(deleteCell);
 
       tbody.appendChild(row);
+      attachSidebarLinkHandlers();
+
     });
   } catch (error) {
     console.error(error);
   }
+
 }
 
 document.addEventListener('DOMContentLoaded', populateUsersTable);
+document.addEventListener('DOMContentLoaded', attachSidebarLinkHandlers);
+
+const logout = document.getElementById("logout-button");
+
+logout.addEventListener("click", function () {
+  localStorage.clear();
+  window.location.href = "/";
+});

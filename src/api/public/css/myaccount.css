@@ -89,7 +89,39 @@ h3 {
 }
 
 
+#usersTable {
+  width: 100% ;
+  border-collapse: collapse; /* Collapse borders */
+  font-family: Arial, sans-serif; /* Set a nicer font */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); /* Add a slight shadow */
+  border-radius: 5px; /* Add rounded corners */
+}
 
+#usersTable thead tr {
+  background-color: #009879; /* Set a color for the header row */
+  color: #ffffff; /* Set the header text color */
+}
+
+#usersTable th, 
+#usersTable td {
+  padding: 12px 15px; /* Add some padding to cells */
+}
+
+#usersTable tbody tr {
+  border-bottom: thin solid #dddddd; /* Add a light border between rows */
+}
+
+#usersTable tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3; /* Use zebra striping on even rows */
+}
+
+#usersTable tbody tr:last-of-type {
+  border-bottom: 2px solid #009879; /* Add a darker border on the last row */
+}
+
+#usersTable tbody tr:hover {
+  background-color: #ededed; /* Add a hover effect to rows */
+}
 
 
 .tab-content form {
@@ -119,6 +151,20 @@ h3 {
   cursor: pointer;
   width: 100px; /* Reglează lățimea butonului */
   height: 30px; /* Reglează înălțimea butonului */
+
+}
+#table-container {
+  max-height: 610px;  /* or any height that suits your layout */
+  overflow-y: auto;   /* enable vertical scrollbar if needed */
+  display: block;   
+  
+}
+th, td {
+  text-align: center;
+  vertical-align: middle; /* This will center content vertically */
+}
+table {
+  width: 100%; /* Make sure your table is full width */
 }
 
 @media  (max-height: 840px) {
@@ -145,7 +191,7 @@ h3 {
   }
 
   .sidebar  {
-    width: 400px;
+    width: 100%;
   }
 
   .content{
@@ -154,6 +200,14 @@ h3 {
 
   .tab-content form {
     width: 100%;
+  }
+  #table-container {
+    max-height: 40vh; /* Adjust this as needed */
+  }
+}
+@media (max-width: 375px){
+  #table-container {
+    max-height: 28vh; /* Adjust this as needed */
   }
 }
 
@@ -166,4 +220,5 @@ h3 {
   .content {
     width: 60%; /* scade procentajul pentru content pentru a face loc pentru sidebar */
   }
+ 
 }

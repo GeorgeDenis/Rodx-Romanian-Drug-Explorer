@@ -27,8 +27,8 @@
           <a href="/cautare">Cautare&filtrare</a>
           <a href="/droguri">Droguri</a>
           <a href="/campanii">Campanii</a>
-          <a href="#" class="is-active">About us</a>
-          <a href="/login" id="login-link">Login</a>
+          <a href="/about" >About us</a>
+          <a href="#" class="is-active" id="login-link">Login</a>
         </div>
         <button class="hamburger">
           <span></span>
@@ -42,24 +42,23 @@
       <a href="/cautare">Cautare&filtrare</a>
       <a href="/droguri">Droguri</a>
       <a href="/campanii">Campanii</a>
-      <a href="#">About us</a>
-      <a href="/login" id="login-link">Login</a>
+      <a href=>About us</a>
+      <a href="#"  class="is-active" id="login-link">Login</a>
     </div>
   </header>
 
   <main>
     <div class="container2">
       <div class="sidebar">
-        <h3>Mihai</h3>
         <ul>
           <li class="selected">Account</li>
           <li>Password</li>
           <li>History</li>
-          <li>Admin</li>
-          <li>Campanii</li>
           <li id="logout-button">Logout</li>
         </ul>
       </div>
+      
+      
       <div class="content">
         <div id="account" class="tab-content">
           <!-- Conținut pentru secțiunea "Account" -->
@@ -96,14 +95,31 @@
         <div id="history" class="tab-content" style="display: none;">
           <h2>History</h2>
         </div>
-        <div id="admin" class="tab-content" style="display: none;">
-          <!-- Conținut pentru secțiunea "Admin" -->
-          <p>Acesta este conținutul pentru secțiunea Admin.</p>
+       
+        <div id="utilizatori" class="tab-content" style="display: none;">
+          <div id="table-container">
+ 
+          <table class="table table-striped" id="usersTable">
+              <thead>
+                  <tr>
+                      <th>ID</th>
+                      <th>Nume</th>
+                      <th>Sterge</th>
+                  </tr>
+              </thead>
+              <tbody>
+
+              </tbody>
+          </table>
+          </div>
+
+      </div>
+  <div id="campanii" class="tab-content" style="display: none;">
+    <h5>nu doamne</h5>
+            <!-- Puteți adăuga aici elemente din istoricul activităților -->
         </div>
-        <div id="campanii" class="tab-content" style="display: none;">
-          <!-- Conținut pentru secțiunea "Campanii" -->
-          <p>Acesta este conținutul pentru secțiunea Campanii.</p>
-        </div>
+      </div>
+    </div>
         
       </div>
       
