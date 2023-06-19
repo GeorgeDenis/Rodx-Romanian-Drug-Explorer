@@ -165,6 +165,28 @@ const login = catchAsync(async (req, res) => {
 });
 
 //ADAUGAT DE MIHAI
+const changePassword = catchAsync(async (req, res) => {
+  const request = await parseRequestBody(req);
+  const { oldPassword, newPassword } = request;
+  
+  const user = await users.findUserByUser(req.currentToken.name);
+  const isOldPasswordCorrect = await bcrypt.compare(oldPassword, user.password);
+  if (!isOldPasswordCorrect) {
+    errorController(
+      res,
+      new AppError("Parola veche este incorectă", 401)
+    );
+    return;
+  }
+
+  const newHashedPassword = await bcrypt.hash(newPassword, 10);
+  await users.updateUserPassword(req.currentToken.name, newHashedPassword);
+
+  res.statusCode = 200;
+  res.end(JSON.stringify({ status: "success", message: "Parola a fost schimbată cu succes" }));
+});
+
+//ADAUGAT DE MIHAI
 const changeAccount = catchAsync(async (req, res) => {
   const request = await parseRequestBody(req);
 
