@@ -94,3 +94,34 @@ exports.deleteUser = async (email) => {
     throw new Error("Database query failed");
   }
 };
+
+//ADAUGAT DE MIHAI
+exports.updateUserPassword = async function(username, newHashedPassword) {
+  const queryText = 'UPDATE users SET password = $1 WHERE name = $2';
+  const queryParams = [newHashedPassword, username];
+
+  try {
+      const res = await pool.query(queryText, queryParams);
+      if (res.rowCount === 0) {
+          throw new Error('User not found');
+      }
+  } catch(err) {
+      console.log(err);
+      throw err;
+  }
+};
+//ADAUGAT DE MIHAI
+exports.updateUserAccount = async function(username, email, newName, newEmail) {
+  const queryText = 'UPDATE users SET name = $1, email = $2 WHERE name = $3 AND email = $4';
+  const queryParams = [newName, newEmail, username, email];
+
+  try {
+      const res = await pool.query(queryText, queryParams);
+      if (res.rowCount === 0) {
+          throw new Error('User not found');
+      }
+  } catch(err) {
+      console.log(err);
+      throw err;
+  }
+};

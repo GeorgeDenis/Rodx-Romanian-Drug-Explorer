@@ -5,7 +5,7 @@ const { Client } = require('pg');
 const client = new Client({
     host: 'localhost', // Modifică conform configurării tale
     user: 'postgres',      // Modifică conform configurării tale
-    password: '1234',  // Modifică conform configurării tale
+    password: '123',  // Modifică conform configurării tale
     database: 'TW'  // Modifică conform configurării tale
 });
 

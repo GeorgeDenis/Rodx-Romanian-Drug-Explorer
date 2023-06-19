@@ -161,3 +161,68 @@ logout.addEventListener("click", function () {
   localStorage.clear();
   window.location.href = "/";
 });
+
+//Mesaj pentru Update
+function submitPasswordForm(e) {
+  e.preventDefault();
+
+  var oldPassword = document.getElementById('old-password').value;
+  var newPassword = document.getElementById('new-password').value;
+  var confirmPassword = document.getElementById('confirm-new-password').value;
+
+  if (oldPassword === '' || newPassword === '' || confirmPassword === '') {
+    alert('Toate campurile trebuie completate!');
+    return;
+  }
+
+  if (newPassword !== confirmPassword) {
+    alert('Parolele nu se potrivesc!');
+    return;
+  }
+
+  var successMessage = document.createElement('p');
+  successMessage.textContent = '';
+  successMessage.style.color = 'green';
+  successMessage.id = 'success-message';
+  document.body.appendChild(successMessage);
+
+  window.setTimeout(function() {
+    var message = document.getElementById('success-message');
+    if (message) {
+      message.style.display = 'none';
+    }
+  }, 5000);
+}
+
+document.querySelector('#password-form').addEventListener('submit', submitPasswordForm);
+
+function submitAccountForm(e) {
+  e.preventDefault();
+
+  var newName = document.getElementById('username').value;
+  var newEmail = document.getElementById('email').value;
+
+  if (newName === '' || newEmail === '') {
+    
+    return;
+  }
+
+  // Creare mesaj de succes
+  var successMessage = document.createElement('p');
+  successMessage.textContent = '';
+  successMessage.style.color = 'green';
+  successMessage.id = 'success-message';
+  document.body.appendChild(successMessage);
+
+  // Setarea unei întârzieri de 5 secunde înainte de a ascunde mesajul
+  window.setTimeout(function() {
+    var message = document.getElementById('success-message');
+    if (message) {
+      message.style.display = 'none';
+    }
+  }, 5000);
+}
+
+document.querySelector('#update-account-form').addEventListener('submit', submitAccountForm);
+
+

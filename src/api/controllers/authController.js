@@ -164,6 +164,69 @@ const login = catchAsync(async (req, res) => {
   res.end(JSON.stringify(response));
 });
 
+//ADAUGAT DE MIHAI
+const changePassword = catchAsync(async (req, res) => {
+  const request = await parseRequestBody(req);
+  const { oldPassword, newPassword } = request;
+  
+  const user = await users.findUserByUser(req.currentToken.name);
+  const isOldPasswordCorrect = await bcrypt.compare(oldPassword, user.password);
+  if (!isOldPasswordCorrect) {
+    errorController(
+      res,
+      new AppError("Parola veche este incorectă", 401)
+    );
+    return;
+  }
+
+  const newHashedPassword = await bcrypt.hash(newPassword, 10);
+  await users.updateUserPassword(req.currentToken.name, newHashedPassword);
+
+  res.statusCode = 200;
+  res.end(JSON.stringify({ status: "success", message: "Parola a fost schimbată cu succes" }));
+});
+
+//ADAUGAT DE MIHAI
+const changeAccount = catchAsync(async (req, res) => {
+  const request = await parseRequestBody(req);
+
+  const user = await users.findUserByUser(req.currentToken.name);
+
+  // Setează numele implicit dacă newName nu este definit sau este un șir gol
+  const newName = request.newName && request.newName.trim() !== '' ? request.newName : user.name;
+  const newEmail = request.newEmail && request.newEmail.trim() !== '' ? request.newEmail : user.email;
+
+  // Verifică dacă numele de utilizator este deja folosit
+  if (newName !== user.name && await users.checkUsername(newName)) {
+    errorController(
+      res,
+      new AppError("Numele de utilizator este deja folosit", 400)
+    );
+    return;
+  }
+
+  // Verifică dacă adresa de e-mail este deja folosită
+  if (newEmail !== user.email && await users.checkEmail(newEmail)) {
+    errorController(
+      res,
+      new AppError("Adresa de e-mail este deja folosită", 400)
+    );
+    return;
+  }
+
+  // Dacă email-ul si username-ul sunt unice, facem modificările
+  await users.updateUserAccount(req.currentToken.name, req.currentToken.email, newName, newEmail);
+  user.name = newName;
+  user.email = newEmail;
+  
+  // Generează un nou token cu detaliile actualizate
+  const token = await generateToken(user);
+
+  res.statusCode = 200;
+  res.end(JSON.stringify({ status: "success", message: "Datele contului au fost schimbate cu succes", token }));
+});
+
+
 const authController = catchAsync(async (req, res) => {
   const { method, url } = req;
   res.setHeader("Content-Type", "application/json");
@@ -171,7 +234,23 @@ const authController = catchAsync(async (req, res) => {
     signup(req, res);
   } else if (url === "/api/auth/login" && method === "POST") {
     login(req, res);
+  
+  }else if (url === "/api/auth/changePassword" && method === "POST") {
+    const response = await verifyToken(req, res);
+    if (!response) {
+      return;
+    }
+    changePassword(req,res);
+  } else if (url === "/api/auth/changeAccount" && method === "POST") {
+    const response = await verifyToken(req, res);
+    if (!response) {
+      return;
+    }
+    changeAccount(req, res);
   }
+  
 });
+
+
 
 module.exports = { authController, verifyToken, verifyRole, permission };
