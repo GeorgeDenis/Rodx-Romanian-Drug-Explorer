@@ -20,9 +20,6 @@ function attachSidebarLinkHandlers() {
     });
   });
 }  
-
-
-
 async function setAdmin()
 {
   const getData = async () => {
@@ -154,9 +151,7 @@ async function populateUsersTable() {
   } catch (error) {
     console.error(error);
   }
-
 }
-
 document.addEventListener('DOMContentLoaded', populateUsersTable);
 document.addEventListener('DOMContentLoaded', attachSidebarLinkHandlers);
 

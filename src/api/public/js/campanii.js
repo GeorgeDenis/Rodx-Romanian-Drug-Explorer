@@ -25,6 +25,8 @@ for (let j = 0; j < btnClose.length; j++) {
   });
 }
 document.addEventListener("keydown", function (e) {
+  console.log("peste");
+
   for (let i = 0; i < buttons.length; i++) {
     let idOpen = "text-box-" + String(i + 1);
     const textBox = document.getElementById(idOpen);
@@ -44,6 +46,8 @@ arrowButtons.forEach((arrow) => {
     const currentIndex = parseInt(currentTextBox.dataset.index) - 1;
     let targetIndex;
 
+
+    
     if (arrow.classList.contains("arrow-left")) {
       targetIndex = currentIndex === 0 ? buttons.length - 1 : currentIndex - 1;
     } else {
@@ -58,3 +62,88 @@ arrowButtons.forEach((arrow) => {
     targetTextBox.classList.remove("hidden");
   });
 });
+
+async function getCampanii() {
+  const getData = async () => {
+    const response = await fetch("http://localhost:3000/api/campaign", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      return;
+    }
+    return await response.json();
+  };
+  getData()
+    .then((data) => {
+      const campaigns = data.campaigns;
+      const parentElement = document.querySelector(".catalog"); // change ".articles-container" to the class name or id of your container
+
+      campaigns.forEach((campaign) => {
+        const rectangleDiv = document.createElement("div");
+        rectangleDiv.className = "rectangle glass";
+
+        const h3 = document.createElement("h3");
+        h3.textContent = campaign.title;
+
+        const contentDiv = document.createElement("div");
+        contentDiv.className = "catalog";
+
+        const img = document.createElement("img");
+        img.src = campaign.image;
+        img.alt = "campaign image";
+
+        const p = document.createElement("p");
+        p.textContent = campaign.shortText;
+
+        contentDiv.appendChild(img);
+        contentDiv.appendChild(p);
+
+        const btnDiv = document.createElement("div");
+        btnDiv.className = "btn";
+
+        const button = document.createElement("button");
+        button.className = "read-more";
+        button.textContent = "Read more";
+
+        button.addEventListener('click', function() {
+          const modalText = document.querySelector('#modal-text');
+          modalText.textContent = campaign.article;
+  
+          const textBox = document.querySelector(".text-box");
+          textBox.classList.remove("hidden");
+          overlay.classList.remove("hidden");
+          body.classList.add("no-scroll");
+        });
+
+        btnDiv.appendChild(button);
+        
+        rectangleDiv.appendChild(h3);
+        rectangleDiv.appendChild(contentDiv);
+        rectangleDiv.appendChild(btnDiv);
+
+        parentElement.appendChild(rectangleDiv);
+      });
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+document.addEventListener("DOMContentLoaded", getCampanii);
+
+let currentIndex = 0;
+const textboxes = document.querySelectorAll('.text-box'); 
+
+function showSlide(index) {
+  textboxes.forEach((box, i) => {
+    if (i === index) {
+      box.classList.remove('hidden');
+    } else {
+      box.classList.add('hidden');
+    }
+  });
+}

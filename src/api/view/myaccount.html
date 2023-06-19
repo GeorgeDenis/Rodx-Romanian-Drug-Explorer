@@ -42,7 +42,7 @@
       <a href="/cautare">Cautare&filtrare</a>
       <a href="/droguri">Droguri</a>
       <a href="/campanii">Campanii</a>
-      <a href=>About us</a>
+      <a href="/about">About us</a>
       <a href="#"  class="is-active" id="login-link">Login</a>
     </div>
   </header>
@@ -114,9 +114,33 @@
           </div>
 
       </div>
-  <div id="campanii" class="tab-content" style="display: none;">
-    <h5>nu doamne</h5>
-            <!-- Puteți adăuga aici elemente din istoricul activităților -->
+     
+      <div class="centrareButoane">
+
+      <div id="campanii" class="tab-content" style="display: none;">
+    <div class="campaniiAdmin">
+      <form id="campaignForm">
+        <input type="file" id="fileInput" accept=".jpg, .jpeg" style="display: none;">
+        <div class="upload-container">
+
+        <button id="uploadBtn" type="button">Poza <span>+</span></button>
+        <span id="checkMark" style="display: none; color: green;">&#10004;</span>
+      </div>
+
+        <input type="text" id="title" placeholder="Write a title" />
+        <textarea id="article" placeholder="Write an article"></textarea>
+        <button id="addBtn" type="submit">Add</button>
+        <div class="dropdown">
+          <button id="deleteBtn" type="button">Delete</button>
+          <div class="dropdown-content">
+            <a href="#">Option 1</a>
+            <a href="#">Option 2</a>
+            <a href="#">Option 3</a>
+          </div>
+        </div>
+      </form>
+    </div>
+        </div>
         </div>
       </div>
     </div>
@@ -129,5 +153,7 @@
   <script src="../public/js/navAccount.js"></script>
   <script src="../public/js/myaccount.js"></script>
   <script src="../public/js/main.js"></script>
+  <script src="../public/js/adminCampanii.js"></script>
+
 </body>
 </html>

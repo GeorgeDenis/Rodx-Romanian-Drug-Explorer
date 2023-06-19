@@ -120,6 +120,13 @@ img {
 .text {
   text-align: justify;
   text-justify: inter-word;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
 }
 .close-modal {
   position: absolute;
