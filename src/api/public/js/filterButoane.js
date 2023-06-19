@@ -1,5 +1,6 @@
 Chart.register(ChartDataLabels);
 
+//fetch-ul cu fe-ul
 const postFilterData = async (data) => {
   const token = localStorage.getItem("token");
   const response = await fetch("http://localhost:3000/api/filter", {
@@ -19,6 +20,7 @@ const postFilterData = async (data) => {
     alert(result.message);
   }
 };
+//functie ca toate campurile sa fie selectate
 function getSelectedValues(selectors) {
   let values = {};
 
