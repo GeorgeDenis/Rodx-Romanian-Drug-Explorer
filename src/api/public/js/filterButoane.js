@@ -249,7 +249,84 @@ function createChartForInterval(
   });
   return chartCurent;
 }
+function createChart(type, labels, data, backgroundColors) {
+  const getTextPosition = (value) => (value < 20 ? "outside" : "inside");
 
+  let traces = [];
+
+  if (type === "pie") {
+    traces = [
+      {
+        values: data,
+        labels: labels,
+        type: type,
+        textinfo: "value",
+        textposition: "auto",
+        insidetextorientation: "horizontal",
+        marker: {
+          colors: backgroundColors,
+        },
+        textfont: { color: "#000000" },
+      },
+    ];
+  } else if (type === "bar") {
+    traces = labels.map((label, i) => {
+      return {
+        x: [label],
+        y: [data[i]],
+        type: type,
+        text: [data[i]],
+        textposition: "auto",
+        marker: {
+          color: backgroundColors[i],
+        },
+        name: label,
+        textfont: { color: "#000000" },
+      };
+    });
+  } else if (type === "line") {
+    traces = [
+      {
+        x: labels,
+        y: data,
+        mode: "lines+markers+text",
+        name: "Urgente",
+        text: data,
+        textposition: "top right",
+        line: {
+          color: backgroundColors[0],
+        },
+        marker: {
+          color: backgroundColors,
+        },
+        textfont: { color: "#000000" },
+      },
+    ];
+  } else {
+    console.error("Chart type not supported");
+    return;
+  }
+
+  let layout = {
+    autosize: true,
+    showlegend: true,
+    legend: {
+      orientation: "h",
+      yanchor: "bottom",
+      y: 1.2,
+      xanchor: "right",
+      x: 1,
+    },
+  };
+
+  let config = { responsive: true };
+
+  Plotly.newPlot("myChartsvg", traces, layout, config);
+}
+function deletePlot() {
+  let chartDiv = document.getElementById("myChartsvg");
+  Plotly.purge(chartDiv);
+}
 var subcategories = {
   infractiuni: ["Gen", "Grupari", "Pedepse", "Cercetari"],
   confiscari: ["Cantitate", "Capturi"],
@@ -391,6 +468,7 @@ async function handleSearchButtonClick(event) {
           if (chartCurent != null) {
             chartCurent.destroy();
           }
+          deletePlot();
           document.getElementById("chartDescription").innerText =
             "Nu exista valori pentru generarea graficului pentru aceste filtre";
           return;
@@ -438,6 +516,12 @@ async function handleSearchButtonClick(event) {
             chartData.backgroundColors,
             "Infractiuni"
           );
+          createChart(
+            chartData.type,
+            chartData.labels,
+            chartData.data,
+            chartData.backgroundColors
+          );
         }
       })
       .catch((error) => console.error(error));
@@ -456,6 +540,7 @@ async function handleSearchButtonClick(event) {
           if (chartCurent != null) {
             chartCurent.destroy();
           }
+          deletePlot();
           document.getElementById("chartDescription").innerText =
             "Nu exista valori pentru generarea graficului pentru aceste filtre";
           return;
@@ -482,6 +567,12 @@ async function handleSearchButtonClick(event) {
             chartData.backgroundColors,
             "Confiscari"
           );
+          createChart(
+            chartData.type,
+            chartData.labels,
+            chartData.data,
+            chartData.backgroundColors
+          );
         }
       })
       .catch((error) => console.error(error));
@@ -497,6 +588,7 @@ async function handleSearchButtonClick(event) {
             if (chartCurent != null) {
               chartCurent.destroy();
             }
+            deletePlot();
             document.getElementById("chartDescription").innerText =
               "Nu exista valori pentru generarea graficului pentru aceste filtre";
             return;
@@ -521,6 +613,12 @@ async function handleSearchButtonClick(event) {
               chartData.data,
               chartData.backgroundColors
             );
+            createChart(
+              chartData.type,
+              chartData.labels,
+              chartData.data,
+              chartData.backgroundColors
+            );
           }
         })
         .catch((error) => console.error(error));
@@ -532,6 +630,7 @@ async function handleSearchButtonClick(event) {
             if (chartCurent != null) {
               chartCurent.destroy();
             }
+            deletePlot();
             document.getElementById("chartDescription").innerText =
               "Nu exista valori pentru generarea graficului pentru aceste filtre";
             return;
@@ -570,6 +669,12 @@ async function handleSearchButtonClick(event) {
               chartData.data,
               chartData.backgroundColors
             );
+            createChart(
+              chartData.type,
+              chartData.labels,
+              chartData.data,
+              chartData.backgroundColors
+            );
           }
         })
         .catch((error) => console.error(error));
@@ -583,28 +688,31 @@ async function handleSearchButtonClick(event) {
   });
   const exportButton = document.getElementById("export-button");
   exportButton.style.display = "inline-block";
-  {
-    document.querySelectorAll(".dropdown-item").forEach(function (item) {
-      item.addEventListener("click", function () {
-        console.log("Ai selectat " + this.textContent);
-      });
-    });
-  }
+
+  // Înlăturați event listener-ul anterior
   document.querySelectorAll(".dropdown-item").forEach(function (item) {
-    item.addEventListener("click", function () {
-      if (this.textContent === "PNG") {
-        var imgData = chartCurent.toBase64Image();
-        var a = document.createElement("a");
-        a.href = imgData;
-        a.download = document.getElementById("chartDescription").innerText;
-        a.click();
-      } else {
-        console.log("Ai selectat " + this.textContent);
-      }
-    });
+    item.removeEventListener("click", handleExportClick);
+    item.addEventListener("click", handleExportClick);
   });
 }
-
+const handleExportClick = function () {
+  if (this.textContent === "PNG") {
+    var imgData = chartCurent.toBase64Image();
+    var a = document.createElement("a");
+    a.href = imgData;
+    a.download = document.getElementById("chartDescription").innerText;
+    a.click();
+  } else if (this.textContent === "SVG") {
+    Plotly.downloadImage("myChartsvg", {
+      format: "svg",
+      width: 800,
+      height: 600,
+      filename: document.getElementById("chartDescription").innerText,
+    });
+  } else {
+    console.log("Ai selectat " + this.textContent);
+  }
+};
 document
   .getElementById("search-button")
   .addEventListener("click", handleSearchButtonClick);

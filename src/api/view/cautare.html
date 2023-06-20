@@ -13,6 +13,8 @@
   <script
     src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0/dist/chartjs-plugin-datalabels.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
 
 
   <style>
@@ -251,7 +253,7 @@
         <button class="dropbtn search-button">Export</button>
         <div class="dropdown-content">
           <button class="dropdown-item">PNG</button>
-          <button class="dropdown-item">CSV</button>
+          <button class="dropdown-item">SVG</button>
           <button class="dropdown-item">PDF</button>
         </div>
       </div>
@@ -268,7 +270,9 @@
   <div id="chartContainer" style="position: relative; height:60vh; width:80vw;margin: auto;">
     <canvas id="myChart"></canvas>
   </div>
-
+  <div id="chartContainersvg" style="display: none;">
+    <div id="myChartsvg"></div>
+  </div>
 
   <footer>
     <p>@Drugs&Prevention</p>

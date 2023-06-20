@@ -1,3 +1,13 @@
+function resetButtons() {
+  const favoriteButton = document.getElementById("favorite-button");
+  const exportButton = document.getElementById("export-button");
+
+  favoriteButton.style.display = "none";
+  exportButton.style.display = "none";
+  favoriteButton.value = "";
+  exportButton.value = "";
+}
+
 document
   .getElementById("categorie_select")
   .addEventListener("change", function () {
@@ -15,6 +25,7 @@ document
     } else if (this.value === "urgente") {
       document.getElementById("urgente_options").style.display = "flex";
     }
+    resetButtons();
   });
 
 document
@@ -41,6 +52,7 @@ document
         document.getElementById("diagnostic_filtru").style.display = "flex";
       }
     }
+    resetButtons();
   });
 
 document.getElementById("urgente_an").addEventListener("change", function () {
@@ -105,6 +117,7 @@ document.getElementById("urgente_an").addEventListener("change", function () {
     document.getElementById("consum_filtru").style.display = "none";
     document.getElementById("diagnostic_filtru").style.display = "none";
   }
+  resetButtons();
 });
 const startYearConfiscari = document.getElementById("startYearConfiscari");
 const endYearConfiscari = document.getElementById("endYearConfiscari");
@@ -117,6 +130,7 @@ startYearConfiscari.addEventListener("change", function () {
   }
   endYearConfiscari.innerHTML =
     `<option value="" disabled selected>An sfârșit</option>` + endYearOptions;
+  resetButtons();
 });
 
 const startYearInfractiuni = document.getElementById("startYearInfractiuni");
@@ -130,6 +144,7 @@ startYearInfractiuni.addEventListener("change", function () {
   }
   endYearInfractiuni.innerHTML =
     `<option value="" disabled selected>An sfârșit</option>` + endYearOptions;
+  resetButtons();
 });
 
 document
@@ -160,6 +175,7 @@ document
       document.getElementById("pedepse_filtru_infractiuni").style.display =
         "flex";
     }
+    resetButtons();
   });
 document
   .getElementById("infractiuni_categorie")
@@ -189,4 +205,5 @@ document
       document.getElementById("pedepse_filtru_infractiuni").style.display =
         "none";
     }
+    resetButtons();
   });
