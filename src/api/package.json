@@ -13,13 +13,17 @@
     "nodemon": "^2.0.22"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.354.0",
+    "@aws-sdk/s3-request-presigner": "^3.354.0",
     "bcrypt": "^5.1.0",
     "concurrently": "^8.0.1",
+    "crypto": "^1.0.1",
     "dotenv": "^16.0.3",
     "jsonwebtoken": "^9.0.0",
     "multer": "^1.4.5-lts.1",
     "multiparty": "^4.2.3",
     "pg": "^8.10.0",
+    "sharp": "^0.32.1",
     "xlsx": "^0.18.5"
   }
 }

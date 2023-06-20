@@ -94,7 +94,7 @@ async function getCampanii() {
         contentElement.className = "content";
 
         const imageElement = document.createElement("img");
-        imageElement.src = "../public/poze/campanie6.jpg";
+        imageElement.src = campaign.image;
 
         const pElement = document.createElement("p");
         pElement.textContent = campaign.article.substring(0, 120) + "...";
@@ -139,7 +139,7 @@ async function getCampanii() {
         textBox.setAttribute("data-index", `${divIndex + index}`);
         closeBtn.setAttribute("class", "close-modal");
         closeBtn.innerHTML = "&times;";
-        img.setAttribute("src", "../public/poze/campanie6.jpg");
+        img.setAttribute("src", campaign.image);
         img.setAttribute("alt", `poza ${index}`);
         text.setAttribute("class", "text");
         p.setAttribute("id", "modal-text");

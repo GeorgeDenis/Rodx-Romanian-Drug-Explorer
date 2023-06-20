@@ -1,43 +1,51 @@
-const uploadBtn = document.getElementById('uploadBtn');
-const fileInput = document.getElementById('fileInput');
-const form = document.getElementById('campaignForm');
+const uploadBtn = document.getElementById("uploadBtn");
+const fileInput = document.getElementById("fileInput");
+const form = document.getElementById("campaignForm");
+const addBtn = document.getElementById("addBtn");
+const articleInput = document.getElementById("article");
+const titleInput = document.getElementById("title");
 
 addBtn.disabled = true;
 
+function checkInputs() {
+  addBtn.disabled =
+    !titleInput.value || !articleInput.value || !fileInput.files.length;
+}
 
-uploadBtn.addEventListener('click', function() {
+[titleInput, articleInput, fileInput].forEach((input) => {
+  input.addEventListener("input", checkInputs);
+});
+
+uploadBtn.addEventListener("click", function () {
   fileInput.click();
 });
 
-fileInput.addEventListener('change', function() {
+fileInput.addEventListener("change", function () {
   form.dataset.file = this.files[0];
-  
-  // Once a file is selected, disable the upload button and show the check mark
+
   uploadBtn.disabled = true;
-  document.getElementById('checkMark').style.display = 'inline';
-  [title, article].forEach(input => {
-    input.addEventListener('input', function() {
-        addBtn.disabled = !title.value || !article.value;
-    });
-}); 
+  document.getElementById("checkMark").style.display = "inline";
+  checkInputs();
 });
-form.addEventListener('submit', function(e) {
+
+form.addEventListener("submit", function (e) {
   e.preventDefault();
 
-  const fileInput = document.getElementById("fileInput");
-  const articleInput = document.getElementById("article");
-  const titleInput = document.getElementById("title");
-  
   const uploadedImage = fileInput.files[0];
-  const article = articleInput.value;
-  const title = titleInput.value;
-  
- 
+  const article = articleInput.value.trim();
+  const title = titleInput.value.trim();
+
+  if (!uploadedImage || article === "" || title === "") {
+    alert("Toate câmpurile trebuie completate!");
+    return;
+  }
+
   const formData = new FormData();
   formData.append("photo", uploadedImage);
   formData.append("article", article);
   formData.append("title", title);
-  
+  document.getElementById("checkMark").style.display = "none";
+  uploadBtn.disabled = false;
   fetch("/api/campaign", {
     method: "POST",
     headers: {
@@ -49,5 +57,8 @@ form.addEventListener('submit', function(e) {
     .then((json) => {
       var obj = JSON.parse(JSON.stringify(json));
       alert(obj.message);
+      fileInput.value = "";
+      articleInput.value = "";
+      titleInput.value = "";
     });
 });
