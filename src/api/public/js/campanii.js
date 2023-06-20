@@ -25,8 +25,6 @@ for (let j = 0; j < btnClose.length; j++) {
   });
 }
 document.addEventListener("keydown", function (e) {
-  console.log("peste");
-
   for (let i = 0; i < buttons.length; i++) {
     let idOpen = "text-box-" + String(i + 1);
     const textBox = document.getElementById(idOpen);
@@ -46,12 +44,13 @@ arrowButtons.forEach((arrow) => {
     const currentIndex = parseInt(currentTextBox.dataset.index) - 1;
     let targetIndex;
 
+    let textboxes = document.querySelectorAll(".text-box"); // refresh textboxes
 
-    
     if (arrow.classList.contains("arrow-left")) {
-      targetIndex = currentIndex === 0 ? buttons.length - 1 : currentIndex - 1;
+      targetIndex =
+        currentIndex === 0 ? textboxes.length - 1 : currentIndex - 1;
     } else {
-      targetIndex = (currentIndex + 1) % buttons.length;
+      targetIndex = (currentIndex + 1) % textboxes.length;
     }
 
     const targetTextBox = document.querySelector(
@@ -62,7 +61,7 @@ arrowButtons.forEach((arrow) => {
     targetTextBox.classList.remove("hidden");
   });
 });
-
+let allTextBoxes = Array.from(document.querySelectorAll(".text-box"));
 async function getCampanii() {
   const getData = async () => {
     const response = await fetch("http://localhost:3000/api/campaign", {
@@ -79,53 +78,122 @@ async function getCampanii() {
   };
   getData()
     .then((data) => {
+      let divIndex = 7;
+
       const campaigns = data.campaigns;
-      const parentElement = document.querySelector(".catalog"); // change ".articles-container" to the class name or id of your container
+      const parentElement = document.querySelector(".catalog");
 
-      campaigns.forEach((campaign) => {
-        const rectangleDiv = document.createElement("div");
-        rectangleDiv.className = "rectangle glass";
+      campaigns.forEach((campaign, index) => {
+        const campaignElement = document.createElement("div");
+        campaignElement.className = "rectangle glass";
 
-        const h3 = document.createElement("h3");
-        h3.textContent = campaign.title;
+        const titleElement = document.createElement("h3");
+        titleElement.textContent = campaign.title;
 
-        const contentDiv = document.createElement("div");
-        contentDiv.className = "catalog";
+        const contentElement = document.createElement("div");
+        contentElement.className = "content";
 
-        const img = document.createElement("img");
-        img.src = campaign.image;
-        img.alt = "campaign image";
+        const imageElement = document.createElement("img");
+        imageElement.src = "../public/poze/campanie6.jpg";
 
-        const p = document.createElement("p");
-        p.textContent = campaign.shortText;
+        const pElement = document.createElement("p");
+        pElement.textContent = campaign.article.substring(0, 120) + "...";
 
-        contentDiv.appendChild(img);
-        contentDiv.appendChild(p);
+        contentElement.appendChild(imageElement);
+        contentElement.appendChild(pElement);
 
-        const btnDiv = document.createElement("div");
-        btnDiv.className = "btn";
+        const btnElement = document.createElement("div");
+        btnElement.className = "btn";
 
-        const button = document.createElement("button");
-        button.className = "read-more";
-        button.textContent = "Read more";
+        const readMoreElement = document.createElement("button");
+        readMoreElement.className = "read-more";
+        readMoreElement.textContent = "Read more";
+        readMoreElement.dataset.index = index + divIndex;
 
-        button.addEventListener('click', function() {
-          const modalText = document.querySelector('#modal-text');
-          modalText.textContent = campaign.article;
-  
-          const textBox = document.querySelector(".text-box");
-          textBox.classList.remove("hidden");
-          overlay.classList.remove("hidden");
-          body.classList.add("no-scroll");
-        });
+        btnElement.appendChild(readMoreElement);
 
-        btnDiv.appendChild(button);
-        
-        rectangleDiv.appendChild(h3);
-        rectangleDiv.appendChild(contentDiv);
-        rectangleDiv.appendChild(btnDiv);
+        campaignElement.appendChild(titleElement);
+        campaignElement.appendChild(contentElement);
+        campaignElement.appendChild(btnElement);
 
-        parentElement.appendChild(rectangleDiv);
+        parentElement.appendChild(campaignElement);
+        attachButtonEvents(readMoreElement);
+      });
+      let textBoxContainer = document.querySelector("#text-box-container"); // Added this line
+
+      campaigns.forEach((campaign, index) => {
+        let textBox = document.createElement("div");
+        let closeBtn = document.createElement("button");
+        closeBtn.setAttribute("class", "close-modal");
+        closeBtn.innerHTML = "&times;";
+        closeBtn.dataset.index = divIndex + index;
+        let img = document.createElement("img");
+        let text = document.createElement("div");
+        let p = document.createElement("p");
+        let navigation = document.createElement("div");
+        let arrowLeft = document.createElement("button");
+        let arrowRight = document.createElement("button");
+
+        textBox.setAttribute("class", "text-box hidden");
+        textBox.setAttribute("id", `text-box-${divIndex + index}`);
+        textBox.setAttribute("data-index", `${divIndex + index}`);
+        closeBtn.setAttribute("class", "close-modal");
+        closeBtn.innerHTML = "&times;";
+        img.setAttribute("src", "../public/poze/campanie6.jpg");
+        img.setAttribute("alt", `poza ${index}`);
+        text.setAttribute("class", "text");
+        p.setAttribute("id", "modal-text");
+        p.innerText = campaign.article;
+        navigation.setAttribute("class", "navigation");
+        arrowLeft.setAttribute("class", "arrow arrow-left");
+        arrowLeft.innerHTML = "&larr;";
+        arrowRight.setAttribute("class", "arrow arrow-right");
+        arrowRight.innerHTML = "&rarr;";
+
+        navigation.appendChild(arrowLeft);
+        navigation.appendChild(arrowRight);
+
+        arrowLeft.addEventListener("click", navigate);
+        arrowRight.addEventListener("click", navigate);
+        text.appendChild(p);
+        text.appendChild(navigation);
+        textBox.appendChild(closeBtn);
+        textBox.appendChild(img);
+        textBox.appendChild(text);
+
+        textBoxContainer.appendChild(textBox);
+        attachCloseButtonEvents(closeBtn);
+
+        allTextBoxes.push(textBox);
+      });
+      let buttons = document.querySelectorAll(".read-more");
+      let btnClose = document.querySelectorAll(".close-modal");
+      let textboxes = document.querySelectorAll(".text-box");
+      allTextBoxes.forEach((textBox, index) => {
+        // Attach navigation events to all text-box elements
+        textBox
+          .querySelector(".arrow-left")
+          .addEventListener("click", function () {
+            navigate(index, -1);
+          });
+        textBox
+          .querySelector(".arrow-right")
+          .addEventListener("click", function () {
+            navigate(index, 1);
+          });
+      });
+
+      // Gestionează evenimentul de închidere pentru toate text-box-urile
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          allTextBoxes.forEach((textBox) => {
+            if (!textBox.classList.contains("hidden")) {
+              textBox.classList.add("hidden");
+              overlay.classList.add("hidden");
+              body.classList.remove("no-scroll");
+            }
+          });
+        }
       });
     })
     .catch((error) => {
@@ -133,17 +201,40 @@ async function getCampanii() {
     });
 }
 
-document.addEventListener("DOMContentLoaded", getCampanii);
-
-let currentIndex = 0;
-const textboxes = document.querySelectorAll('.text-box'); 
-
-function showSlide(index) {
-  textboxes.forEach((box, i) => {
-    if (i === index) {
-      box.classList.remove('hidden');
-    } else {
-      box.classList.add('hidden');
-    }
+function attachButtonEvents(button) {
+  button.addEventListener("click", function () {
+    let idOpen = "text-box-" + button.dataset.index;
+    const textBox = document.getElementById(idOpen);
+    textBox.classList.remove("hidden");
+    overlay.classList.remove("hidden");
+    body.classList.add("no-scroll");
   });
 }
+
+function attachCloseButtonEvents(button) {
+  button.addEventListener("click", function () {
+    let idClose = "text-box-" + button.dataset.index;
+    const textBox = document.getElementById(idClose);
+    textBox.classList.add("hidden");
+    overlay.classList.add("hidden");
+    body.classList.remove("no-scroll");
+  });
+}
+
+function attachNavigationButtonEvents(button) {
+  button.addEventListener("click", navigate);
+}
+function navigate(currentIndex, direction) {
+  let targetIndex = currentIndex + direction;
+  if (targetIndex < 0) targetIndex = allTextBoxes.length - 1;
+  if (targetIndex >= allTextBoxes.length) targetIndex = 0;
+
+  if (allTextBoxes[currentIndex]) {
+    allTextBoxes[currentIndex].classList.add("hidden");
+  }
+  if (allTextBoxes[targetIndex]) {
+    allTextBoxes[targetIndex].classList.remove("hidden");
+  }
+}
+
+document.addEventListener("DOMContentLoaded", getCampanii);

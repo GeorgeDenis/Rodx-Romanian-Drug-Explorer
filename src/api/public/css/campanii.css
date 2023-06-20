@@ -12,13 +12,12 @@
   font-family: "Fira sans", sans-serif;
 }
 
-
 .catalog {
   margin-top: 10rem;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
 }
 .rectangle {
   display: flex;
@@ -30,6 +29,8 @@
   margin-bottom: 5rem;
   max-width: 25rem;
   border: solid;
+  flex: 1 0 calc(33.33% - 6rem); /* Grow and shrink as needed, starting out at 33.33% of the container's width, then subtracting margin. */
+  max-width: calc(33.33% - 6rem);
 }
 .glass {
   background: linear-gradient(
@@ -147,7 +148,7 @@ img {
   margin-top: 1rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1060px) {
   .text-box {
     margin-top: 10rem;
     top: 30%;
@@ -158,5 +159,15 @@ img {
   }
   .text-box img {
     float: none;
+  }
+  .rectangle {
+    flex: 1 0 calc(50% - 6rem); /* Now 2 articles per line. */
+    max-width: calc(50% - 6rem);
+  }
+}
+@media (max-width: 700px) {
+  .rectangle {
+    flex: 1 0 calc(100% - 6rem); /* Now 1 article per line. */
+    max-width: calc(100% - 6rem);
   }
 }
