@@ -132,7 +132,7 @@ footer {
 }
 
 select:required:invalid {
-  color: gray;
+  color: #737373;
 }
 option[value=""][disabled] {
   display: none;
@@ -145,7 +145,7 @@ option {
 .dropbtn {
   font-size: 1rem;
   padding: 10px 20px;
-  background-color: #4caf50;
+  background-color: #3A833C;
   border: none;
   color: white;
   text-align: center;

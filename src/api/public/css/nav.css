@@ -101,7 +101,8 @@ nav h1 {
 
 .menu a.is-active,
 .menu a:hover {
-  background-color: #61876e !important;
+  background-color: #5A7C69;
+  
 }
 
 .mobile-menu {

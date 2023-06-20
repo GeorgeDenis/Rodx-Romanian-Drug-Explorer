@@ -166,16 +166,16 @@ logout.addEventListener("click", function () {
 function submitPasswordForm(e) {
   e.preventDefault();
 
-  var oldPassword = document.getElementById('old-password').value;
-  var newPassword = document.getElementById('new-password').value;
-  var confirmPassword = document.getElementById('confirm-new-password').value;
+  var oldPassword = document.getElementById('old-password');
+  var newPassword = document.getElementById('new-password');
+  var confirmPassword = document.getElementById('confirm-new-password');
 
-  if (oldPassword === '' || newPassword === '' || confirmPassword === '') {
+  if (oldPassword.value === '' || newPassword.value === '' || confirmPassword.value === '') {
     alert('Toate campurile trebuie completate!');
     return;
   }
 
-  if (newPassword !== confirmPassword) {
+  if (newPassword.value !== confirmPassword.value) {
     alert('Parolele nu se potrivesc!');
     return;
   }
@@ -186,6 +186,11 @@ function submitPasswordForm(e) {
   successMessage.id = 'success-message';
   document.body.appendChild(successMessage);
 
+  // Golim campurile
+  oldPassword.value = '';
+  newPassword.value = '';
+  confirmPassword.value = '';
+
   window.setTimeout(function() {
     var message = document.getElementById('success-message');
     if (message) {
@@ -195,6 +200,7 @@ function submitPasswordForm(e) {
 }
 
 document.querySelector('#password-form').addEventListener('submit', submitPasswordForm);
+
 
 function submitAccountForm(e) {
   e.preventDefault();

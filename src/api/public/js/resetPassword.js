@@ -3,8 +3,10 @@ document
   .addEventListener("submit", function (event) {
     event.preventDefault();
 
-    const oldPassword = document.getElementById("old-password").value;
-    const newPassword = document.getElementById("new-password").value;
+    const oldPasswordInput = document.getElementById("old-password");
+    const newPasswordInput = document.getElementById("new-password");
+    const oldPassword = oldPasswordInput.value;
+    const newPassword = newPasswordInput.value;
 
     fetch("http://localhost:3000/api/auth/changePassword", {
       method: "POST",
@@ -22,6 +24,11 @@ document
         if (data.status === "success") {
           alert(data.message);
           console.log("Parola a fost schimbată cu succes");
+
+          // Aici resetăm valorile câmpurilor de input
+          oldPasswordInput.value = '';
+          newPasswordInput.value = '';
+
         } else {
           console.error(data.message);
         }
