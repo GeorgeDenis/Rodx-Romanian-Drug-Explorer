@@ -324,6 +324,19 @@ const predefinedColors = [
   "#17BEBB",
 ];
 
+function downloadSvg() {
+  let context = chartCurent.canvas.getContext("2d");
+  let serializer = new C2S(context.canvas.width, context.canvas.height);
+  chartCurent.draw(serializer);
+
+  let link = document.createElement("a");
+  link.href =
+    "data:image/svg+xml; utf8," +
+    encodeURIComponent(serializer.getSerializedSvg());
+  link.download = "chart.svg";
+  link.click();
+}
+
 async function handleSearchButtonClick(event) {
   event.preventDefault();
 
@@ -567,6 +580,28 @@ async function handleSearchButtonClick(event) {
   favoriteButton.style.display = "inline-block";
   favoriteButton.addEventListener("click", async () => {
     await postFilterData(allSelectedValues);
+  });
+  const exportButton = document.getElementById("export-button");
+  exportButton.style.display = "inline-block";
+  {
+    document.querySelectorAll(".dropdown-item").forEach(function (item) {
+      item.addEventListener("click", function () {
+        console.log("Ai selectat " + this.textContent);
+      });
+    });
+  }
+  document.querySelectorAll(".dropdown-item").forEach(function (item) {
+    item.addEventListener("click", function () {
+      if (this.textContent === "PNG") {
+        var imgData = chartCurent.toBase64Image();
+        var a = document.createElement("a");
+        a.href = imgData;
+        a.download = document.getElementById("chartDescription").innerText;
+        a.click();
+      } else {
+        console.log("Ai selectat " + this.textContent);
+      }
+    });
   });
 }
 

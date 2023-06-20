@@ -12,8 +12,11 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script
     src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+
 
   <style>
+
 
 
   </style>
@@ -244,6 +247,18 @@
     <div id="button-container">
       <button class="search-button" id="search-button">Caută</button>
       <button class="search-button" id="favorite-button" style="display: none;">Preferate</button>
+      <div id="export-button" class="dropdown" style="display: none;">
+        <button class="dropbtn search-button">Export</button>
+        <div class="dropdown-content">
+          <button class="dropdown-item">PNG</button>
+          <button class="dropdown-item">CSV</button>
+          <button class="dropdown-item">PDF</button>
+        </div>
+      </div>
+
+
+
+
     </div>
     <div id="description-container">
       <div id="chartDescription"></div>
@@ -253,14 +268,7 @@
   <div id="chartContainer" style="position: relative; height:60vh; width:80vw;margin: auto;">
     <canvas id="myChart"></canvas>
   </div>
-  <div class="dropup">
-    <button class="dropbtn">Save</button>
-    <div class="dropup-content">
-      <a href="#">PNG</a>
-      <a href="#">CSV</a>
-      <a href="#">PDF</a>
-    </div>
-  </div>
+
 
   <footer>
     <p>@Drugs&Prevention</p>
@@ -268,7 +276,7 @@
   <script src="../public/js/main.js"></script>
   <script src="../public/js/filterButoane.js"></script>
   <script src="../public/js/filterBtnShows.js"></script>
-
+  <script src="../public/js/exportDiagram.js"></script>
 </body>
 <script>
 
