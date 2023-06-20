@@ -118,3 +118,75 @@ startYearConfiscari.addEventListener("change", function () {
   endYearConfiscari.innerHTML =
     `<option value="" disabled selected>An sfârșit</option>` + endYearOptions;
 });
+
+const startYearInfractiuni = document.getElementById("startYearInfractiuni");
+const endYearInfractiuni = document.getElementById("endYearInfractiuni");
+
+startYearInfractiuni.addEventListener("change", function () {
+  let startYear = parseInt(this.value);
+  let endYearOptions = "";
+  for (let i = startYear + 1; i <= 2022; i++) {
+    endYearOptions += `<option value="${i}">${i}</option>`;
+  }
+  endYearInfractiuni.innerHTML =
+    `<option value="" disabled selected>An sfârșit</option>` + endYearOptions;
+});
+
+document
+  .getElementById("infractiuni_categorie")
+  .addEventListener("change", function () {
+    document.getElementById("gen_filtru_infractiuni").style.display = "none";
+    document.getElementById("cercetari_filtru_infractiuni").style.display =
+      "none";
+    document.getElementById("incadrare_filtru_infractiuni").style.display =
+      "none";
+    document.getElementById("grupari_filtru_infractiuni").style.display =
+      "none";
+    document.getElementById("pedepse_filtru_infractiuni").style.display =
+      "none";
+
+    if (this.value === "Gen") {
+      document.getElementById("gen_filtru_infractiuni").style.display = "flex";
+    } else if (this.value === "Cercetari") {
+      document.getElementById("cercetari_filtru_infractiuni").style.display =
+        "flex";
+    } else if (this.value === "Incadrare juridica") {
+      document.getElementById("incadrare_filtru_infractiuni").style.display =
+        "flex";
+    } else if (this.value === "Grupari") {
+      document.getElementById("grupari_filtru_infractiuni").style.display =
+        "flex";
+    } else if (this.value === "Pedepse") {
+      document.getElementById("pedepse_filtru_infractiuni").style.display =
+        "flex";
+    }
+  });
+document
+  .getElementById("infractiuni_categorie")
+  .addEventListener("change", function () {
+    document.getElementById("varsta_filtru_infractiuni").style.display = "none";
+    document.getElementById("lege_filtru_infractiuni").style.display = "none";
+
+    if (this.value === "Gen") {
+      document.getElementById("gen_filtru_infractiuni").style.display = "flex";
+      document
+        .getElementById("gen_filtru_infractiuni")
+        .addEventListener("change", function () {
+          document.getElementById("varsta_filtru_infractiuni").style.display =
+            this.value ? "flex" : "none";
+        });
+    } else if (this.value === "Pedepse") {
+      document.getElementById("pedepse_filtru_infractiuni").style.display =
+        "flex";
+      document
+        .getElementById("pedepse_filtru_infractiuni")
+        .addEventListener("change", function () {
+          document.getElementById("lege_filtru_infractiuni").style.display =
+            this.value ? "flex" : "none";
+        });
+    } else {
+      document.getElementById("gen_filtru_infractiuni").style.display = "none";
+      document.getElementById("pedepse_filtru_infractiuni").style.display =
+        "none";
+    }
+  });

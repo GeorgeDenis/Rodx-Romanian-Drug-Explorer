@@ -22,16 +22,8 @@ sheet_name_list.forEach((y) => {
 
   let promises = data.map((row) => {
     return client.query(
-      "INSERT INTO urgente(categorie, canabis, stimulanti, opioide, nsp, filtru, an) VALUES($1, $2, $3, $4, $5, $6, $7)",
-      [
-        row.Categorie,
-        row.Canabis,
-        row.Stimulanți,
-        row.Opiacee,
-        row.NSP,
-        row.Filtru,
-        year,
-      ]
+      "INSERT INTO infractiuni(categorie, valoare, filtru, subfiltru,an) VALUES($1, $2, $3, $4, $5)",
+      [row.Categorie, row.Valoare, row.Filtru, row.Subfiltru, year]
     );
   });
 

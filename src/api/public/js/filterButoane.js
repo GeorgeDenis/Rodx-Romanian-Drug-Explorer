@@ -146,7 +146,13 @@ function createChartForUrgente(type, labels, data, backgroundColors) {
   });
   return chartCurent;
 }
-function createChartForConfiscari(type, labels, data, backgroundColors) {
+function createChartForInterval(
+  type,
+  labels,
+  data,
+  backgroundColors,
+  chartTitle
+) {
   const ctx = document.getElementById("myChart").getContext("2d");
   if (chartCurent != null) {
     chartCurent.destroy();
@@ -193,7 +199,7 @@ function createChartForConfiscari(type, labels, data, backgroundColors) {
   chartCurent = new Chart(ctx, {
     type: type,
     data: {
-      labels: type === "pie" || type === "line" ? labels : ["Confiscari"],
+      labels: type === "pie" || type === "line" ? labels : [chartTitle],
       datasets: datasets,
     },
     options: {
@@ -292,6 +298,20 @@ async function fetchConfiscariIntervalData(confiscariValues) {
     return await response.json();
   }
 }
+async function fetchInfractiuniIntervalData(infractiuniValues) {
+  const response = await fetch("/api/filter/infractiuni/interval", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(infractiuniValues),
+  });
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  } else {
+    return await response.json();
+  }
+}
 
 const predefinedColors = [
   "#5FAD56",
@@ -319,13 +339,10 @@ async function handleSearchButtonClick(event) {
     specificSelectors = document.querySelectorAll(
       "#infractiuni_options select"
     );
-    specificSelectorIds = ["infractiuni_an", "infractiuni_subcategorie"];
   } else if (categorieSelectValue === "confiscari") {
     specificSelectors = document.querySelectorAll("#confiscari_options select");
-    specificSelectorIds = ["confiscari_an", "confiscari_subcategorie"];
   } else if (categorieSelectValue === "urgente") {
     specificSelectors = document.querySelectorAll("#urgente_options select");
-    specificSelectorIds = ["urgente_an", "urgente_drog", "urgente_filtru"];
   }
 
   const specificValues = getSelectedValues(specificSelectors);
@@ -352,20 +369,65 @@ async function handleSearchButtonClick(event) {
 
     const infractiuniValues = getSelectedValues(infractiuniSelects);
     if (!infractiuniValues) return;
+    fetchInfractiuniIntervalData(infractiuniValues)
+      .then((response) => {
+        const allZero = response.data.every(
+          (item) => item.cantitate === 0 || item.cantitate === null
+        );
+        if (allZero) {
+          if (chartCurent != null) {
+            chartCurent.destroy();
+          }
+          document.getElementById("chartDescription").innerText =
+            "Nu exista valori pentru generarea graficului pentru aceste filtre";
+          return;
+        }
 
-    chartData = {
-      type: reprezentareSelectValue,
-      labels: [
-        "Boston",
-        "Worcester",
-        "Springfield",
-        "Lowell",
-        "Cambridge",
-        "New Bedford",
-      ],
-      data: [617, 181, 153, 106, 105, 95],
-      backgroundColors: ["green", "red", "blue"],
-    };
+        let description = `Infractiuni: intre ${infractiuniValues.startYearInfractiuni} si ${infractiuniValues.endYearInfractiuni}, filtrate dupa ${infractiuniValues.infractiuni_categorie}`;
+        if (infractiuniValues.incadrare_filtru_infractiuni) {
+          description += ` si ${infractiuniValues.incadrare_filtru_infractiuni}.`;
+        }
+        if (infractiuniValues.cercetari_filtru_infractiuni) {
+          description += ` si ${infractiuniValues.cercetari_filtru_infractiuni}.`;
+        }
+        if (infractiuniValues.gen_filtru_infractiuni) {
+          description += `, ${infractiuniValues.gen_filtru_infractiuni}`;
+        }
+        if (infractiuniValues.grupari_filtru_infractiuni) {
+          description += ` si ${infractiuniValues.grupari_filtru_infractiuni}.`;
+        }
+        if (infractiuniValues.pedepse_filtru_infractiuni) {
+          description += `, ${infractiuniValues.pedepse_filtru_infractiuni}`;
+        }
+        if (infractiuniValues.lege_filtru_infractiuni) {
+          description += ` si ${infractiuniValues.lege_filtru_infractiuni}.`;
+        }
+        if (infractiuniValues.varsta_filtru_infractiuni) {
+          description += ` si ${infractiuniValues.varsta_filtru_infractiuni}.`;
+        }
+
+        document.getElementById("chartDescription").innerText = "";
+        document.getElementById("chartDescription").innerText = description;
+
+        chartData = {
+          type: reprezentareSelectValue,
+          labels: response.data.map((item) => item.label),
+          data: response.data.map((item) => item.cantitate),
+          backgroundColors: response.data.map(
+            (item, index) => predefinedColors[index % predefinedColors.length]
+          ),
+        };
+        if (chartData) {
+          createChartForInterval(
+            chartData.type,
+            chartData.labels,
+            chartData.data,
+            chartData.backgroundColors,
+            "Infractiuni"
+          );
+        }
+      })
+      .catch((error) => console.error(error));
   } else if (categorieSelectValue === "confiscari") {
     const confiscariSelects = document.querySelectorAll(
       "#confiscari_options select"
@@ -378,6 +440,9 @@ async function handleSearchButtonClick(event) {
           (item) => item.cantitate === 0 || item.cantitate === null
         );
         if (allZero) {
+          if (chartCurent != null) {
+            chartCurent.destroy();
+          }
           document.getElementById("chartDescription").innerText =
             "Nu exista valori pentru generarea graficului pentru aceste filtre";
           return;
@@ -397,11 +462,12 @@ async function handleSearchButtonClick(event) {
           ),
         };
         if (chartData) {
-          createChartForConfiscari(
+          createChartForInterval(
             chartData.type,
             chartData.labels,
             chartData.data,
-            chartData.backgroundColors
+            chartData.backgroundColors,
+            "Confiscari"
           );
         }
       })

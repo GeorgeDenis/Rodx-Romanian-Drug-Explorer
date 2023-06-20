@@ -59,20 +59,66 @@
       </select>
 
       <div id="infractiuni_options" style="display: none;">
-        <select class="filter-select" id="infractiuni_subcategorie">
+        <select class="filter-select" id="infractiuni_categorie">
           <option value="" disabled selected>Categorie</option>
+          <option value="Cercetari">Cercetari</option>
+          <option value="Incadrare juridica">Incadrare juridica</option>
           <option value="Gen">Gen</option>
-          <option value="grupari">Grupari</option>
+          <option value="Grupari">Grupari</option>
           <option value="Pedepse">Pedepse</option>
-          <option value="cercetari">Cercetari</option>
         </select>
-        <select class="filter-select" id="infractiuni_an">
-          <option value="" disabled selected>An</option>
-          <option value="2022">2022</option>
-          <option value="2021">2021</option>
+        <select class="filter-select" id="startYearInfractiuni">
+          <option value="" disabled selected>An început</option>
           <option value="2020">2020</option>
+          <option value="2021">2021</option>
+        </select>
+
+        <select class="filter-select" id="endYearInfractiuni">
+          <option value="" disabled selected>An sfârșit</option>
         </select>
         <!-- ...restul selectoarelor... -->
+        <select class="filter-select" id="gen_filtru_infractiuni" style="display: none;">
+          <option value="" disabled selected>Alegeți genul</option>
+          <option value="Bărbați">Barbati</option>
+          <option value="Femei">Femei</option>
+        </select>
+        <select class="filter-select" id="cercetari_filtru_infractiuni" style="display: none;">
+          <option value="" disabled selected>Alegeți tipul cercetarii</option>
+          <option value="Persoane cercetate">Persoane cercetate</option>
+          <option value="Persoane în judecată">Persoane în judecată</option>
+          <option value="Persoane condamnate">Persoane condamnate</option>
+        </select>
+        <select class="filter-select" id="incadrare_filtru_infractiuni" style="display: none;">
+          <option value="" disabled selected>Alegeți incadrarea</option>
+          <option value="Art.2 din Legea nr. 143/2000">Art.2 din Legea nr. 143/2000</option>
+          <option value="Art.3 din Legea nr. 143/2000">Art.3 din Legea nr. 143/2000</option>
+          <option value="Art.4 din Legea nr. 143/2000">Art.4 din Legea nr. 143/2000</option>
+          <option value="Art.7 din Legea nr. 143/2000">Art.7 din Legea nr. 143/2000</option>
+        </select>
+        <select class="filter-select" id="grupari_filtru_infractiuni" style="display: none;">
+          <option value="" disabled selected>Alegeți situatia</option>
+          <option value="Grupări identificate">Grupări identificate</option>
+          <option value="Persoane în grupări">Persoane în grupări</option>
+        </select>
+        <select class="filter-select" id="pedepse_filtru_infractiuni" style="display: none;">
+          <option value="" disabled selected>Alegeți tipul pedepsei</option>
+          <option value="Executarea pedepsei">Executarea pedepsei</option>
+          <option value="Suspendarea pedepsei">Suspendarea pedepsei</option>
+          <option value="Amendă penală">Amendă penală</option>
+          <option value="Amânarea executării pedepsei">Amânarea executării pedepsei</option>
+        </select>
+        <select class="filter-select" id="varsta_filtru_infractiuni" style="display: none;">
+          <option value="" disabled selected>Alegeți categoria de vârstă</option>
+          <option value="Majori">Majori</option>
+          <option value="Minori">Minori</option>
+        </select>
+        <select class="filter-select" id="lege_filtru_infractiuni" style="display: none;">
+          <option value="" disabled selected>Alegeți legea</option>
+          <option value="Legea nr. 143/2000">Legea nr. 143/2000</option>
+          <option value="Legea nr. 194/2011">Legea nr. 194/2011</option>
+        </select>
+
+
       </div>
       <div id="confiscari_options" style="display: none;">
         <select class="filter-select" id="confiscari_subcategorie">

@@ -118,3 +118,64 @@ exports.getConfiscariIntervalBd = async (confiscariDate) => {
   });
   return confiscari;
 };
+exports.getInfractiuniIntervalBd = async (infractiuniDate) => {
+  const {
+    infractiuni_categorie,
+    endYearInfractiuni,
+    startYearInfractiuni,
+    incadrare_filtru_infractiuni,
+    cercetari_filtru_infractiuni,
+    gen_filtru_infractiuni,
+    grupari_filtru_infractiuni,
+    pedepse_filtru_infractiuni,
+    varsta_filtru_infractiuni,
+    lege_filtru_infractiuni,
+  } = infractiuniDate;
+
+  let filtru =
+    incadrare_filtru_infractiuni ||
+    cercetari_filtru_infractiuni ||
+    gen_filtru_infractiuni ||
+    grupari_filtru_infractiuni ||
+    pedepse_filtru_infractiuni;
+  let filtruSecond = null;
+  filtruSecond = varsta_filtru_infractiuni || lege_filtru_infractiuni;
+  if (filtruSecond) {
+    const queryText = {
+      text: `SELECT an, valoare FROM infractiuni WHERE an BETWEEN $1 AND $2 AND categorie=$3 AND filtru=$4 AND subfiltru=$5`,
+      values: [
+        startYearInfractiuni,
+        endYearInfractiuni,
+        infractiuni_categorie,
+        filtru,
+        filtruSecond,
+      ],
+    };
+    const result = await pool.query(queryText);
+    const confiscari = result.rows.map((row) => {
+      return {
+        label: row["an"],
+        cantitate: Math.floor(row["valoare"]),
+      };
+    });
+    return confiscari;
+  } else {
+    const queryText = {
+      text: `SELECT an, valoare FROM infractiuni WHERE an BETWEEN $1 AND $2 AND categorie=$3 AND filtru=$4`,
+      values: [
+        startYearInfractiuni,
+        endYearInfractiuni,
+        infractiuni_categorie,
+        filtru,
+      ],
+    };
+    const result = await pool.query(queryText);
+    const confiscari = result.rows.map((row) => {
+      return {
+        label: row["an"],
+        cantitate: Math.floor(row["valoare"]),
+      };
+    });
+    return confiscari;
+  }
+};

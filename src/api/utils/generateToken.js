@@ -29,13 +29,11 @@ http
 
       req.on("end", () => {
         const data = querystring.parse(body);
-        // Verificăm dacă cheia partajată este corectă
         if (data.sharedKey !== process.env.SHARED_KEY) {
           res.writeHead(403);
           return res.end("Forbidden");
         }
 
-        // Generăm tokenul JWT
         const token = generateToken(data.name, data.role, data.email);
         res.writeHead(200, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ token }));
