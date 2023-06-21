@@ -7,6 +7,62 @@ const upload = multer({ storage });
 const { addCampaign, getAllCampaigns } = require("../model/campaign");
 const { uploadImage } = require("../model/s3Services");
 
+/**
+ * @swagger
+ * /api/campaign:
+ *   post:
+ *     summary: Adaugă o nouă campanie.
+ *     tags: [Campaign]
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               photo:
+ *                 type: string
+ *                 format: binary
+ *               title:
+ *                 type: string
+ *               article:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Campanie adăugată cu succes.
+ *       400:
+ *         description: Eroare în timpul încărcării fișierului.
+ *       401:
+ *         description: Nu sunteti autorizat.
+ *       403:
+ *         description: Nu aveti permisiunea de a efectua aceasta actiune.
+ *       500:
+ *         description: Eroare de server.
+ * 
+ *   get:
+ *     summary: Obțineți toate campaniile.
+ *     tags: [Campaign]
+ *     responses:
+ *       200:
+ *         description: Lista de campanii.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   title:
+ *                     type: string
+ *                   article:
+ *                     type: string
+ *                   img:
+ *                     type: string
+ *       500:
+ *         description: Eroare de server.
+ */
 const insertCampaign = catchAsync(async (req, res) => {
   upload.single("photo")(req, res, async (err) => {
     if (err instanceof multer.MulterError) {

@@ -7,6 +7,61 @@ const users = require("../model/user");
 const bcrypt = require("bcrypt");
 const { verifyToken, verifyRole } = require("./authController");
 
+/**
+ * @swagger
+ * /api/admin:
+ *   get:
+ *     summary: Obțineți toți utilizatorii.
+ *     tags: [Admin]
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Lista de utilizatori
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   name:
+ *                     type: string
+ *                   email:
+ *                     type: string
+ *                   role:
+ *                     type: string
+ *       401:
+ *         description: Nu sunteti autorizat.
+ *       403:
+ *         description: Nu aveti permisiunea de a efectua aceasta actiune.
+ * 
+ *   delete:
+ *     summary: Șterge un utilizator pe baza adresei de email.
+ *     tags: [Admin]
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *     responses:
+ *       204:
+ *         description: Utilizator șters cu succes.
+ *       400:
+ *         description: Email-ul introdus nu exista.
+ *       401:
+ *         description: Nu sunteti autorizat.
+ *       403:
+ *         description: Nu aveti permisiunea de a efectua aceasta actiune.
+ *       500:
+ *         description: A aparut o problema la stergerea utilizatorului.
+ */
 const permission = catchAsync(async (req, res) => {
   const response = await verifyToken(req, res);
   if (!response) {

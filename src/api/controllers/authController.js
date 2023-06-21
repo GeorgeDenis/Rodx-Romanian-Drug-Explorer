@@ -22,7 +22,136 @@ const fetch = require("node-fetch");
 //   const token = jwt.sign(data, jwtSecretKey, options);
 //   return token;
 // };
-
+/**
+ * @swagger
+ * /api/auth/signup:
+ *   post:
+ *     summary: Înregistrează un utilizator nou.
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *             required:
+ *               - name
+ *               - email
+ *               - password
+ *     responses:
+ *       201:
+ *         description: Utilizator înregistrat cu succes.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     token:
+ *                       type: string
+ * /api/auth/login:
+ *   post:
+ *     summary: Autentifică un utilizator existent.
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *             required:
+ *               - email
+ *               - password
+ *     responses:
+ *       200:
+ *         description: Autentificare reușită.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     token:
+ *                       type: string
+ * /api/auth/changePassword:
+ *   post:
+ *     summary: Schimbă parola unui utilizator autentificat.
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               oldPassword:
+ *                 type: string
+ *               newPassword:
+ *                 type: string
+ *             required:
+ *               - oldPassword
+ *               - newPassword
+ *     responses:
+ *       200:
+ *         description: Parola a fost schimbată cu succes.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                 message:
+ *                   type: string
+ * /api/auth/changeAccount:
+ *   post:
+ *     summary: Modifică detaliile contului unui utilizator autentificat.
+ *     tags: [Authentication]
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               newName:
+ *                 type: string
+ *               newEmail:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Datele contului au fost schimbate cu succes.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                 message:
+ *                   type: string
+ *                 token:
+ *                   type: string
+ */
 const generateToken = catchAsync(async (user) => {
   const response = await fetch("http://localhost:5000/token", {
     method: "POST",
