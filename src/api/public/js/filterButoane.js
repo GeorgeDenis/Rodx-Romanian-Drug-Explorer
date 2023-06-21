@@ -334,6 +334,7 @@ var subcategories = {
 };
 
 async function fetchUrgenteData(urgenteValues) {
+  console.log(urgenteValues);
   const response = await fetch("/api/filter/urgente", {
     method: "POST",
     headers: {
@@ -348,6 +349,7 @@ async function fetchUrgenteData(urgenteValues) {
   }
 }
 async function fetchUrgenteIntervalData(urgenteValues) {
+  console.log(urgenteValues);
   const response = await fetch("/api/filter/urgente/interval", {
     method: "POST",
     headers: {
@@ -362,6 +364,7 @@ async function fetchUrgenteIntervalData(urgenteValues) {
   }
 }
 async function fetchConfiscariIntervalData(confiscariValues) {
+  console.log(confiscariValues);
   const response = await fetch("/api/filter/confiscari/interval", {
     method: "POST",
     headers: {
@@ -376,6 +379,7 @@ async function fetchConfiscariIntervalData(confiscariValues) {
   }
 }
 async function fetchInfractiuniIntervalData(infractiuniValues) {
+  console.log(infractiuniValues);
   const response = await fetch("/api/filter/infractiuni/interval", {
     method: "POST",
     headers: {

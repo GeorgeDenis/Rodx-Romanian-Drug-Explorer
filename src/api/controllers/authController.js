@@ -8,7 +8,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { promisify } = require("util");
 const fetch = require("node-fetch");
-
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
 // const generateToken = (name, role, email) => {
 //   let jwtSecretKey = process.env.JWT_SECRET_KEY;
 //   let data = {
@@ -354,17 +355,89 @@ const changeAccount = catchAsync(async (req, res) => {
   res.statusCode = 200;
   res.end(JSON.stringify({ status: "success", message: "Datele contului au fost schimbate cu succes", token }));
 });
+/////
+
+const resetPasswordRequest = catchAsync(async (req, res) => {
+  const { email } = await parseRequestBody(req);
+  const user = await users.findUserByEmail(email);
+  if (!user) {
+    errorController(res, new AppError("Email-ul nu exista!", 401));
+    return;
+  }
+
+  const resetToken = crypto.randomBytes(32).toString('hex');
+  const resetExpires = new Date();
+  resetExpires.setHours(resetExpires.getHours() + 1);
+  
+  await users.setUserResetToken(user.email, resetToken, resetExpires);
+
+  const resetUrl = `http://localhost:5000/api/auth/resetPassword/${resetToken}`;
+  
+  let transporter = nodemailer.createTransport({
+    service: 'yahoo',
+    auth: {
+      user: 'your-email@yahoo.com',
+      pass: 'your-yahoo-password'
+    }
+  });
+  console.log(mailOptions);
+  let mailOptions = {
+    from: '"Your Name" <your-email@example.com>',
+    to: user.email,
+    subject: "Resetare parola",
+    text: `Vă rugăm să accesați acest link pentru a vă reseta parola: ${resetUrl}`,
+  };
+  console.log(mailOptions);
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+        console.log(error);
+    } else {
+        console.log('Email sent: ' + info.response);
+    }
+});
+
+  
+  res.statusCode = 200;
+  res.end(JSON.stringify({ status: "success", message: "Un e-mail a fost trimis cu instrucțiuni de resetare a parolei." }));
+});
+
+
+const resetPassword = catchAsync(async (req, res) => {
+  const resetToken = req.params.token;
+  const user = await users.findUserByResetToken(resetToken);
+
+  if (!user) {
+    errorController(res, new AppError("Token-ul nu există sau a expirat", 401));
+    return;
+  }
+
+  // verifica daca tokenul a expirat
+  const resetExpires = new Date(user.reset_token_expires);
+  if (resetExpires < new Date()) {
+    errorController(res, new AppError("Token-ul a expirat", 401));
+    return;
+  }
+
+  const { password } = await parseRequestBody(req);
+  const hashedPassword = await bcrypt.hash(password, 12);
+
+  await users.updateUserPassword(user.email, hashedPassword);
+  await users.clearUserResetToken(user.email);
+
+  res.statusCode = 200;
+  res.end(JSON.stringify({ status: "success", message: "Parola a fost resetată cu succes." }));
+});
 
 
 const authController = catchAsync(async (req, res) => {
   const { method, url } = req;
   res.setHeader("Content-Type", "application/json");
+  
   if (url === "/api/auth/signup" && method === "POST") {
     signup(req, res);
   } else if (url === "/api/auth/login" && method === "POST") {
     login(req, res);
-  
-  }else if (url === "/api/auth/changePassword" && method === "POST") {
+  } else if (url === "/api/auth/changePassword" && method === "POST") {
     const response = await verifyToken(req, res);
     if (!response) {
       return;
@@ -376,8 +449,11 @@ const authController = catchAsync(async (req, res) => {
       return;
     }
     changeAccount(req, res);
+  } else if (url === "/api/auth/resetPasswordRequest" && method === "POST") {
+    resetPasswordRequest(req, res);
+  } else if (url.startsWith("/api/auth/resetPassword/") && method === "POST") {
+    resetPassword(req, res);
   }
-  
 });
 
 

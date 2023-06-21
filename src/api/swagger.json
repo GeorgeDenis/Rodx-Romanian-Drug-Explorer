@@ -1,494 +1,785 @@
 {
-    "openapi":"3.0.0",
-    "info":{
-       "title":"RODX",
-       "version":"1.0.0",
-       "description":"API Information",
-       "contact":{
-          "name":"Developer name"
-       }
+    "openapi": "3.0.0",
+    "info": {
+        "title": "RODX",
+        "version": "1.0.0",
+        "description": "API Information",
+        "contact": {
+            "name": "Developer name"
+        }
     },
-    "servers":[
-       {
-          "url":"http://localhost:3000/"
-       }
+    "servers": [
+        {
+            "url": "http://localhost:3000/"
+        }
     ],
-    "components":{
-       "securitySchemes":{
-          "BearerAuth":{
-             "type":"http",
-             "scheme":"bearer",
-             "bearerFormat":"JWT"
-          }
-       }
+    "components": {
+        "securitySchemes": {
+            "BearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
     },
-    "paths":{
-       "/api/admin":{
-          "get":{
-             "summary":"Obțineți toți utilizatorii.",
-             "tags":[
-                "Admin"
-             ],
-             "security":[
-                {
-                   "BearerAuth":[
-                      
-                   ]
-                }
-             ],
-             "responses":{
-                "200":{
-                   "description":"Lista de utilizatori",
-                   "content":{
-                      "application/json":{
-                         "schema":{
-                            "type":"array",
-                            "items":{
-                               "type":"object",
-                               "properties":{
-                                  "name":{
-                                     "type":"string"
-                                  },
-                                  "email":{
-                                     "type":"string"
-                                  },
-                                  "role":{
-                                     "type":"string"
-                                  }
-                               }
+    "paths": {
+        "/api/admin": {
+            "get": {
+                "summary": "Obțineți toți utilizatorii.",
+                "tags": [
+                    "Admin"
+                ],
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de utilizatori",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "email": {
+                                                "type": "string"
+                                            },
+                                            "role": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
                             }
-                         }
-                      }
-                   }
-                },
-                "401":{
-                   "description":"Nu sunteti autorizat."
-                },
-                "403":{
-                   "description":"Nu aveti permisiunea de a efectua aceasta actiune."
+                        }
+                    },
+                    "401": {
+                        "description": "Nu sunteti autorizat."
+                    },
+                    "403": {
+                        "description": "Nu aveti permisiunea de a efectua aceasta actiune."
+                    }
                 }
-             }
-          },
-          "delete":{
-             "summary":"Șterge un utilizator pe baza adresei de email.",
-             "tags":[
-                "Admin"
-             ],
-             "security":[
-                {
-                   "BearerAuth":[
-                      
-                   ]
-                }
-             ],
-             "requestBody":{
-                "required":true,
-                "content":{
-                   "application/json":{
-                      "schema":{
-                         "type":"object",
-                         "properties":{
-                            "email":{
-                               "type":"string"
+            },
+            "delete": {
+                "summary": "Șterge un utilizator pe baza adresei de email.",
+                "tags": [
+                    "Admin"
+                ],
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    }
+                                }
                             }
-                         }
-                      }
-                   }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Utilizator șters cu succes."
+                    },
+                    "400": {
+                        "description": "Email-ul introdus nu exista."
+                    },
+                    "401": {
+                        "description": "Nu sunteti autorizat."
+                    },
+                    "403": {
+                        "description": "Nu aveti permisiunea de a efectua aceasta actiune."
+                    },
+                    "500": {
+                        "description": "A aparut o problema la stergerea utilizatorului."
+                    }
                 }
-             },
-             "responses":{
-                "204":{
-                   "description":"Utilizator șters cu succes."
-                },
-                "400":{
-                   "description":"Email-ul introdus nu exista."
-                },
-                "401":{
-                   "description":"Nu sunteti autorizat."
-                },
-                "403":{
-                   "description":"Nu aveti permisiunea de a efectua aceasta actiune."
-                },
-                "500":{
-                   "description":"A aparut o problema la stergerea utilizatorului."
-                }
-             }
-          }
-       },
-       "/api/auth/signup":{
-          "post":{
-             "summary":"Înregistrează un utilizator nou.",
-             "tags":[
-                "Authentication"
-             ],
-             "requestBody":{
-                "required":true,
-                "content":{
-                   "application/json":{
-                      "schema":{
-                         "type":"object",
-                         "properties":{
-                            "name":{
-                               "type":"string"
-                            },
-                            "email":{
-                               "type":"string"
-                            },
-                            "password":{
-                               "type":"string"
+            }
+        },
+        "/api/auth/signup": {
+            "post": {
+                "summary": "Înregistrează un utilizator nou.",
+                "tags": [
+                    "Authentication"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password"
+                                ]
                             }
-                         },
-                         "required":[
-                            "name",
-                            "email",
-                            "password"
-                         ]
-                      }
-                   }
-                }
-             },
-             "responses":{
-                "201":{
-                   "description":"Utilizator înregistrat cu succes.",
-                   "content":{
-                      "application/json":{
-                         "schema":{
-                            "type":"object",
-                            "properties":{
-                               "status":{
-                                  "type":"string"
-                               },
-                               "data":{
-                                  "type":"object",
-                                  "properties":{
-                                     "token":{
-                                        "type":"string"
-                                     }
-                                  }
-                               }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Utilizator înregistrat cu succes.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "token": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
-                         }
-                      }
-                   }
+                        }
+                    }
                 }
-             }
-          }
-       },
-       "/api/auth/login":{
-          "post":{
-             "summary":"Autentifică un utilizator existent.",
-             "tags":[
-                "Authentication"
-             ],
-             "requestBody":{
-                "required":true,
-                "content":{
-                   "application/json":{
-                      "schema":{
-                         "type":"object",
-                         "properties":{
-                            "email":{
-                               "type":"string"
-                            },
-                            "password":{
-                               "type":"string"
+            }
+        },
+        "/api/auth/login": {
+            "post": {
+                "summary": "Autentifică un utilizator existent.",
+                "tags": [
+                    "Authentication"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "email",
+                                    "password"
+                                ]
                             }
-                         },
-                         "required":[
-                            "email",
-                            "password"
-                         ]
-                      }
-                   }
-                }
-             },
-             "responses":{
-                "200":{
-                   "description":"Autentificare reușită.",
-                   "content":{
-                      "application/json":{
-                         "schema":{
-                            "type":"object",
-                            "properties":{
-                               "status":{
-                                  "type":"string"
-                               },
-                               "data":{
-                                  "type":"object",
-                                  "properties":{
-                                     "token":{
-                                        "type":"string"
-                                     }
-                                  }
-                               }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Autentificare reușită.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "token": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
-                         }
-                      }
-                   }
+                        }
+                    }
                 }
-             }
-          }
-       },
-       "/api/auth/changePassword":{
-          "post":{
-             "summary":"Schimbă parola unui utilizator autentificat.",
-             "tags":[
-                "Authentication"
-             ],
-             "requestBody":{
-                "required":true,
-                "content":{
-                   "application/json":{
-                      "schema":{
-                         "type":"object",
-                         "properties":{
-                            "oldPassword":{
-                               "type":"string"
-                            },
-                            "newPassword":{
-                               "type":"string"
+            }
+        },
+        "/api/auth/changePassword": {
+            "post": {
+                "summary": "Schimbă parola unui utilizator autentificat.",
+                "tags": [
+                    "Authentication"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "oldPassword": {
+                                        "type": "string"
+                                    },
+                                    "newPassword": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "oldPassword",
+                                    "newPassword"
+                                ]
                             }
-                         },
-                         "required":[
-                            "oldPassword",
-                            "newPassword"
-                         ]
-                      }
-                   }
-                }
-             },
-             "responses":{
-                "200":{
-                   "description":"Parola a fost schimbată cu succes.",
-                   "content":{
-                      "application/json":{
-                         "schema":{
-                            "type":"object",
-                            "properties":{
-                               "status":{
-                                  "type":"string"
-                               },
-                               "message":{
-                                  "type":"string"
-                               }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Parola a fost schimbată cu succes.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
                             }
-                         }
-                      }
-                   }
+                        }
+                    }
                 }
-             }
-          }
-       },
-       "/api/auth/changeAccount":{
-          "post":{
-             "summary":"Modifică detaliile contului unui utilizator autentificat.",
-             "tags":[
-                "Authentication"
-             ],
-             "requestBody":{
-                "content":{
-                   "application/json":{
-                      "schema":{
-                         "type":"object",
-                         "properties":{
-                            "newName":{
-                               "type":"string"
-                            },
-                            "newEmail":{
-                               "type":"string"
+            }
+        },
+        "/api/auth/changeAccount": {
+            "post": {
+                "summary": "Modifică detaliile contului unui utilizator autentificat.",
+                "tags": [
+                    "Authentication"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "newName": {
+                                        "type": "string"
+                                    },
+                                    "newEmail": {
+                                        "type": "string"
+                                    }
+                                }
                             }
-                         }
-                      }
-                   }
-                }
-             },
-             "responses":{
-                "200":{
-                   "description":"Datele contului au fost schimbate cu succes.",
-                   "content":{
-                      "application/json":{
-                         "schema":{
-                            "type":"object",
-                            "properties":{
-                               "status":{
-                                  "type":"string"
-                               },
-                               "message":{
-                                  "type":"string"
-                               },
-                               "token":{
-                                  "type":"string"
-                               }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Datele contului au fost schimbate cu succes.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "token": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
                             }
-                         }
-                      }
-                   }
+                        }
+                    }
                 }
-             }
-          }
-       },
-       "/api/campaign":{
-          "post":{
-             "summary":"Adaugă o nouă campanie.",
-             "tags":[
-                "Campaign"
-             ],
-             "security":[
-                {
-                   "BearerAuth":[
-                      
-                   ]
-                }
-             ],
-             "requestBody":{
-                "required":true,
-                "content":{
-                   "multipart/form-data":{
-                      "schema":{
-                         "type":"object",
-                         "properties":{
-                            "photo":{
-                               "type":"string",
-                               "format":"binary"
-                            },
-                            "title":{
-                               "type":"string"
-                            },
-                            "article":{
-                               "type":"string"
+            }
+        },
+        "/api/campaign": {
+            "post": {
+                "summary": "Adaugă o nouă campanie.",
+                "tags": [
+                    "Campaign"
+                ],
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "photo": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "article": {
+                                        "type": "string"
+                                    }
+                                }
                             }
-                         }
-                      }
-                   }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Campanie adăugată cu succes."
+                    },
+                    "400": {
+                        "description": "Eroare în timpul încărcării fișierului."
+                    },
+                    "401": {
+                        "description": "Nu sunteti autorizat."
+                    },
+                    "403": {
+                        "description": "Nu aveti permisiunea de a efectua aceasta actiune."
+                    },
+                    "500": {
+                        "description": "Eroare de server."
+                    }
                 }
-             },
-             "responses":{
-                "201":{
-                   "description":"Campanie adăugată cu succes."
-                },
-                "400":{
-                   "description":"Eroare în timpul încărcării fișierului."
-                },
-                "401":{
-                   "description":"Nu sunteti autorizat."
-                },
-                "403":{
-                   "description":"Nu aveti permisiunea de a efectua aceasta actiune."
-                },
-                "500":{
-                   "description":"Eroare de server."
-                }
-             }
-          },
-          "get":{
-             "summary":"Obțineți toate campaniile.",
-             "tags":[
-                "Campaign"
-             ],
-             "responses":{
-                "200":{
-                   "description":"Lista de campanii.",
-                   "content":{
-                      "application/json":{
-                         "schema":{
-                            "type":"array",
-                            "items":{
-                               "type":"object",
-                               "properties":{
-                                  "title":{
-                                     "type":"string"
-                                  },
-                                  "article":{
-                                     "type":"string"
-                                  },
-                                  "img":{
-                                     "type":"string"
-                                  }
-                               }
+            },
+            "get": {
+                "summary": "Obțineți toate campaniile.",
+                "tags": [
+                    "Campaign"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de campanii.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "title": {
+                                                "type": "string"
+                                            },
+                                            "article": {
+                                                "type": "string"
+                                            },
+                                            "img": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
                             }
-                         }
-                      }
-                   }
-                },
-                "500":{
-                   "description":"Eroare de server."
+                        }
+                    },
+                    "500": {
+                        "description": "Eroare de server."
+                    }
                 }
-             }
-          }
-       },
-       "/api/users":{
-          "get":{
-             "tags":[
-                "Users"
-             ],
-             "description":"Obține toți utilizatorii. Numește \"admin\".",
-             "responses":{
-                "200":{
-                   "description":"Lista utilizatorilor."
+            }
+        },
+        "/api/filter/urgente": {
+            "post": {
+                "summary": "Obține informații despre urgente.",
+                "tags": [
+                    "Filters"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "urgente_an": {
+                                        "type": "string",
+                                        "description": "Anul pentru urgenta."
+                                    },
+                                    "urgente_drog": {
+                                        "type": "string",
+                                        "description": "Drogul pentru urgenta."
+                                    },
+                                    "urgente_filtru": {
+                                        "type": "string",
+                                        "description": "Filtrul pentru urgenta."
+                                    }
+                                }
+                            }
+                        }
+                    }
                 },
-                "401":{
-                   "description":"Autorizare necorespunzătoare."
-                },
-                "403":{
-                   "description":"Acces neautorizat."
-                },
-                "500":{
-                   "description":"Eroare de server."
+                "responses": {
+                    "200": {
+                        "description": "Operațiunea a fost finalizată cu succes. Se întoarce lista cu urgente.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "urgente_an": {
+                                                        "type": "string"
+                                                    },
+                                                    "urgente_drog": {
+                                                        "type": "string"
+                                                    },
+                                                    "urgente_filtru": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Cerește datele pentru filtru sau introducere anul și drogul."
+                    }
                 }
-             }
-          },
-          "post":{
-             "tags":[
-                "Users"
-             ],
-             "description":"Creează un utilizator nou.",
-             "requestBody":{
-                "required":true,
-                "content":{
-                   "application/json":{
-                      "schema":{
-                         "$ref":""
-                      }
-                   }
+            }
+        },
+        "/api/filter/confiscari/interval": {
+            "post": {
+                "summary": "Obține informații despre confiscări într-un interval specificat.",
+                "tags": [
+                    "Filters"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "confiscari_subcategorie": {
+                                        "type": "string",
+                                        "description": "Subcategoria pentru confiscare."
+                                    },
+                                    "drog": {
+                                        "type": "string",
+                                        "description": "Drogul pentru confiscare."
+                                    },
+                                    "endYearConfiscari": {
+                                        "type": "string",
+                                        "description": "Anul de sfârșit pentru intervalul de confiscări."
+                                    },
+                                    "startYearConfiscari": {
+                                        "type": "string",
+                                        "description": "Anul de start pentru intervalul de confiscări."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Operațiunea a fost finalizată cu succes. Se întoarce lista cu confiscări.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "confiscari_subcategorie": {
+                                                        "type": "string"
+                                                    },
+                                                    "drog": {
+                                                        "type": "string"
+                                                    },
+                                                    "endYearConfiscari": {
+                                                        "type": "string"
+                                                    },
+                                                    "startYearConfiscari": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Cerește datele pentru filtru sau introducere anul și drogul."
+                    }
                 }
-             },
-             "responses":{
-                "200":{
-                   "description":"Utilizatorul a fost creat cu succes."
+            }
+        },
+        "/api/filter/urgente/interval": {
+            "post": {
+                "summary": "Obține informații despre urgente într-un interval specificat.",
+                "tags": [
+                    "Filters"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "endYear": {
+                                        "type": "string",
+                                        "description": "Anul de sfârșit pentru intervalul de urgențe."
+                                    },
+                                    "gen_filtru": {
+                                        "type": "string",
+                                        "description": "Genul pentru filtrul de urgențe."
+                                    },
+                                    "startYear": {
+                                        "type": "string",
+                                        "description": "Anul de start pentru intervalul de urgențe."
+                                    },
+                                    "urgente_an": {
+                                        "type": "string",
+                                        "description": "Anul pentru urgenta."
+                                    },
+                                    "urgente_drog": {
+                                        "type": "string",
+                                        "description": "Drogul pentru urgenta."
+                                    },
+                                    "urgente_filtru": {
+                                        "type": "string",
+                                        "description": "Filtrul pentru urgenta."
+                                    }
+                                }
+                            }
+                        }
+                    }
                 },
-                "400":{
-                   "description":"Cerere incorectă."
-                },
-                "500":{
-                   "description":"Eroare de server."
+                "responses": {
+                    "200": {
+                        "description": "Operațiunea a fost finalizată cu succes. Se întoarce lista cu urgente.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "endYear": {
+                                                        "type": "string"
+                                                    },
+                                                    "gen_filtru": {
+                                                        "type": "string"
+                                                    },
+                                                    "startYear": {
+                                                        "type": "string"
+                                                    },
+                                                    "urgente_an": {
+                                                        "type": "string"
+                                                    },
+                                                    "urgente_drog": {
+                                                        "type": "string"
+                                                    },
+                                                    "urgente_filtru": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Cerește datele pentru filtru sau introducere anul și drogul."
+                    }
                 }
-             }
-          }
-       },
-       "/api/users/self":{
-          "get":{
-             "tags":[
-                "Users"
-             ],
-             "description":"Obține informațiile utilizatorului curent.",
-             "responses":{
-                "200":{
-                   "description":"Datele utilizatorului curent."
+            }
+        },
+        "/api/filter/infractiuni/interval": {
+            "post": {
+                "summary": "Obține informații despre infracțiuni într-un interval specificat.",
+                "tags": [
+                    "Filters"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "endYearInfractiuni": {
+                                        "type": "string",
+                                        "description": "Anul de sfârșit pentru intervalul de infracțiuni."
+                                    },
+                                    "incadrare_filtru_infractiuni": {
+                                        "type": "string",
+                                        "description": "Incadrarea juridica pentru filtrul de infracțiuni."
+                                    },
+                                    "infractiuni_categorie": {
+                                        "type": "string",
+                                        "description": "Categoria infracțiunii."
+                                    },
+                                    "startYearInfractiuni": {
+                                        "type": "string",
+                                        "description": "Anul de start pentru intervalul de infracțiuni."
+                                    }
+                                }
+                            }
+                        }
+                    }
                 },
-                "401":{
-                   "description":"Autorizare necorespunzătoare."
-                },
-                "404":{
-                   "description":"Utilizatorul nu a fost găsit."
-                },
-                "500":{
-                   "description":"Eroare de server."
+                "responses": {
+                    "200": {
+                        "description": "Operațiunea a fost finalizată cu succes. Se întoarce lista cu infracțiuni.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "endYearInfractiuni": {
+                                                        "type": "string"
+                                                    },
+                                                    "incadrare_filtru_infractiuni": {
+                                                        "type": "string"
+                                                    },
+                                                    "infractiuni_categorie": {
+                                                        "type": "string"
+                                                    },
+                                                    "startYearInfractiuni": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Cerește datele pentru filtru sau introducere anul și drogul."
+                    }
                 }
-             }
-          }
-       }
+            }
+        },
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "description": "Obține toți utilizatorii. Numește \"admin\".",
+                "responses": {
+                    "200": {
+                        "description": "Lista utilizatorilor."
+                    },
+                    "401": {
+                        "description": "Autorizare necorespunzătoare."
+                    },
+                    "403": {
+                        "description": "Acces neautorizat."
+                    },
+                    "500": {
+                        "description": "Eroare de server."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "description": "Creează un utilizator nou.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": ""
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Utilizatorul a fost creat cu succes."
+                    },
+                    "400": {
+                        "description": "Cerere incorectă."
+                    },
+                    "500": {
+                        "description": "Eroare de server."
+                    }
+                }
+            }
+        },
+        "/api/users/self": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "description": "Obține informațiile utilizatorului curent.",
+                "responses": {
+                    "200": {
+                        "description": "Datele utilizatorului curent."
+                    },
+                    "401": {
+                        "description": "Autorizare necorespunzătoare."
+                    },
+                    "404": {
+                        "description": "Utilizatorul nu a fost găsit."
+                    },
+                    "500": {
+                        "description": "Eroare de server."
+                    }
+                }
+            }
+        }
     },
-    "tags":[
-       
-    ]
- }
+    "tags": []
+}

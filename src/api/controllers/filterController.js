@@ -8,6 +8,202 @@ const filters = require("../model/filter");
 const jwt = require("jsonwebtoken");
 const { promisify } = require("util");
 
+/**
+ * @swagger
+ * /api/filter/urgente:
+ *   post:
+ *     summary: Obține informații despre urgente.
+ *     tags: [Filters]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               urgente_an:
+ *                 type: string
+ *                 description: Anul pentru urgenta.
+ *               urgente_drog:
+ *                 type: string
+ *                 description: Drogul pentru urgenta.
+ *               urgente_filtru:
+ *                 type: string
+ *                 description: Filtrul pentru urgenta.
+ *     responses:
+ *       200:
+ *         description: Operațiunea a fost finalizată cu succes. Se întoarce lista cu urgente.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items: 
+ *                     type: object
+ *                     properties:
+ *                       urgente_an:
+ *                         type: string
+ *                       urgente_drog:
+ *                         type: string
+ *                       urgente_filtru:
+ *                         type: string
+ *       400:
+ *         description: Cerește datele pentru filtru sau introducere anul și drogul.
+
+ * /api/filter/confiscari/interval:
+ *   post:
+ *     summary: Obține informații despre confiscări într-un interval specificat.
+ *     tags: [Filters]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               confiscari_subcategorie:
+ *                 type: string
+ *                 description: Subcategoria pentru confiscare.
+ *               drog:
+ *                 type: string
+ *                 description: Drogul pentru confiscare.
+ *               endYearConfiscari:
+ *                 type: string
+ *                 description: Anul de sfârșit pentru intervalul de confiscări.
+ *               startYearConfiscari:
+ *                 type: string
+ *                 description: Anul de start pentru intervalul de confiscări.
+ *     responses:
+ *       200:
+ *         description: Operațiunea a fost finalizată cu succes. Se întoarce lista cu confiscări.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items: 
+ *                     type: object
+ *                     properties:
+ *                       confiscari_subcategorie:
+ *                         type: string
+ *                       drog:
+ *                         type: string
+ *                       endYearConfiscari:
+ *                         type: string
+ *                       startYearConfiscari:
+ *                         type: string
+ *       400:
+ *         description: Cerește datele pentru filtru sau introducere anul și drogul.
+
+ * /api/filter/urgente/interval:
+ *   post:
+ *     summary: Obține informații despre urgente într-un interval specificat.
+ *     tags: [Filters]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               endYear:
+ *                 type: string
+ *                 description: Anul de sfârșit pentru intervalul de urgențe.
+ *               gen_filtru:
+ *                 type: string
+ *                 description: Genul pentru filtrul de urgențe.
+ *               startYear:
+ *                 type: string
+ *                 description: Anul de start pentru intervalul de urgențe.
+ *               urgente_an:
+ *                 type: string
+ *                 description: Anul pentru urgenta.
+ *               urgente_drog:
+ *                 type: string
+ *                 description: Drogul pentru urgenta.
+ *               urgente_filtru:
+ *                 type: string
+ *                 description: Filtrul pentru urgenta.
+ *     responses:
+ *       200:
+ *         description: Operațiunea a fost finalizată cu succes. Se întoarce lista cu urgente.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items: 
+ *                     type: object
+ *                     properties:
+ *                       endYear:
+ *                         type: string
+ *                       gen_filtru:
+ *                         type: string
+ *                       startYear:
+ *                         type: string
+ *                       urgente_an:
+ *                         type: string
+ *                       urgente_drog:
+ *                         type: string
+ *                       urgente_filtru:
+ *                         type: string
+ *       400:
+ *         description: Cerește datele pentru filtru sau introducere anul și drogul.
+ * /api/filter/infractiuni/interval:
+ *   post:
+ *     summary: Obține informații despre infracțiuni într-un interval specificat.
+ *     tags: [Filters]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               endYearInfractiuni:
+ *                 type: string
+ *                 description: Anul de sfârșit pentru intervalul de infracțiuni.
+ *               incadrare_filtru_infractiuni:
+ *                 type: string
+ *                 description: Incadrarea juridica pentru filtrul de infracțiuni.
+ *               infractiuni_categorie:
+ *                 type: string
+ *                 description: Categoria infracțiunii.
+ *               startYearInfractiuni:
+ *                 type: string
+ *                 description: Anul de start pentru intervalul de infracțiuni.
+ *     responses:
+ *       200:
+ *         description: Operațiunea a fost finalizată cu succes. Se întoarce lista cu infracțiuni.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items: 
+ *                     type: object
+ *                     properties:
+ *                       endYearInfractiuni:
+ *                         type: string
+ *                       incadrare_filtru_infractiuni:
+ *                         type: string
+ *                       infractiuni_categorie:
+ *                         type: string
+ *                       startYearInfractiuni:
+ *                         type: string
+ *       400:
+ *         description: Cerește datele pentru filtru sau introducere anul și drogul.
+ */  
+
+
 const getUrgente = catchAsync(async (req, res) => {
   const urgenteData = await parseRequestBody(req);
   if (!urgenteData) {
@@ -116,7 +312,7 @@ const filterController = catchAsync(async (req, res) => {
   res.setHeader("Content-Type", "application/json");
   if (url === "/api/filter/urgente/interval" && method === "POST") {
     getUrgenteInterval(req, res);
-  } else if (url === "/api/filter/urgente" && method === "GET") {
+  } else if (url === "/api/filter/urgente" && method === "POST") {
     getUrgente(req, res);
   } else if (url === "/api/filter/confiscari/interval" && method === "POST") {
     getConfiscariInterval(req, res);
