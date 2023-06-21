@@ -401,19 +401,8 @@ const predefinedColors = [
   "#17BEBB",
 ];
 
-function downloadSvg() {
-  let context = chartCurent.canvas.getContext("2d");
-  let serializer = new C2S(context.canvas.width, context.canvas.height);
-  chartCurent.draw(serializer);
-
-  let link = document.createElement("a");
-  link.href =
-    "data:image/svg+xml; utf8," +
-    encodeURIComponent(serializer.getSerializedSvg());
-  link.download = "chart.svg";
-  link.click();
-}
 let globalResponseData = null;
+let selectedCategory = null;
 async function handleSearchButtonClick(event) {
   event.preventDefault();
 
@@ -469,6 +458,8 @@ async function handleSearchButtonClick(event) {
             chartCurent.destroy();
           }
           deletePlot();
+          globalResponseData = null;
+          selectedCategory = null;
           document.getElementById("chartDescription").innerText =
             "Nu exista valori pentru generarea graficului pentru aceste filtre";
           return;
@@ -498,7 +489,8 @@ async function handleSearchButtonClick(event) {
 
         document.getElementById("chartDescription").innerText = "";
         document.getElementById("chartDescription").innerText = description;
-
+        globalResponseData = response.data;
+        selectedCategory = "infractiuni";
         chartData = {
           type: reprezentareSelectValue,
           labels: response.data.map((item) => item.label),
@@ -540,6 +532,8 @@ async function handleSearchButtonClick(event) {
             chartCurent.destroy();
           }
           deletePlot();
+          globalResponseData = null;
+          selectedCategory = null;
           document.getElementById("chartDescription").innerText =
             "Nu exista valori pentru generarea graficului pentru aceste filtre";
           return;
@@ -549,7 +543,8 @@ async function handleSearchButtonClick(event) {
 
         document.getElementById("chartDescription").innerText = "";
         document.getElementById("chartDescription").innerText = description;
-
+        globalResponseData = response.data;
+        selectedCategory = "confiscari";
         chartData = {
           type: reprezentareSelectValue,
           labels: response.data.map((item) => item.label),
@@ -588,6 +583,8 @@ async function handleSearchButtonClick(event) {
               chartCurent.destroy();
             }
             deletePlot();
+            globalResponseData = null;
+            selectedCategory = null;
             document.getElementById("chartDescription").innerText =
               "Nu exista valori pentru generarea graficului pentru aceste filtre";
             return;
@@ -598,6 +595,7 @@ async function handleSearchButtonClick(event) {
           document.getElementById("chartDescription").innerText = "";
           document.getElementById("chartDescription").innerText = description;
           globalResponseData = response.data;
+          selectedCategory = "urgente";
           chartData = {
             type: reprezentareSelectValue,
             labels: response.data.map((item) => item.label),
@@ -631,11 +629,14 @@ async function handleSearchButtonClick(event) {
               chartCurent.destroy();
             }
             deletePlot();
+            globalResponseData = null;
+            selectedCategory = null;
             document.getElementById("chartDescription").innerText =
               "Nu exista valori pentru generarea graficului pentru aceste filtre";
             return;
           }
           let description = `Urgente: cazuri cauzate de ${urgenteValues.urgente_drog} intre ${urgenteValues.startYear} si ${urgenteValues.endYear}`;
+
           if (urgenteValues.urgente_filtru) {
             description += ` filtrate dupa ${urgenteValues.urgente_filtru}`;
           }
@@ -651,7 +652,8 @@ async function handleSearchButtonClick(event) {
           if (urgenteValues.diagnostic_filtru) {
             description += `, ${urgenteValues.diagnostic_filtru}.`;
           }
-
+          globalResponseData = response.data;
+          selectedCategory = "urgenteInterval";
           document.getElementById("chartDescription").innerText = "";
           document.getElementById("chartDescription").innerText = description;
           chartData = {
@@ -710,23 +712,83 @@ const handleExportClick = function () {
       filename: document.getElementById("chartDescription").innerText,
     });
   } else if (this.textContent === "CSV") {
-    if (!globalResponseData) {
+    if (globalResponseData == null || globalResponseData.length === 0) {
       console.error("Nu există date pentru a fi exportate în format CSV.");
       return;
     }
-
-    // Transformăm datele în format CSV
     let csvContent = "data:text/csv;charset=utf-8,";
-    globalResponseData.forEach(function (item) {
-      let label = item.label != null ? item.label : "";
-      let drog = item.drog != null ? item.drog : "";
-      let cantitate = item.cantitate != null ? item.cantitate : "";
+    if (selectedCategory === "urgente") {
+      let categoryRow = ["Categorie", "Drog", "Cantitate", "Filtru", "An"].join(
+        ","
+      );
+      csvContent += categoryRow + "\r\n";
 
-      let row = [label, drog, cantitate].join(",");
-      csvContent += row + "\r\n";
-    });
+      globalResponseData.forEach(function (item) {
+        let label = item.label != null ? item.label : "";
+        let drog = item.drog != null ? item.drog : "";
+        let cantitate = item.cantitate != null ? item.cantitate : "";
+        let filtru = item.cantitate != null ? item.filtru : "";
+        let an = item.cantitate != null ? item.an : "";
 
-    // Creeăm un element 'a' temporar pentru a iniția descărcarea
+        let row = [label, drog, cantitate, filtru, an].join(",");
+        csvContent += row + "\r\n";
+      });
+    } else if (selectedCategory === "confiscari") {
+      let categoryRow = ["Drog", "Categorie", "Cantitate", "An"].join(",");
+      csvContent += categoryRow + "\r\n";
+      globalResponseData.forEach(function (item) {
+        let label = item.label != null ? item.label : "";
+        let cantitate = item.cantitate != null ? item.cantitate : "";
+        let drog = item.drog != null ? item.drog : "";
+        let filtru = item.filtru != null ? item.filtru : "";
+
+        let row = [drog, filtru, cantitate, label].join(",");
+        csvContent += row + "\r\n";
+      });
+    } else if (selectedCategory === "infractiuni") {
+      let categoryRow = ["Categorie", "Cantitate", "Filtru", "An"].join(",");
+      let ok = false;
+      csvContent += categoryRow;
+      globalResponseData.forEach(function (item) {
+        let categorie = item.categorie != null ? item.categorie : "";
+        let label = item.label != null ? item.label : "";
+        let cantitate = item.cantitate != null ? item.cantitate : "";
+        let filtru = item.filtru != null ? item.filtru : "";
+        let subfiltru = item.subfiltru != null ? item.subfiltru : "";
+        let row = [categorie, cantitate, filtru, label].join(",");
+        if (subfiltru !== "" && ok) {
+          row += "," + subfiltru;
+          row += "\r\n";
+        } else {
+          if (subfiltru !== "" && !ok) {
+            csvContent += ",Subfiltru";
+            csvContent += "\r\n";
+            row += "," + subfiltru;
+            row += "\r\n";
+            ok = true;
+          } else {
+            csvContent += "\r\n";
+            ok = true;
+          }
+        }
+        csvContent += row;
+      });
+    } else if (selectedCategory === "urgenteInterval") {
+      let categoryRow = ["Categorie", "Drog", "Cantitate", "Filtru", "An"].join(
+        ","
+      );
+      csvContent += categoryRow + "\r\n";
+      globalResponseData.forEach(function (item) {
+        let categorie = item.categorie != null ? item.categorie : "";
+        let cantitate = item.cantitate != null ? item.cantitate : "";
+        let drog = item.drog != null ? item.drog : "";
+        let filtru = item.filtru != null ? item.filtru : "";
+        let an = item.label != null ? item.label : "";
+
+        let row = [categorie, drog, cantitate, filtru, an].join(",");
+        csvContent += row + "\r\n";
+      });
+    }
     let encodedUri = encodeURI(csvContent);
     let link = document.createElement("a");
     link.setAttribute("href", encodedUri);
@@ -734,9 +796,9 @@ const handleExportClick = function () {
       "download",
       document.getElementById("chartDescription").innerText + ".csv"
     );
-    document.body.appendChild(link); // Necesar pentru Firefox
+    document.body.appendChild(link);
 
-    link.click(); // Acest lucru va descărca fișierul
+    link.click();
   } else {
     console.log("Ai selectat " + this.textContent);
   }
