@@ -128,9 +128,9 @@ exports.updateUserAccount = async function(username, email, newName, newEmail) {
 
 ///
 exports.findUserByResetToken = async function(resetToken) {
-  const queryText = 'SELECT * FROM users WHERE reset_token = $1';
+  const queryText = 'SELECT * FROM users WHERE password_reset_token = $1';
   const queryParams = [resetToken];
-  
+  console.log(resetToken);
   try {
     const res = await pool.query(queryText, queryParams);
     if (res.rowCount === 0) {
@@ -143,7 +143,7 @@ exports.findUserByResetToken = async function(resetToken) {
   }
 };
 
-exports.updateUserPassword = async function(email, hashedPassword) {
+exports.updateUserPasswordbyEmail = async function(email, hashedPassword) {
   const queryText = 'UPDATE users SET password = $1 WHERE email = $2';
   const queryParams = [hashedPassword, email];
   
@@ -158,8 +158,24 @@ exports.updateUserPassword = async function(email, hashedPassword) {
   }
 };
 
+exports.setUserResetToken = async function(email, resetToken, resetExpires) {
+  const queryText = 'UPDATE users SET password_reset_token = $1, password_reset_expires = $2 WHERE email = $3';
+  const queryParams = [resetToken, resetExpires, email];
+  
+  try {
+    const res = await pool.query(queryText, queryParams);
+    if (res.rowCount === 0) {
+      throw new Error('User not found');
+    }
+  } catch(err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+
 exports.clearUserResetToken = async function(email) {
-  const queryText = 'UPDATE users SET reset_token = NULL, reset_token_expires = NULL WHERE email = $1';
+  const queryText = 'UPDATE users SET password_reset_token = NULL, password_reset_expires = NULL WHERE email = $1';
   const queryParams = [email];
   
   try {

@@ -371,23 +371,23 @@ const resetPasswordRequest = catchAsync(async (req, res) => {
   
   await users.setUserResetToken(user.email, resetToken, resetExpires);
 
-  const resetUrl = `http://localhost:5000/api/auth/resetPassword/${resetToken}`;
+  const resetUrl = `http://localhost:3000/api/auth/resetPassword/${resetToken}`;
   
   let transporter = nodemailer.createTransport({
-    service: 'yahoo',
+    service: 'gmail',
     auth: {
-      user: 'your-email@yahoo.com',
-      pass: 'your-yahoo-password'
+      user: 'noreply.ip.b4@gmail.com',
+      pass: 'fzgmsukprrcyficq'
     }
   });
-  console.log(mailOptions);
+  
   let mailOptions = {
     from: '"Your Name" <your-email@example.com>',
     to: user.email,
     subject: "Resetare parola",
     text: `Vă rugăm să accesați acest link pentru a vă reseta parola: ${resetUrl}`,
   };
-  console.log(mailOptions);
+  
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
         console.log(error);
@@ -403,7 +403,10 @@ const resetPasswordRequest = catchAsync(async (req, res) => {
 
 
 const resetPassword = catchAsync(async (req, res) => {
-  const resetToken = req.params.token;
+  console.log(req.url);  // Aici ar trebui să vezi URL-ul
+
+  const resetToken = req.url.split('/')[4];
+ 
   const user = await users.findUserByResetToken(resetToken);
 
   if (!user) {
@@ -411,7 +414,6 @@ const resetPassword = catchAsync(async (req, res) => {
     return;
   }
 
-  // verifica daca tokenul a expirat
   const resetExpires = new Date(user.reset_token_expires);
   if (resetExpires < new Date()) {
     errorController(res, new AppError("Token-ul a expirat", 401));
@@ -421,12 +423,13 @@ const resetPassword = catchAsync(async (req, res) => {
   const { password } = await parseRequestBody(req);
   const hashedPassword = await bcrypt.hash(password, 12);
 
-  await users.updateUserPassword(user.email, hashedPassword);
+  await users.updateUserPasswordbyEmail(user.email, hashedPassword);
   await users.clearUserResetToken(user.email);
 
   res.statusCode = 200;
   res.end(JSON.stringify({ status: "success", message: "Parola a fost resetată cu succes." }));
 });
+
 
 
 const authController = catchAsync(async (req, res) => {
@@ -452,8 +455,10 @@ const authController = catchAsync(async (req, res) => {
   } else if (url === "/api/auth/resetPasswordRequest" && method === "POST") {
     resetPasswordRequest(req, res);
   } else if (url.startsWith("/api/auth/resetPassword/") && method === "POST") {
+    
     resetPassword(req, res);
-  }
+    
+}
 });
 
 
