@@ -20,7 +20,6 @@ const server = http.createServer((req, res) => {
     res.end();
     return;
   }
-
   const currentTime = Date.now();
   const clientIp = req.socket.remoteAddress;
 

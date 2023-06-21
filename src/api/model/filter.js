@@ -48,9 +48,10 @@ exports.getUrgenteByFilter = async (urgenteData) => {
       label: row.categorie,
       drog: urgente_drog,
       cantitate: row[urgente_drog],
+      filtru: urgente_filtru,
+      an: urgente_an,
     };
   });
-
   return urgente;
 };
 exports.getUrgenteIntervalBd = async (urgenteData) => {
@@ -86,9 +87,11 @@ exports.getUrgenteIntervalBd = async (urgenteData) => {
     return {
       label: row["an"],
       cantitate: row[urgente_drog],
+      categorie: filtru,
+      drog: urgente_drog,
+      filtru: row["filtru"],
     };
   });
-
   return urgente;
 };
 
@@ -114,6 +117,8 @@ exports.getConfiscariIntervalBd = async (confiscariDate) => {
     return {
       label: row["an"],
       cantitate: Math.floor(row[confiscari_subcategorie]),
+      filtru: confiscari_subcategorie,
+      drog: drog,
     };
   });
   return confiscari;
@@ -156,6 +161,9 @@ exports.getInfractiuniIntervalBd = async (infractiuniDate) => {
       return {
         label: row["an"],
         cantitate: Math.floor(row["valoare"]),
+        categorie: infractiuni_categorie,
+        filtru: filtru,
+        subfiltru: filtruSecond,
       };
     });
     return confiscari;
@@ -174,6 +182,8 @@ exports.getInfractiuniIntervalBd = async (infractiuniDate) => {
       return {
         label: row["an"],
         cantitate: Math.floor(row["valoare"]),
+        categorie: infractiuni_categorie,
+        filtru: filtru,
       };
     });
     return confiscari;

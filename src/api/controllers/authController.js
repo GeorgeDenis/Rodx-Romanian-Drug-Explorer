@@ -180,7 +180,7 @@ const verifyToken = catchAsync(async (req, res) => {
   if (!token || token === "null") {
     errorController(
       res,
-      new AppError("You are not logged in! Please log in!", 401)
+      new AppError("Nu sunteti autentificat! Va rugam sa va autentificati!", 401)
     );
     return null;
   }
@@ -191,7 +191,7 @@ const verifyToken = catchAsync(async (req, res) => {
   );
   const freshUser = await users.findUserByUser(decoded.name);
   if (!freshUser) {
-    errorController(res, new AppError("The user does not longer exists!", 401));
+    errorController(res, new AppError("Acest utilizator nu mai exista!", 401));
     return null;
   }
   req.currentToken = decoded;
@@ -279,7 +279,6 @@ const login = catchAsync(async (req, res) => {
     errorController(res, new AppError("Parola incorecta", 401));
     return;
   }
-  //let token = generateToken(user.name, user.role, user.email);
 
   const token = await generateToken(user);
 
@@ -294,7 +293,6 @@ const login = catchAsync(async (req, res) => {
   res.end(JSON.stringify(response));
 });
 
-//ADAUGAT DE MIHAI
 const changePassword = catchAsync(async (req, res) => {
   const request = await parseRequestBody(req);
   const { oldPassword, newPassword } = request;
@@ -316,17 +314,14 @@ const changePassword = catchAsync(async (req, res) => {
   res.end(JSON.stringify({ status: "success", message: "Parola a fost schimbată cu succes" }));
 });
 
-//ADAUGAT DE MIHAI
 const changeAccount = catchAsync(async (req, res) => {
   const request = await parseRequestBody(req);
 
   const user = await users.findUserByUser(req.currentToken.name);
 
-  // Setează numele implicit dacă newName nu este definit sau este un șir gol
   const newName = request.newName && request.newName.trim() !== '' ? request.newName : user.name;
   const newEmail = request.newEmail && request.newEmail.trim() !== '' ? request.newEmail : user.email;
 
-  // Verifică dacă numele de utilizator este deja folosit
   if (newName !== user.name && await users.checkUsername(newName)) {
     errorController(
       res,
@@ -335,7 +330,6 @@ const changeAccount = catchAsync(async (req, res) => {
     return;
   }
 
-  // Verifică dacă adresa de e-mail este deja folosită
   if (newEmail !== user.email && await users.checkEmail(newEmail)) {
     errorController(
       res,
@@ -344,12 +338,10 @@ const changeAccount = catchAsync(async (req, res) => {
     return;
   }
 
-  // Dacă email-ul si username-ul sunt unice, facem modificările
   await users.updateUserAccount(req.currentToken.name, req.currentToken.email, newName, newEmail);
   user.name = newName;
   user.email = newEmail;
   
-  // Generează un nou token cu detaliile actualizate
   const token = await generateToken(user);
 
   res.statusCode = 200;

@@ -12,7 +12,7 @@ sidebarLinks.forEach(link => {
       content.style.display = 'none';
     });
 
-    const contentId = this.textContent.trim().toLowerCase(); // Call trim() here
+    const contentId = this.textContent.trim().toLowerCase(); 
     const contentElement = document.getElementById(contentId);
     if (contentElement) {
       contentElement.style.display = 'block';

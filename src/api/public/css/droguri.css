@@ -41,7 +41,6 @@ body {
 
 
 
-/* pe aici se aplica fonturile, culoarea la tot cum arata pagina gen cu text si background*/
 body {
   position: relative;
   font-size: 1rem;
@@ -184,7 +183,6 @@ a {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
-/* Fac butoanele sa arate calumea */
 
 .btn {
   display: inline-block;
@@ -225,7 +223,6 @@ a {
   box-shadow: none;
 }
 
-/*riiple e cand dau pe buton si sa face sto animatii vrajeli hau miau*/
 .ripple {
   background-position: center;
   transition: background-image 0.8s;
@@ -255,7 +252,6 @@ textarea {
   font-size: 16px;
 }
 
-/* schimb pozitia pozelor in pagina*/
 .img-wrapper {
   position: relative;
   width: 100%;
@@ -299,7 +295,6 @@ textarea {
   display: block;
   width: 300px;
   margin-bottom: 20px;
-  vertical-align: top;
 }
 
 .scroll-list__item .image img {
@@ -334,10 +329,8 @@ textarea {
 }
 
 
-   /* asta imi face sa nu mai fie totul pe un rand*/
 
 
-/*asta imi pune cumva totu pe pagina*/
 .scroll-list__item {
   display: inline-block;
   width: 300px;
@@ -352,7 +345,7 @@ textarea {
 }
 
 .scroll-list__item .desc {
-  padding: 10px; /* aici tre sa vad cum fac sa diferentieze un pic doar */
+  padding: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -366,7 +359,6 @@ textarea {
   line-height: 1.5;
   margin: 0 0 10px;
 }
-/* aici se vede */
 .scroll-list__item .desc .btn {
   display: inline-block;
   background-color: var(--primary);

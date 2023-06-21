@@ -58,6 +58,7 @@
           <li id="logout-button">Logout</li>
         </ul>
       </div>
+
       
       
       <div class="content">
@@ -132,12 +133,10 @@
         <textarea id="article" placeholder="Write an article"></textarea>
         <button id="addBtn" type="submit">Add</button>
         <div class="dropdown">
-          <button id="deleteBtn" type="button">Delete</button>
-          <div class="dropdown-content">
-            <a href="#">Option 1</a>
-            <a href="#">Option 2</a>
-            <a href="#">Option 3</a>
-          </div>
+          <select id="deleteDropdown">
+            <option value="" disabled selected hidden>Alege un articol</option>
+          </select>
+          <button id="deleteBtn" type="button">Sterge</button>
         </div>
       </form>
     </div>

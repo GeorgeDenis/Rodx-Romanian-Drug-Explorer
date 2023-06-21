@@ -42,3 +42,19 @@ exports.getAllCampaigns = async () => {
     return { message: "Server Error" };
   }
 };
+
+exports.deleteCampaignByTitle = async (title) => {
+  return await pool
+    .query("DELETE FROM campaigns WHERE title = $1", [title])
+    .then((results) => {
+      if (results.rowCount > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      return false;
+    });
+};

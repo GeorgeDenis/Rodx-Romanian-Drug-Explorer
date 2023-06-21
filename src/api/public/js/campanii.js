@@ -44,7 +44,7 @@ arrowButtons.forEach((arrow) => {
     const currentIndex = parseInt(currentTextBox.dataset.index) - 1;
     let targetIndex;
 
-    let textboxes = document.querySelectorAll(".text-box"); // refresh textboxes
+    let textboxes = document.querySelectorAll(".text-box");  
 
     if (arrow.classList.contains("arrow-left")) {
       targetIndex =
@@ -119,7 +119,7 @@ async function getCampanii() {
         parentElement.appendChild(campaignElement);
         attachButtonEvents(readMoreElement);
       });
-      let textBoxContainer = document.querySelector("#text-box-container"); // Added this line
+      let textBoxContainer = document.querySelector("#text-box-container");
 
       campaigns.forEach((campaign, index) => {
         let textBox = document.createElement("div");
@@ -170,7 +170,7 @@ async function getCampanii() {
       let btnClose = document.querySelectorAll(".close-modal");
       let textboxes = document.querySelectorAll(".text-box");
       allTextBoxes.forEach((textBox, index) => {
-        // Attach navigation events to all text-box elements
+       
         textBox
           .querySelector(".arrow-left")
           .addEventListener("click", function () {
@@ -183,7 +183,7 @@ async function getCampanii() {
           });
       });
 
-      // Gestionează evenimentul de închidere pentru toate text-box-urile
+    
       document.addEventListener("keydown", function (e) {
         if (e.key === "Escape") {
           allTextBoxes.forEach((textBox) => {
