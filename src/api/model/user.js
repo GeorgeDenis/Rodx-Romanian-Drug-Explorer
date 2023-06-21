@@ -15,7 +15,7 @@ exports.createUser = async (userData) => {
   const values = [name, email, password, role];
   try {
     const result = await pool.query(queryText, values);
-    return result.rows[0]; // returneaza utilizatorul creat
+    return result.rows[0];
   } catch (err) {
     console.error(err);
     throw err;

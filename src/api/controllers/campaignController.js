@@ -6,6 +6,9 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 const { addCampaign, getAllCampaigns } = require("../model/campaign");
 const { uploadImage } = require("../model/s3Services");
+const { deleteCampaignByTitle } = require("../model/campaign");
+const parseRequestBody = require("../utils/parseReq");
+
 
 /**
  * @swagger
@@ -66,11 +69,9 @@ const { uploadImage } = require("../model/s3Services");
 const insertCampaign = catchAsync(async (req, res) => {
   upload.single("photo")(req, res, async (err) => {
     if (err instanceof multer.MulterError) {
-      // A Multer error occurred during the upload
       res.writeHead(400, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ message: err.message }));
     } else if (err) {
-      // An unknown error occurred during the upload
       res.writeHead(500, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ message: "Error uploading file." }));
     } else {
@@ -110,6 +111,33 @@ const getCampaigns = catchAsync(async (req, res) => {
   }
 });
 
+const deleteCampaign = catchAsync(async (req, res) => {
+
+  const request = await parseRequestBody(req);
+  if (!request) {
+    errorController(
+      res,
+      new AppError(
+        "Va rog sa introduceti titlul campaniei pe care doriti sa-l stergeti",
+        400
+      )
+    );
+  }
+
+  const deletionSuccess = await deleteCampaignByTitle(request.title);
+
+  if (deletionSuccess) {
+    res.statusCode = 204;
+    res.end();
+  } else {
+    errorController(
+      res,
+      new AppError("A aparut o problema la stergerea campaniei!", 500)
+    );
+    return;
+  }
+});
+
 const campaignController = catchAsync(async (req, res) => {
   const { url, method } = req;
   res.setHeader("Content-Type", "application/json");
@@ -125,6 +153,16 @@ const campaignController = catchAsync(async (req, res) => {
   }
   if (url === "/api/campaign" && method === "GET") {
     getCampaigns(req, res);
+  }
+  else if (url === "/api/campaign" && method === "DELETE") {
+    const response = await verifyToken(req, res);
+    if (!response) {
+      return;
+    }
+    if (!verifyRole(res, response, "admin")) {
+      return;
+    }
+    deleteCampaign(req, res);
   }
 });
 module.exports = campaignController;

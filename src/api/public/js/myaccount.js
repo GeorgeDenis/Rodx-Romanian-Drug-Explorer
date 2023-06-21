@@ -20,6 +20,23 @@ function attachSidebarLinkHandlers() {
     });
   });
 }  
+
+var listItems = document.querySelectorAll('.sidebar ul li');
+
+  // Loop through the list items
+  listItems.forEach(function(li) {
+    // Add a click event listener to each list item
+    li.addEventListener('click', function() {
+      // Loop through the list items again
+      listItems.forEach(function(li) {
+        // Remove the 'selected' class from all list items
+        li.classList.remove('selected');
+      });
+
+      // Add the 'selected' class to the clicked list item
+      this.classList.add('selected');
+    });
+  });
 async function setAdmin()
 {
   const getData = async () => {
@@ -155,6 +172,53 @@ async function populateUsersTable() {
 document.addEventListener('DOMContentLoaded', populateUsersTable);
 document.addEventListener('DOMContentLoaded', attachSidebarLinkHandlers);
 
+const deleteBtn = document.getElementById("deleteBtn");
+const deleteDropdown = document.getElementById("deleteDropdown");
+
+window.onload = function() {
+  fetch("/api/campaign", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((json) => {
+      json.campaigns.forEach((campaign) => {
+        const option = document.createElement("option");
+        option.value = campaign.id;  
+        option.innerText = campaign.title;  
+        deleteDropdown.appendChild(option);
+      });
+    });
+}
+deleteBtn.addEventListener("click", function () {
+  const selectedOption = deleteDropdown.options[deleteDropdown.selectedIndex];
+  if (selectedOption.value) {
+    fetch("/api/campaign", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({ title: selectedOption.text }),  
+    })
+    .then((response) => {
+      if (response.ok) {
+        alert("Campanie ștearsă cu succes.");
+        deleteDropdown.remove(deleteDropdown.selectedIndex);
+      } else {
+        alert("A apărut o eroare.");
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      alert("A apărut o eroare.");
+    });
+  } else {
+    alert("Selectați o campanie pentru a șterge.");
+  }
+});
 const logout = document.getElementById("logout-button");
 
 logout.addEventListener("click", function () {

@@ -44,20 +44,6 @@ h3 {
   padding-bottom: 10px; /* Adaugă un spațiu de 10px sub text */
 }
 
-.sidebar ul li:not(.selected):hover {
-  color: #3c6255;
-}
-
-
-
-
-.sidebar ul li.selected {
-  
-  border-top: 1px solid #3c6255; /* Înlocuiește 'blue' cu culoarea dorită */
-  border-bottom: 1px solid #3c6255;
-}
-
-
 .container2 {
   margin-top: 50px;
     overflow-y: scroll; 
@@ -75,6 +61,10 @@ h3 {
 .container2, .sidebar {
   height: 80vh;  /* Or some other value that doesn't exceed the viewport height */
   overflow-y: scroll; /* Or "scroll" */
+}
+
+.selected {
+  color: #48dba8;
 }
 
 .sidebar {
@@ -242,7 +232,14 @@ table {
   justify-content: center;
   width: 100%;
 }
-
+.dropdown {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: start; /* Acest lucru este optional, in functie de cum vrei sa arate */
+}
+#deleteBtn {
+  margin-right: 20px;
+}
 
 .upload-container {
   display: flex;
@@ -250,6 +247,12 @@ table {
 }
 #uploadBtn {
   margin-right: 10px; /* adjust this value as needed */
+}
+
+ul li {
+  user-select: none;
+  cursor: pointer;
+
 }
 
 @media  (max-height: 840px) {
@@ -291,13 +294,13 @@ table {
   }
 }
 @media (max-width: 375px){
-  #table-container {
+  #table-contai ner {
     max-height: 28vh; /* Adjust this as needed */
   }
  
  
 }
-@media only screen and (max-width: 375px) {
+@media only screen and (max-width: 768px) {
   .container2 {
     margin-top: 10vh;  /* adjust this value as needed */
     height: calc(100vh - 100px); /* adjust based on your header's actual height */
