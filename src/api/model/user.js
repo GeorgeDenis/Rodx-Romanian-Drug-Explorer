@@ -95,7 +95,6 @@ exports.deleteUser = async (email) => {
   }
 };
 
-//ADAUGAT DE MIHAI
 exports.updateUserPassword = async function(username, newHashedPassword) {
   const queryText = 'UPDATE users SET password = $1 WHERE name = $2';
   const queryParams = [newHashedPassword, username];
@@ -110,7 +109,6 @@ exports.updateUserPassword = async function(username, newHashedPassword) {
       throw err;
   }
 };
-//ADAUGAT DE MIHAI
 exports.updateUserAccount = async function(username, email, newName, newEmail) {
   const queryText = 'UPDATE users SET name = $1, email = $2 WHERE name = $3 AND email = $4';
   const queryParams = [newName, newEmail, username, email];

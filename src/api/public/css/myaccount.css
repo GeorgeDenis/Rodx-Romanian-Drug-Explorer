@@ -41,7 +41,7 @@ h3 {
   text-align: center;
   border-bottom: 1px solid #ccc;
   margin-top: 10%;
-  padding-bottom: 10px; /* Adaugă un spațiu de 10px sub text */
+  padding-bottom: 10px;
 }
 
 .container2 {
@@ -50,8 +50,8 @@ h3 {
   display: flex;
   justify-content: space-around;
   background-color: white;
-  width: 95vw; /* schimbă 1024px cu 95vw */
-  max-width: 1024px; /* păstrează lățimea maximă la 1024px */
+  width: 95vw; 
+  max-width: 1024px;  
   min-height: 70vh;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -59,8 +59,8 @@ h3 {
   scroll-padding-top: 100px; 
 }
 .container2, .sidebar {
-  height: 80vh;  /* Or some other value that doesn't exceed the viewport height */
-  overflow-y: scroll; /* Or "scroll" */
+  height: 80vh;  
+  overflow-y: scroll; 
 }
 
 .selected {
@@ -68,59 +68,59 @@ h3 {
 }
 
 .sidebar {
-  width: 30%; /* schimbă 300px cu 30% */
+  width: 30%; 
   border-right: 1px solid #ccc;
 }
 
 .content {
-  width: 70%; /* schimbă calc(100% - 300px) cu 70% */
+  width: 70%;
   padding: 20px;
 }
 .sidebar ul {
   list-style: none; 
-  padding-left: 0; /* Acest lucru elimină spațiul implicit adăugat de browser pe partea stângă a listelor neordonate */
+  padding-left: 0; 
 }
 
 .sidebar ul li {
   font-family: 'Arial', sans-serif;
-  margin: 10px 0; /* Acest lucru adaugă un spațiu de 10px deasupra și dedesubtul fiecărui element listă */
-  border-bottom: 1px solid #ccc; /* Aceasta adaugă o linie de delimitare dedesubtul fiecărui element listă */
-  padding: 10px 20px; /* Aceasta adaugă un spațiu de 10px deasupra și dedesubtul conținutului fiecărui element listă, precum și un spațiu de 20px pe partea stângă */
+  margin: 10px 0; 
+  border-bottom: 1px solid #ccc; 
+  padding: 10px 20px; 
 }
 
 
 #usersTable {
   width: 100% ;
-  border-collapse: collapse; /* Collapse borders */
-  font-family: Arial, sans-serif; /* Set a nicer font */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); /* Add a slight shadow */
-  border-radius: 5px; /* Add rounded corners */
+  border-collapse: collapse;
+  font-family: Arial, sans-serif; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  border-radius: 5px; 
 }
 
 #usersTable thead tr {
-  background-color: #009879; /* Set a color for the header row */
-  color: #ffffff; /* Set the header text color */
+  background-color: #009879;
+  color: #ffffff; 
 }
 
 #usersTable th, 
 #usersTable td {
-  padding: 12px 15px; /* Add some padding to cells */
+  padding: 12px 15px;
 }
 
 #usersTable tbody tr {
-  border-bottom: thin solid #dddddd; /* Add a light border between rows */
+  border-bottom: thin solid #dddddd; 
 }
 
 #usersTable tbody tr:nth-of-type(even) {
-  background-color: #f3f3f3; /* Use zebra striping on even rows */
+  background-color: #f3f3f3; 
 }
 
 #usersTable tbody tr:last-of-type {
-  border-bottom: 2px solid #009879; /* Add a darker border on the last row */
+  border-bottom: 2px solid #009879; 
 }
 
 #usersTable tbody tr:hover {
-  background-color: #ededed; /* Add a hover effect to rows */
+  background-color: #ededed; 
 }
 
 .tab-content {
@@ -133,9 +133,9 @@ h3 {
 .tab-content form {
   display: flex;
   flex-direction: column;
-  width: 100%; /* Modifică acest procentaj pentru a regla lățimea formularului */
+  width: 100%;
   margin: auto;
-  align-items: flex-start; /* Alinează elementele la stânga */
+  align-items: flex-start;  
 }
 
 .tab-content form label {
@@ -155,22 +155,22 @@ h3 {
   color: var(--light);
   margin-top: 20px;
   cursor: pointer;
-  width: 100px; /* Reglează lățimea butonului */
-  height: 30px; /* Reglează înălțimea butonului */
+  width: 100px;
+  height: 30px;
 
 }
 #table-container {
-  max-height: 610px;  /* or any height that suits your layout */
-  overflow-y: auto;   /* enable vertical scrollbar if needed */
+  max-height: 610px;  
+  overflow-y: auto;  
   display: block;   
   
 }
 th, td {
   text-align: center;
-  vertical-align: middle; /* This will center content vertically */
+  vertical-align: middle; 
 }
 table {
-  width: 100%; /* Make sure your table is full width */
+  width: 100%; 
 }
 
 #campaignForm {
@@ -201,9 +201,9 @@ table {
   padding: 10px;
   border-radius: 5px;
   border: 1px solid var(--primary);
-  width: 100%; /* Add a width property */
-  height: 100px; /* Add a height property */
-  resize: none; /* This prevents the textarea from being resized */
+  width: 100%;
+  height: 100px; 
+  resize: none; 
 }
 
 .dropdown {
@@ -235,7 +235,7 @@ table {
 .dropdown {
   display: flex;
   flex-direction: row-reverse;
-  justify-content: start; /* Acest lucru este optional, in functie de cum vrei sa arate */
+  justify-content: start; 
 }
 #deleteBtn {
   margin-right: 20px;
@@ -243,10 +243,10 @@ table {
 
 .upload-container {
   display: flex;
-  align-items: center; /* this will vertically align the items in the middle */
+  align-items: center; 
 }
 #uploadBtn {
-  margin-right: 10px; /* adjust this value as needed */
+  margin-right: 10px; 
 }
 
 ul li {
@@ -257,15 +257,15 @@ ul li {
 
 @media  (max-height: 840px) {
   .container2 {
-    margin-top: 10vh; /* Ajustează această valoare în funcție de înălțimea navbar-ului tău */
-    height: calc(100vh - 100px); /* Ajustează această valoare în funcție de înălțimea navbar-ului tău */
+    margin-top: 10vh; 
+    height: calc(100vh - 100px); 
   }
 }
 
 @media  (max-height: 739px) {
   .container2 {
-    margin-top: 10vh; /* Ajustează această valoare în funcție de înălțimea navbar-ului tău */
-    height: calc(100vh - 100px); /* Ajustează această valoare în funcție de înălțimea navbar-ului tău */
+    margin-top: 10vh;
+    height: calc(100vh - 100px); 
   }
 }
 
@@ -274,8 +274,8 @@ ul li {
     flex-direction: column;
     width: 100%;
     height: auto;
-    padding: 10px; /* adaugă spațiu în jurul containerului */
-    box-sizing: border-box; /* asigură-te că padding-ul este inclus în lățimea totală a containerului */
+    padding: 10px; 
+    box-sizing: border-box;  
   }
 
   .sidebar  {
@@ -290,32 +290,31 @@ ul li {
     width: 100%;
   }
   #table-container {
-    max-height: 40vh; /* Adjust this as needed */
+    max-height: 40vh;
   }
 }
 @media (max-width: 375px){
   #table-contai ner {
-    max-height: 28vh; /* Adjust this as needed */
+    max-height: 28vh;
   }
  
  
 }
 @media only screen and (max-width: 768px) {
   .container2 {
-    margin-top: 10vh;  /* adjust this value as needed */
-    height: calc(100vh - 100px); /* adjust based on your header's actual height */
+    margin-top: 10vh; 
+    height: calc(100vh - 100px);
   }
-  /* Other elements adjustments if needed */
 }
 
 
 @media (min-width: 769px) and (max-width: 1024px) {
   .sidebar {
-    width: 40%; /* crește procentajul pentru sidebar pentru a preveni înghesuirea conținutului */
+    width: 40%; 
   }
 
   .content {
-    width: 60%; /* scade procentajul pentru content pentru a face loc pentru sidebar */
+    width: 60%;
   }
  
 }

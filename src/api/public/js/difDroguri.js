@@ -20,7 +20,6 @@ function switchSlide() {
   }
 }
 
-// Call switchSlide() immediately after defining it
 switchSlide();
 
 setInterval(switchSlide, 5000);

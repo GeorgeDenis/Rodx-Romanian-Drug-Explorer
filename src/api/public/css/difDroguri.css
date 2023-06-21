@@ -51,8 +51,8 @@ margin-top: 50px
 }
 
 #slideshow-target {
-    width: 100%; /* or any desired width */
-    height: auto; /* or any desired height */
+    width: 100%;  
+    height: auto; 
 }
 
 .navigation-manual{
@@ -118,7 +118,7 @@ margin-top: 50px
     margin-left: -75%;
 }
 
-/*css*/
+
 
 
 

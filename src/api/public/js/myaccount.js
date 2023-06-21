@@ -11,7 +11,7 @@ function attachSidebarLinkHandlers() {
         content.style.display = 'none';
       });
 
-      const contentId = this.textContent.trim().toLowerCase(); // Call trim() here
+      const contentId = this.textContent.trim().toLowerCase(); 
       const contentElement = document.getElementById(contentId);
     
       if (contentElement) {
@@ -23,17 +23,12 @@ function attachSidebarLinkHandlers() {
 
 var listItems = document.querySelectorAll('.sidebar ul li');
 
-  // Loop through the list items
   listItems.forEach(function(li) {
-    // Add a click event listener to each list item
     li.addEventListener('click', function() {
-      // Loop through the list items again
       listItems.forEach(function(li) {
-        // Remove the 'selected' class from all list items
         li.classList.remove('selected');
       });
 
-      // Add the 'selected' class to the clicked list item
       this.classList.add('selected');
     });
   });
@@ -249,7 +244,6 @@ function submitPasswordForm(e) {
   successMessage.id = 'success-message';
   document.body.appendChild(successMessage);
 
-  // Golim campurile
   oldPassword.value = '';
   newPassword.value = '';
   confirmPassword.value = '';
@@ -276,14 +270,12 @@ function submitAccountForm(e) {
     return;
   }
 
-  // Creare mesaj de succes
   var successMessage = document.createElement('p');
   successMessage.textContent = '';
   successMessage.style.color = 'green';
   successMessage.id = 'success-message';
   document.body.appendChild(successMessage);
 
-  // Setarea unei întârzieri de 5 secunde înainte de a ascunde mesajul
   window.setTimeout(function() {
     var message = document.getElementById('success-message');
     if (message) {

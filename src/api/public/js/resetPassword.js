@@ -25,7 +25,6 @@ document
           alert(data.message);
           console.log("Parola a fost schimbată cu succes");
 
-          // Aici resetăm valorile câmpurilor de input
           oldPasswordInput.value = '';
           newPasswordInput.value = '';
 

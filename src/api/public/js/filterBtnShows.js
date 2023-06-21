@@ -11,7 +11,6 @@ function resetButtons() {
 document
   .getElementById("categorie_select")
   .addEventListener("change", function () {
-    // Ascunde toate grupele de selectoare
     document.getElementById("infractiuni_options").style.display = "none";
     document.getElementById("confiscari_options").style.display = "none";
     document.getElementById("urgente_options").style.display = "none";

@@ -1,6 +1,5 @@
 Chart.register(ChartDataLabels);
 
-//fetch-ul cu fe-ul
 const postFilterData = async (data) => {
   const token = localStorage.getItem("token");
   const response = await fetch("http://localhost:3000/api/filter", {
@@ -20,7 +19,6 @@ const postFilterData = async (data) => {
     alert(result.message);
   }
 };
-//functie ca toate campurile sa fie selectate
 function getSelectedValues(selectors) {
   let values = {};
 
@@ -691,7 +689,6 @@ async function handleSearchButtonClick(event) {
   const exportButton = document.getElementById("export-button");
   exportButton.style.display = "inline-block";
 
-  // Înlăturați event listener-ul anterior
   document.querySelectorAll(".dropdown-item").forEach(function (item) {
     item.removeEventListener("click", handleExportClick);
     item.addEventListener("click", handleExportClick);
