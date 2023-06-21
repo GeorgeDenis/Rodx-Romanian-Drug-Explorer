@@ -413,7 +413,7 @@ function downloadSvg() {
   link.download = "chart.svg";
   link.click();
 }
-
+let globalResponseData = null;
 async function handleSearchButtonClick(event) {
   event.preventDefault();
 
@@ -473,7 +473,6 @@ async function handleSearchButtonClick(event) {
             "Nu exista valori pentru generarea graficului pentru aceste filtre";
           return;
         }
-
         let description = `Infractiuni: intre ${infractiuniValues.startYearInfractiuni} si ${infractiuniValues.endYearInfractiuni}, filtrate dupa ${infractiuniValues.infractiuni_categorie}`;
         if (infractiuniValues.incadrare_filtru_infractiuni) {
           description += ` si ${infractiuniValues.incadrare_filtru_infractiuni}.`;
@@ -598,6 +597,7 @@ async function handleSearchButtonClick(event) {
 
           document.getElementById("chartDescription").innerText = "";
           document.getElementById("chartDescription").innerText = description;
+          globalResponseData = response.data;
           chartData = {
             type: reprezentareSelectValue,
             labels: response.data.map((item) => item.label),
@@ -709,6 +709,34 @@ const handleExportClick = function () {
       height: 600,
       filename: document.getElementById("chartDescription").innerText,
     });
+  } else if (this.textContent === "CSV") {
+    if (!globalResponseData) {
+      console.error("Nu există date pentru a fi exportate în format CSV.");
+      return;
+    }
+
+    // Transformăm datele în format CSV
+    let csvContent = "data:text/csv;charset=utf-8,";
+    globalResponseData.forEach(function (item) {
+      let label = item.label != null ? item.label : "";
+      let drog = item.drog != null ? item.drog : "";
+      let cantitate = item.cantitate != null ? item.cantitate : "";
+
+      let row = [label, drog, cantitate].join(",");
+      csvContent += row + "\r\n";
+    });
+
+    // Creeăm un element 'a' temporar pentru a iniția descărcarea
+    let encodedUri = encodeURI(csvContent);
+    let link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute(
+      "download",
+      document.getElementById("chartDescription").innerText + ".csv"
+    );
+    document.body.appendChild(link); // Necesar pentru Firefox
+
+    link.click(); // Acest lucru va descărca fișierul
   } else {
     console.log("Ai selectat " + this.textContent);
   }

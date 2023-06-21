@@ -116,7 +116,7 @@ const filterController = catchAsync(async (req, res) => {
   res.setHeader("Content-Type", "application/json");
   if (url === "/api/filter/urgente/interval" && method === "POST") {
     getUrgenteInterval(req, res);
-  } else if (url === "/api/filter/urgente" && method === "POST") {
+  } else if (url === "/api/filter/urgente" && method === "GET") {
     getUrgente(req, res);
   } else if (url === "/api/filter/confiscari/interval" && method === "POST") {
     getConfiscariInterval(req, res);

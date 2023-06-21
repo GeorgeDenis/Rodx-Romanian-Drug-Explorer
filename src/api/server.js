@@ -1,6 +1,8 @@
 const http = require("http");
 const apiRequest = require("./controllers/controller");
 const handleViewRequest = require("./controllers/pagesController");
+const rssController = require("./controllers/rssController");
+
 const da = require("./utils/generateToken");
 const rateLimitWindowTimeInMillis = 60000;
 const maxRequestsPerWindow = 500;
@@ -25,6 +27,8 @@ const server = http.createServer((req, res) => {
     const url = req.url;
     if (url.startsWith("/api")) {
       apiRequest(req, res);
+    } else if (url.startsWith("/rss")) {
+      rssController(req, res);
     } else {
       handleViewRequest(req, res);
     }

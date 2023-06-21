@@ -162,7 +162,6 @@ logout.addEventListener("click", function () {
   window.location.href = "/";
 });
 
-//Mesaj pentru Update
 function submitPasswordForm(e) {
   e.preventDefault();
 
