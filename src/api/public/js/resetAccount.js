@@ -21,6 +21,7 @@ document
         if (response.ok) {
           return response.json();
         } else {
+          repopulateData();
           throw new Error("An error occurred");
         }
       })
@@ -33,7 +34,7 @@ document
       })
       .catch((error) => {
         console.error("Error:", error);
-        alert("An error occurred. Please try again.");
+        alert("Exista deja un utilizator cu aceste date!");
       });
   });
 async function repopulateData() {

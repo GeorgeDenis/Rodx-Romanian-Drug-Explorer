@@ -25,15 +25,13 @@ document
           alert(data.message);
           console.log("Parola a fost schimbată cu succes");
 
-          oldPasswordInput.value = '';
-          newPasswordInput.value = '';
-
-
+          oldPasswordInput.value = "";
+          newPasswordInput.value = "";
         } else {
-          console.error(data.message);
+          alert(data.message);
         }
       })
       .catch((error) => {
-        console.error("A apărut o eroare:", error);
+        alert("A apărut o eroare:", error);
       });
   });

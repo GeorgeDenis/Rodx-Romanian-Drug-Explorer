@@ -19,6 +19,32 @@ exports.addCampaign = async (campaignData) => {
     });
   return result;
 };
+exports.getArticleImageByTitle = async (title) => {
+  const result = await pool.query(
+    "SELECT image FROM campaigns WHERE title = $1",
+    [title]
+  );
+};
+exports.getArticleImageByTitle = async (title) => {
+  try {
+    const result = await pool.query(
+      "SELECT image FROM campaigns WHERE title = $1",
+      [title]
+    );
+
+    if (result.rows.length > 0) {
+      return result.rows[0].image;
+    } else {
+      return {
+        message: "Nu exista o campanie cu un astfel de nume",
+      };
+    }
+  } catch (error) {
+    return {
+      message: "Server Error",
+    };
+  }
+};
 
 exports.getAllCampaigns = async () => {
   try {

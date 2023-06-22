@@ -8,21 +8,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { promisify } = require("util");
 const fetch = require("node-fetch");
-const crypto = require('crypto');
-const nodemailer = require('nodemailer');
-// const generateToken = (name, role, email) => {
-//   let jwtSecretKey = process.env.JWT_SECRET_KEY;
-//   let data = {
-//     name: name,
-//     role: role,
-//     email: email,
-//   };
-//   let options = {
-//     expiresIn: process.env.EXPIRATION,
-//   };
-//   const token = jwt.sign(data, jwtSecretKey, options);
-//   return token;
-// };
+const crypto = require("crypto");
+const nodemailer = require("nodemailer");
 /**
  * @swagger
  * /api/auth/signup:
@@ -180,7 +167,10 @@ const verifyToken = catchAsync(async (req, res) => {
   if (!token || token === "null") {
     errorController(
       res,
-      new AppError("Nu sunteti autentificat! Va rugam sa va autentificati!", 401)
+      new AppError(
+        "Nu sunteti autentificat! Va rugam sa va autentificati!",
+        401
+      )
     );
     return null;
   }
@@ -296,14 +286,11 @@ const login = catchAsync(async (req, res) => {
 const changePassword = catchAsync(async (req, res) => {
   const request = await parseRequestBody(req);
   const { oldPassword, newPassword } = request;
-  
+
   const user = await users.findUserByUser(req.currentToken.name);
   const isOldPasswordCorrect = await bcrypt.compare(oldPassword, user.password);
   if (!isOldPasswordCorrect) {
-    errorController(
-      res,
-      new AppError("Parola veche este incorectă", 401)
-    );
+    errorController(res, new AppError("Parola veche este incorectă", 401));
     return;
   }
 
@@ -311,7 +298,12 @@ const changePassword = catchAsync(async (req, res) => {
   await users.updateUserPassword(req.currentToken.name, newHashedPassword);
 
   res.statusCode = 200;
-  res.end(JSON.stringify({ status: "success", message: "Parola a fost schimbată cu succes" }));
+  res.end(
+    JSON.stringify({
+      status: "success",
+      message: "Parola a fost schimbată cu succes",
+    })
+  );
 });
 
 const changeAccount = catchAsync(async (req, res) => {
@@ -319,10 +311,16 @@ const changeAccount = catchAsync(async (req, res) => {
 
   const user = await users.findUserByUser(req.currentToken.name);
 
-  const newName = request.newName && request.newName.trim() !== '' ? request.newName : user.name;
-  const newEmail = request.newEmail && request.newEmail.trim() !== '' ? request.newEmail : user.email;
+  const newName =
+    request.newName && request.newName.trim() !== ""
+      ? request.newName
+      : user.name;
+  const newEmail =
+    request.newEmail && request.newEmail.trim() !== ""
+      ? request.newEmail
+      : user.email;
 
-  if (newName !== user.name && await users.checkUsername(newName)) {
+  if (newName !== user.name && (await users.checkUsername(newName))) {
     errorController(
       res,
       new AppError("Numele de utilizator este deja folosit", 400)
@@ -330,7 +328,7 @@ const changeAccount = catchAsync(async (req, res) => {
     return;
   }
 
-  if (newEmail !== user.email && await users.checkEmail(newEmail)) {
+  if (newEmail !== user.email && (await users.checkEmail(newEmail))) {
     errorController(
       res,
       new AppError("Adresa de e-mail este deja folosită", 400)
@@ -338,14 +336,25 @@ const changeAccount = catchAsync(async (req, res) => {
     return;
   }
 
-  await users.updateUserAccount(req.currentToken.name, req.currentToken.email, newName, newEmail);
+  await users.updateUserAccount(
+    req.currentToken.name,
+    req.currentToken.email,
+    newName,
+    newEmail
+  );
   user.name = newName;
   user.email = newEmail;
-  
+
   const token = await generateToken(user);
 
   res.statusCode = 200;
-  res.end(JSON.stringify({ status: "success", message: "Datele contului au fost schimbate cu succes", token }));
+  res.end(
+    JSON.stringify({
+      status: "success",
+      message: "Datele contului au fost schimbate cu succes",
+      token,
+    })
+  );
 });
 /////
 
@@ -357,48 +366,47 @@ const resetPasswordRequest = catchAsync(async (req, res) => {
     return;
   }
 
-  const resetToken = crypto.randomBytes(32).toString('hex');
+  const resetToken = crypto.randomBytes(32).toString("hex");
   const resetExpires = new Date();
   resetExpires.setHours(resetExpires.getHours() + 1);
-  
+
   await users.setUserResetToken(user.email, resetToken, resetExpires);
 
   const resetUrl = `http://localhost:3000/resetPassword/${resetToken}`;
-  
+
   let transporter = nodemailer.createTransport({
-    service: 'gmail',
+    service: "gmail",
     auth: {
-      user: 'noreply.ip.b4@gmail.com',
-      pass: 'fzgmsukprrcyficq'
-    }
+      user: "noreply.ip.b4@gmail.com",
+      pass: "fzgmsukprrcyficq",
+    },
   });
-  
+
   let mailOptions = {
-    from: '"Your Name" <your-email@example.com>',
+    from: '"Rodx" <your-email@example.com>',
     to: user.email,
     subject: "Resetare parola",
-    text: `Vă rugăm să accesați acest link pentru a vă reseta parola: ${resetUrl}`,
+    html: `Vă rugăm să <a href="${resetUrl}">accesați acest link</a> pentru a vă reseta parola.`,
   };
-  
+
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-        console.log(error);
-    } else {
-        console.log('Email sent: ' + info.response);
+      console.log(error);
     }
-});
+  });
 
-  
   res.statusCode = 200;
-  res.end(JSON.stringify({ status: "success", message: "Un e-mail a fost trimis cu instrucțiuni de resetare a parolei." }));
+  res.end(
+    JSON.stringify({
+      status: "success",
+      message: "Un e-mail a fost trimis cu instrucțiuni de resetare a parolei.",
+    })
+  );
 });
-
 
 const resetPassword = catchAsync(async (req, res) => {
-  console.log(req.url);  // Aici ar trebui să vezi URL-ul
+  const resetToken = req.url.split("/")[4];
 
-  const resetToken = req.url.split('/')[4];
- 
   const user = await users.findUserByResetToken(resetToken);
 
   if (!user) {
@@ -419,15 +427,18 @@ const resetPassword = catchAsync(async (req, res) => {
   await users.clearUserResetToken(user.email);
 
   res.statusCode = 200;
-  res.end(JSON.stringify({ status: "success", message: "Parola a fost resetată cu succes." }));
+  res.end(
+    JSON.stringify({
+      status: "success",
+      message: "Parola a fost resetată cu succes.",
+    })
+  );
 });
-
-
 
 const authController = catchAsync(async (req, res) => {
   const { method, url } = req;
   res.setHeader("Content-Type", "application/json");
-  
+
   if (url === "/api/auth/signup" && method === "POST") {
     signup(req, res);
   } else if (url === "/api/auth/login" && method === "POST") {
@@ -437,7 +448,7 @@ const authController = catchAsync(async (req, res) => {
     if (!response) {
       return;
     }
-    changePassword(req,res);
+    changePassword(req, res);
   } else if (url === "/api/auth/changeAccount" && method === "POST") {
     const response = await verifyToken(req, res);
     if (!response) {
@@ -447,11 +458,8 @@ const authController = catchAsync(async (req, res) => {
   } else if (url === "/api/auth/resetPasswordRequest" && method === "POST") {
     resetPasswordRequest(req, res);
   } else if (url.startsWith("/api/auth/resetPassword/") && method === "POST") {
-        resetPassword(req, res);
-    
-}
+    resetPassword(req, res);
+  }
 });
-
-
 
 module.exports = { authController, verifyToken, verifyRole, permission };

@@ -4,11 +4,14 @@ const fs = require("fs");
 const multer = require("multer");
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
-const { addCampaign, getAllCampaigns } = require("../model/campaign");
-const { uploadImage } = require("../model/s3Services");
+const {
+  addCampaign,
+  getAllCampaigns,
+  getArticleImageByTitle,
+} = require("../model/campaign");
+const { uploadImage, deleteImage } = require("../model/s3Services");
 const { deleteCampaignByTitle } = require("../model/campaign");
 const parseRequestBody = require("../utils/parseReq");
-
 
 /**
  * @swagger
@@ -43,7 +46,7 @@ const parseRequestBody = require("../utils/parseReq");
  *         description: Nu aveti permisiunea de a efectua aceasta actiune.
  *       500:
  *         description: Eroare de server.
- * 
+ *
  *   get:
  *     summary: Obțineți toate campaniile.
  *     tags: [Campaign]
@@ -112,7 +115,6 @@ const getCampaigns = catchAsync(async (req, res) => {
 });
 
 const deleteCampaign = catchAsync(async (req, res) => {
-
   const request = await parseRequestBody(req);
   if (!request) {
     errorController(
@@ -123,7 +125,8 @@ const deleteCampaign = catchAsync(async (req, res) => {
       )
     );
   }
-
+  let imageFile = await getArticleImageByTitle(request.title);
+  await deleteImage(imageFile);
   const deletionSuccess = await deleteCampaignByTitle(request.title);
 
   if (deletionSuccess) {
@@ -153,8 +156,7 @@ const campaignController = catchAsync(async (req, res) => {
   }
   if (url === "/api/campaign" && method === "GET") {
     getCampaigns(req, res);
-  }
-  else if (url === "/api/campaign" && method === "DELETE") {
+  } else if (url === "/api/campaign" && method === "DELETE") {
     const response = await verifyToken(req, res);
     if (!response) {
       return;

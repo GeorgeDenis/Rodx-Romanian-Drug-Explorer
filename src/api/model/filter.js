@@ -57,6 +57,72 @@ exports.addConfiscariFilter = async (filterData, email) => {
     throw err;
   }
 };
+exports.deleteConfiscariFilter = async (filterId, email) => {
+  const user_id = await getUserId(email);
+  try {
+    const queryText =
+      "DELETE FROM confiscari_filtru WHERE user_id=$1 AND id=$2";
+    const result = await pool.query(queryText, [user_id, filterId]);
+
+    if (result.rowCount === 0) {
+      return false;
+    }
+
+    return true;
+  } catch (err) {
+    console.error(err);
+    throw new Error("Database query failed");
+  }
+};
+exports.deleteUrgenteFilter = async (filterId, email) => {
+  const user_id = await getUserId(email);
+  try {
+    const queryText = "DELETE FROM urgente_filtru WHERE user_id=$1 AND id=$2";
+    const result = await pool.query(queryText, [user_id, filterId]);
+
+    if (result.rowCount === 0) {
+      return false;
+    }
+
+    return true;
+  } catch (err) {
+    console.error(err);
+    throw new Error("Database query failed");
+  }
+};
+exports.deleteUrgenteFilter = async (filterId, email) => {
+  const user_id = await getUserId(email);
+  try {
+    const queryText = "DELETE FROM urgente_filtru WHERE user_id=$1 AND id=$2";
+    const result = await pool.query(queryText, [user_id, filterId]);
+
+    if (result.rowCount === 0) {
+      return false;
+    }
+
+    return true;
+  } catch (err) {
+    console.error(err);
+    throw new Error("Database query failed");
+  }
+};
+exports.deleteInfractiuniFilter = async (filterId, email) => {
+  const user_id = await getUserId(email);
+  try {
+    const queryText =
+      "DELETE FROM infractiuni_filtru WHERE user_id=$1 AND id=$2";
+    const result = await pool.query(queryText, [user_id, filterId]);
+
+    if (result.rowCount === 0) {
+      return false;
+    }
+
+    return true;
+  } catch (err) {
+    console.error(err);
+    throw new Error("Database query failed");
+  }
+};
 exports.addUrgenteFiltru = async (filterData, email) => {
   const {
     categorie_select,
@@ -222,7 +288,7 @@ exports.getAllConfiscariFilter = async (email) => {
   const user_id = await getUserId(email);
 
   const queryText = `
-    SELECT categorie_select,confiscari_subcategorie,drog,startYearConfiscari,endYearConfiscari,reprezentare FROM confiscari_filtru
+    SELECT id,categorie_select,confiscari_subcategorie,drog,startYearConfiscari,endYearConfiscari,reprezentare FROM confiscari_filtru
     WHERE user_id = $1
   `;
   const values = [user_id];
@@ -238,7 +304,7 @@ exports.getAllConfiscariFilter = async (email) => {
 exports.getAllUrgenteFilter = async (email) => {
   const user_id = await getUserId(email);
   const queryText = `
-    SELECT categorie_select,urgente_an,urgente_drog,urgente_filtru,reprezentare,startYear,endYear,varsta_filtru,administrare_filtru,consum_filtru,gen_filtru,diagnostic_filtru,user_id FROM urgente_filtru WHERE user_id = $1
+    SELECT id,categorie_select,urgente_an,urgente_drog,urgente_filtru,reprezentare,startYear,endYear,varsta_filtru,administrare_filtru,consum_filtru,gen_filtru,diagnostic_filtru,user_id FROM urgente_filtru WHERE user_id = $1
   `;
   const values = [user_id];
 
@@ -253,7 +319,7 @@ exports.getAllUrgenteFilter = async (email) => {
 exports.getAllInfractiuniFilter = async (email) => {
   const user_id = await getUserId(email);
   const queryText = `
-  SELECT  categorie_select,
+  SELECT  id,categorie_select,
   infractiuni_categorie,
   startYearInfractiuni,
   reprezentare,

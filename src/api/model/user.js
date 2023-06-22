@@ -150,7 +150,7 @@ exports.updateUserAccount = async function (
 exports.findUserByResetToken = async function (resetToken) {
   const queryText = "SELECT * FROM users WHERE password_reset_token = $1";
   const queryParams = [resetToken];
-  console.log(resetToken);
+
   try {
     const res = await pool.query(queryText, queryParams);
     if (res.rowCount === 0) {

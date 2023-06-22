@@ -57,4 +57,20 @@ async function getFile(fileName) {
     return "";
   }
 }
-module.exports = { uploadImage, getFile };
+async function deleteImage(fileName) {
+  if (fileName != null) {
+    const input = {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: fileName,
+    };
+    try {
+      await s3.send(new DeleteObjectCommand(input));
+      return true;
+    } catch (err) {
+      throw new Error(err);
+    }
+  } else {
+    return false;
+  }
+}
+module.exports = { uploadImage, getFile, deleteImage };

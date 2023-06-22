@@ -27,6 +27,26 @@ fileInput.addEventListener("change", function () {
   document.getElementById("checkMark").style.display = "inline";
   checkInputs();
 });
+const deleteDrop = document.getElementById("deleteDropdown");
+function fetchCampaigns() {
+  deleteDrop.innerHTML = "";
+
+  fetch("/api/campaign", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((json) => {
+      json.campaigns.forEach((campaign) => {
+        const option = document.createElement("option");
+        option.value = campaign.id;
+        option.innerText = campaign.title;
+        deleteDrop.appendChild(option);
+      });
+    });
+}
 
 form.addEventListener("submit", function (e) {
   e.preventDefault();
@@ -57,6 +77,7 @@ form.addEventListener("submit", function (e) {
     .then((json) => {
       var obj = JSON.parse(JSON.stringify(json));
       alert(obj.message);
+      fetchCampaigns();
       fileInput.value = "";
       articleInput.value = "";
       titleInput.value = "";

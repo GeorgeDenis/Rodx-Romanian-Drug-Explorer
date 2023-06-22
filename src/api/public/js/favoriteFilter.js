@@ -8,6 +8,33 @@ const emptyOtherFilters = (excludeId) => {
     .filter((id) => id !== excludeId)
     .forEach((id) => (document.getElementById(id).innerHTML = ""));
 };
+const deleteFilter = async (id, type) => {
+  const token = localStorage.getItem("token");
+  const url = `http://localhost:3000/api/filter/${type}/favorite/${id}`;
+  try {
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const data = await response.json();
+      alert(data.message);
+      return;
+    }
+
+    getFilters(
+      `http://localhost:3000/api/filter/${type}/favorite`,
+      `${type}Filters`
+    );
+  } catch (error) {
+    console.log("An error occurred:", error);
+  }
+};
+
 const getFilters = async (url, containerId) => {
   try {
     const token = localStorage.getItem("token");
@@ -28,7 +55,7 @@ const getFilters = async (url, containerId) => {
     const data = await response.json();
 
     const filtersContainer = document.getElementById(containerId);
-    filtersContainer.innerHTML = ""; // Clear the filters container
+    filtersContainer.innerHTML = "";
 
     data.data.forEach((filter, index) => {
       const button = document.createElement("button");
@@ -39,7 +66,20 @@ const getFilters = async (url, containerId) => {
         window.location.href = "/cautare";
       });
 
-      filtersContainer.appendChild(button);
+      const deleteSpan = document.createElement("span");
+      deleteSpan.className = "material-symbols-outlined";
+      deleteSpan.textContent = "delete";
+      deleteSpan.dataset.id = filter.id;
+      deleteSpan.addEventListener("click", () => {
+        deleteFilter(deleteSpan.dataset.id, filter.categorie_select);
+      });
+
+      const filterContainer = document.createElement("div");
+      filterContainer.className = "filter-container";
+      filterContainer.appendChild(button);
+      filterContainer.appendChild(deleteSpan);
+
+      filtersContainer.appendChild(filterContainer);
     });
   } catch (error) {
     console.log("An error occurred:", error);

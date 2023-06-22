@@ -478,6 +478,114 @@ const saveUrgenteFilter = catchAsync(async (req, res) => {
   res.end(JSON.stringify({ message: "Filtrul a fost adăugat cu succes" }));
 });
 
+const deleteConfiscariFilter = catchAsync(async (req, res) => {
+  const filterId = req.url.split("/")[5];
+
+  if (!filterId) {
+    return errorController(
+      res,
+      new AppError("Trebuie sa introduceti un id de filtru valid!", 400)
+    );
+  }
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    token = req.headers.authorization.split(" ")[1];
+  }
+  if (!token) {
+    return errorController(
+      res,
+      new AppError(
+        "Trebuie sa fiti autentificat pentru a sterge un filtru!",
+        401
+      )
+    );
+  }
+  const decoded = await promisify(jwt.verify)(
+    token,
+    process.env.JWT_SECRET_KEY
+  );
+  const result = await filters.deleteConfiscariFilter(filterId, decoded.email);
+  if (result === null) {
+    return errorController(res, new AppError("Filtrul nu exista!", 400));
+  }
+  res.statusCode = 200;
+  res.end(JSON.stringify({ message: "Filtrul a fost sters cu succes" }));
+});
+const deleteUrgenteFilter = catchAsync(async (req, res) => {
+  const filterId = req.url.split("/")[5];
+
+  if (!filterId) {
+    return errorController(
+      res,
+      new AppError("Trebuie sa introduceti un id de filtru valid!", 400)
+    );
+  }
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    token = req.headers.authorization.split(" ")[1];
+  }
+  if (!token) {
+    return errorController(
+      res,
+      new AppError(
+        "Trebuie sa fiti autentificat pentru a sterge un filtru!",
+        401
+      )
+    );
+  }
+  const decoded = await promisify(jwt.verify)(
+    token,
+    process.env.JWT_SECRET_KEY
+  );
+  const result = await filters.deleteUrgenteFilter(filterId, decoded.email);
+  if (result === null) {
+    return errorController(res, new AppError("Filtrul nu exista!", 400));
+  }
+  res.statusCode = 200;
+  res.end(JSON.stringify({ message: "Filtrul a fost sters cu succes" }));
+});
+const deleteInfractiuniFilter = catchAsync(async (req, res) => {
+  const filterId = req.url.split("/")[5];
+
+  if (!filterId) {
+    return errorController(
+      res,
+      new AppError("Trebuie sa introduceti un id de filtru valid!", 400)
+    );
+  }
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    token = req.headers.authorization.split(" ")[1];
+  }
+  if (!token) {
+    return errorController(
+      res,
+      new AppError(
+        "Trebuie sa fiti autentificat pentru a sterge un filtru!",
+        401
+      )
+    );
+  }
+  const decoded = await promisify(jwt.verify)(
+    token,
+    process.env.JWT_SECRET_KEY
+  );
+  const result = await filters.deleteInfractiuniFilter(filterId, decoded.email);
+  if (result === null) {
+    return errorController(res, new AppError("Filtrul nu exista!", 400));
+  }
+  res.statusCode = 200;
+  res.end(JSON.stringify({ message: "Filtrul a fost sters cu succes" }));
+});
 const filterController = catchAsync(async (req, res) => {
   const { url, method } = req;
   res.setHeader("Content-Type", "application/json");
@@ -491,16 +599,31 @@ const filterController = catchAsync(async (req, res) => {
     saveConfiscariFilter(req, res);
   } else if (url === "/api/filter/confiscari/favorite" && method === "GET") {
     getConfiscariFavorite(req, res);
+  } else if (
+    url.match(/^\/api\/filter\/confiscari\/favorite\/(\d+)$/) &&
+    method === "DELETE"
+  ) {
+    deleteConfiscariFilter(req, res);
   } else if (url === "/api/filter/urgente/favorite" && method === "POST") {
     saveUrgenteFilter(req, res);
   } else if (url === "/api/filter/urgente/favorite" && method === "GET") {
     getUrgenteFavorite(req, res);
+  } else if (
+    url.match(/^\/api\/filter\/urgente\/favorite\/(\d+)$/) &&
+    method === "DELETE"
+  ) {
+    deleteUrgenteFilter(req, res);
   } else if (url === "/api/filter/infractiuni/favorite" && method === "POST") {
     saveInfractiuniFilter(req, res);
   } else if (url === "/api/filter/infractiuni/favorite" && method === "GET") {
     getInfractiuniFavorite(req, res);
   } else if (url === "/api/filter/infractiuni/interval" && method === "POST") {
     getInfractiuniInterval(req, res);
+  } else if (
+    url.match(/^\/api\/filter\/infractiuni\/favorite\/(\d+)$/) &&
+    method === "DELETE"
+  ) {
+    deleteInfractiuniFilter(req, res);
   }
 });
 module.exports = filterController;
