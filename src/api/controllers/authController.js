@@ -363,7 +363,7 @@ const resetPasswordRequest = catchAsync(async (req, res) => {
   
   await users.setUserResetToken(user.email, resetToken, resetExpires);
 
-  const resetUrl = `http://localhost:3000/api/auth/resetPassword/${resetToken}`;
+  const resetUrl = `http://localhost:3000/resetPassword/${resetToken}`;
   
   let transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -447,8 +447,7 @@ const authController = catchAsync(async (req, res) => {
   } else if (url === "/api/auth/resetPasswordRequest" && method === "POST") {
     resetPasswordRequest(req, res);
   } else if (url.startsWith("/api/auth/resetPassword/") && method === "POST") {
-    
-    resetPassword(req, res);
+        resetPassword(req, res);
     
 }
 });

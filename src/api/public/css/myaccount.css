@@ -47,7 +47,6 @@ h3 {
 
 .container2 {
   margin-top: 50px;
-  overflow-y: scroll;
   display: flex;
   justify-content: space-around;
   background-color: white;
@@ -62,7 +61,6 @@ h3 {
 .container2,
 .sidebar {
   height: 80vh;
-  overflow-y: scroll;
 }
 
 .selected {
@@ -325,6 +323,7 @@ ul li {
 
   .sidebar {
     width: 100%;
+    overflow-y: scroll;
   }
 
   .content {
@@ -366,5 +365,19 @@ ul li {
 
   .content {
     width: 60%;
+  }
+}
+@media (max-width: 414px) {
+  .container2,
+  .sidebar {
+    height: auto;
+  }
+  .content,
+  .tab-content {
+    padding-top: 0;
+    margin-top: 0;
+  }
+  .tab-content form {
+    margin-top: 0;
   }
 }

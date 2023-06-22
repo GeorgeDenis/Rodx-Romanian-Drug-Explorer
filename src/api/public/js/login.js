@@ -9,6 +9,7 @@ login.addEventListener("click", () => {
   wrapper.classList.remove("active");
 });
 
+
 document.addEventListener("DOMContentLoaded", function () {
   const emailInput = document.querySelector(".email-input input");
 

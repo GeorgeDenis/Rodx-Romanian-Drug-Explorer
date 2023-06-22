@@ -67,6 +67,8 @@ async function setAdmin()
   logoutElement.insertAdjacentHTML("beforebegin", newElement);
   
   attachSidebarLinkHandlers();
+  populateUsersTable();
+
      
     }
 
@@ -161,10 +163,8 @@ async function populateUsersTable() {
 
     });
   } catch (error) {
-    console.error(error);
   }
 }
-document.addEventListener('DOMContentLoaded', populateUsersTable);
 document.addEventListener('DOMContentLoaded', attachSidebarLinkHandlers);
 
 const deleteBtn = document.getElementById("deleteBtn");
