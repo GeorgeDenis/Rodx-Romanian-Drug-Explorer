@@ -70,6 +70,8 @@ const getFilters = async (url, containerId) => {
       deleteSpan.className = "material-symbols-outlined";
       deleteSpan.textContent = "delete";
       deleteSpan.dataset.id = filter.id;
+      deleteSpan.style.cursor = "pointer";
+
       deleteSpan.addEventListener("click", () => {
         deleteFilter(deleteSpan.dataset.id, filter.categorie_select);
       });

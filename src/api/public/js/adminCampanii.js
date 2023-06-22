@@ -4,6 +4,14 @@ const form = document.getElementById("campaignForm");
 const addBtn = document.getElementById("addBtn");
 const articleInput = document.getElementById("article");
 const titleInput = document.getElementById("title");
+const cancelBtn = document.getElementById("cancelBtn");
+cancelBtn.addEventListener("click", () => {
+  titleInput.value = "";
+  articleInput.value = "";
+  fileInput.value = "";
+  uploadBtn.disabled = false;
+  document.getElementById("checkMark").style.display = "none";
+});
 
 addBtn.disabled = true;
 

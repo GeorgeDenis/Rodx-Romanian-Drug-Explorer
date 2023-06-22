@@ -30,7 +30,7 @@
           <a href="/droguri">Droguri</a>
           <a href="/campanii">Campanii</a>
           <a href="/about">About us</a>
-          <a href="#" class="is-active" id="login-link">My account</a>
+          <a href="#" class="is-active" id="login-link">MyAccount</a>
         </div>
         <button class="hamburger">
           <span></span>
@@ -64,7 +64,7 @@
 
       <div class="content">
         <div id="account" class="tab-content">
-          <!-- Conținut pentru secțiunea "Account" -->
+
           <h2>Account Information</h2>
 
           <form id="update-account-form">
@@ -79,7 +79,7 @@
         </div>
 
         <div id="password" class="tab-content" style="display: none;">
-          <!-- Conținut pentru secțiunea "Password" -->
+
           <h2>Password Settings</h2>
           <form id="password-form">
             <label for="old-password">Old Password</label>
@@ -144,7 +144,10 @@
 
                 <input type="text" id="title" placeholder="Write a title" />
                 <textarea id="article" placeholder="Write an article"></textarea>
-                <button id="addBtn" type="submit">Add</button>
+                <div class="button-container">
+                  <button id="addBtn" type="submit">Add</button>
+                  <button id="cancelBtn" type="button">Cancel</button>
+                </div>
                 <div class="dropdown">
                   <select id="deleteDropdown">
                     <option value="" disabled selected hidden>Alege un articol</option>
