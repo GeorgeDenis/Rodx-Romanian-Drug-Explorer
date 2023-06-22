@@ -53,6 +53,7 @@ CREATE TABLE campaigns (
     article VARCHAR(3000)
 );
 CREATE TABLE confiscari_filtru (
+    id SERIAL PRIMARY KEY,
     user_id INT REFERENCES users(user_id),
     categorie_select VARCHAR(255),
     confiscari_subcategorie VARCHAR(255),
@@ -62,6 +63,7 @@ CREATE TABLE confiscari_filtru (
     reprezentare VARCHAR(255)
 );
 CREATE TABLE infractiuni_filtru (
+    id SERIAL PRIMARY KEY,
     user_id INT REFERENCES users(user_id),
     categorie_select VARCHAR(255),
     infractiuni_categorie VARCHAR(255),
@@ -78,6 +80,7 @@ CREATE TABLE infractiuni_filtru (
     
 );
 CREATE TABLE urgente_filtru (
+    id SERIAL PRIMARY KEY,
     user_id INT REFERENCES users(user_id),
     categorie_select VARCHAR(255),
     urgente_an VARCHAR(255),
