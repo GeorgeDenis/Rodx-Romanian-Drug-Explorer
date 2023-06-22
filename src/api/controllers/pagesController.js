@@ -42,7 +42,9 @@ const handleViewRequest = (req, res) => {
     filePath = "./view/campanii.html";
   } else if (url === "/login") {
     filePath = "./view/login.html";
-  } else if (url === "/cautare") {
+  } else if (url === "/forgot") {
+    filePath = "./view/forgot.html";
+  }else if (url === "/cautare") {
     filePath = "./view/cautare.html";
   } else if (url === "/about") {
     filePath = "./view/about.html";
@@ -70,7 +72,9 @@ const handleViewRequest = (req, res) => {
     filePath = "./view/Droguri/Metamfetamina.html";
   } else if (url === "/fenciclidina") {
     filePath = "./view/Droguri/Fenciclidina.html";
-  } else {
+  } else if (url.startsWith("/resetPassword")) {
+    filePath = "./view/resetPassword.html";
+  }  else {
     filePath = path.resolve("." + req.url);
   }
   respondFile(req, res, filePath);

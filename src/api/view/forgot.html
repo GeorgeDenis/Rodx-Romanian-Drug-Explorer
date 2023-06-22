@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="../../public/css/login.css">
+  <link rel="stylesheet" href="../../public/css/nav.css">
+
+  <style>
+    body {
+      background: url("../public/poze/background.jpg");
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <div class="container">
+        <h1>RoDX</h1>
+        <div class="menu">
+          <a href="/acasa">Acasa</a>
+          <a href="/cautare">Cautare&filtrare</a>
+          <a href="/droguri">Droguri</a>
+          <a href="/campanii">Campanii</a>
+          <a href="/about">About us</a>
+          <a href="/login">Login</a>
+        </div>
+        <button class=" hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </nav>
+    <div class="mobile-menu">
+      <a href="/index">Acasa</a>
+      <a href="/cautare">Cautare&filtrare</a>
+      <a href="/droguri">Droguri</a>
+      <a href="/campanii">Campanii</a>
+      <a href="/about">About us</a>
+      <a href="/login">Login</a>
+
+    </div>
+  </header>
+  <div class="wrapper">
+    <div class="form-box login">
+      <h2>Resetare parola</h2>
+      <form action="#">
+        <div class="input-box email-input">
+          <span class="icon">
+            <ion-icon name="mail"></ion-icon>
+          </span>
+          <input type="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+          <label>Email</label>
+        </div>
+       
+      
+        <button type="submit" class="btn" id="ButonMail">Trimite Email</button>
+       
+      </form>
+    </div>
+   
+   
+    
+  </div>
+  <script src="../public/js/main.js"></script>
+  <script src="../public/js/forgot.js"></script>
+
+
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+</body>
+
+</html>

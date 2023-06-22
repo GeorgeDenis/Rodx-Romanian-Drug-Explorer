@@ -28,6 +28,7 @@ document
           oldPasswordInput.value = '';
           newPasswordInput.value = '';
 
+
         } else {
           console.error(data.message);
         }
