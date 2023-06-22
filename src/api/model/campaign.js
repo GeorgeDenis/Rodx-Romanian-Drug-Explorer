@@ -8,11 +8,11 @@ exports.addCampaign = async (campaignData) => {
       campaignData.img,
     ])
     .then((results) => {
-      return { message: "Article added successfully" };
+      return { message: "Campanie adaugata cu succes" };
     })
     .catch((error) => {
       if (error.code === "23505") {
-        return { message: "The article already exists" };
+        return { message: "Exista deja o campanie cu acest nume" };
       } else {
         return { message: "Server Error" };
       }

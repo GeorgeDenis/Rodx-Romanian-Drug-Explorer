@@ -51,7 +51,7 @@ const { promisify } = require("util");
  *                         type: string
  *       400:
  *         description: Cerește datele pentru filtru sau introducere anul și drogul.
-
+ *
  * /api/filter/confiscari/interval:
  *   post:
  *     summary: Obține informații despre confiscări într-un interval specificat.
@@ -98,7 +98,7 @@ const { promisify } = require("util");
  *                         type: string
  *       400:
  *         description: Cerește datele pentru filtru sau introducere anul și drogul.
-
+ * 
  * /api/filter/urgente/interval:
  *   post:
  *     summary: Obține informații despre urgente într-un interval specificat.
@@ -201,6 +201,196 @@ const { promisify } = require("util");
  *                         type: string
  *       400:
  *         description: Cerește datele pentru filtru sau introducere anul și drogul.
+ * /api/filter/confiscari/favorite:
+ *   post:
+ *     summary: Salvează filtrele favorite pentru confiscări.
+ *     tags: [Filters]
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               categorie_select:
+ *                 type: string
+ *                 description: Categoria selectată pentru confiscare.
+ *               reprezentare:
+ *                 type: string
+ *                 description: Tipul de reprezentare pentru confiscare.
+ *               drog:
+ *                 type: string
+ *                 description: tipul de drog pentru confiscare
+ *               confiscari_subcategorie:
+ *                 type: string
+ *                 description: Subcategoria pentru confiscare.
+ *               startYearConfiscari:
+ *                 type: string
+ *                 description: Anul de start pentru confiscări.
+ *               endYearConfiscari:
+ *                 type: string
+ *                 description: Anul de final pentru confiscari
+ *               token:
+ *                 type: string
+ *                 description: Tokenul de autentificare. 
+ *     responses:
+ *       200:
+ *         description: Filtrul a fost salvat cu succes.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Filtrul a fost salvat cu succes.
+ *       400:
+ *         description: Nu s-a putut salva filtrul.
+ *   get:
+ *     summary: Obține filtrele favorite pentru confiscări.
+ *     tags: [Filters]
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *     responses:
+ *       200:
+ *         description: Lista de filtre favorite pentru confiscări.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items: 
+ *                 type: object
+ *                 properties:
+ *                   filter_id:
+ *                     type: string
+ * /api/filter/urgente/favorite:
+ *   post:
+ *     summary: Salvează filtrele favorite pentru urgențe.
+ *     tags: [Filters]
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               categorie_select:
+ *                 type: string
+ *                 description: Categoria selectată pentru urgențe.
+ *               reprezentare:
+ *                 type: string
+ *                 description: Tipul de reprezentare grafică.
+ *               token:
+ *                 type: string
+ *                 description: Tokenul de autentificare.
+ *               urgente_an:
+ *                 type: string
+ *                 description: Anul pentru filtrul de urgențe urgente an
+ *               urgente_drog:
+ *                 type: string
+ *                 description: Tipul de drog pentru filtrul de urgențe.
+ *               urgente_filtru:
+ *                 type: string
+ *                 description: Filtrul pentru genul urgențelor.
+ *     responses:
+ *       200:
+ *         description: Filtrul a fost salvat cu succes.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Filtrul a fost salvat cu succes.
+ *       400:
+ *         description: Nu s-a putut salva filtrul.
+ *   get:
+ *     summary: Obține filtrele favorite pentru urgențe.
+ *     tags: [Filters]
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Lista de filtre favorite pentru urgențe.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items: 
+ *                 type: object
+ *                 properties:
+ *                   filter_id:
+ *                     type: string
+ * /api/filter/infractiuni/favorite:
+ *   post:
+ *    summary: Salvează filtrele favorite pentru infracțiuni.
+ *    tags: [Filters]
+ *    security:
+ *      - BearerAuth: []
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              categorie_select:
+ *                type: string
+ *                description: Categoria selectată pentru infracțiuni.
+ *              cercetari_filtru_infractiuni:
+ *                type: string
+ *                description: Filtrul de cercetări pentru infracțiuni.
+ *              endYearInfractiuni:
+ *                type: string
+ *                description: Anul de sfârșit pentru filtrul de infracțiuni.
+ *              infractiuni_categorie:
+ *                type: string
+ *                description: Categoria infracțiunii.
+ *              reprezentare:
+ *                type: string
+ *                description: Tipul de reprezentare grafică.
+ *              startYearInfractiuni:
+ *                type: string
+ *                description: Anul de început pentru filtrul de infracțiuni.
+ *              token:
+ *                type: string
+ *                description: Tokenul de autentificare.
+ *    responses:
+ *      200:
+ *        description: Filtrul a fost salvat cu succes.
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                message:
+ *                  type: string
+ *                  example: Filtrul a fost salvat cu succes.
+ *      400:
+ *       description: Nu s-a putut salva filtrul.
+ *   get:
+ *     summary: Obține filtrele favorite pentru infracțiuni.
+ *     tags: [Filters]
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Lista de filtre favorite pentru infracțiuni.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items: 
+ *                 type: object
+ *                 properties:
+ *                   filter_id:
+ *                     type: string
  */
 
 const getUrgente = catchAsync(async (req, res) => {

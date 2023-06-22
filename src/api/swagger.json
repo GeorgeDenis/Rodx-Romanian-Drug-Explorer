@@ -323,6 +323,109 @@
                 }
             }
         },
+        "/api/auth/resetPasswordRequest": {
+            "post": {
+                "summary": "Solicită resetarea parolei.",
+                "tags": [
+                    "Authentication"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "email"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Solicitare de resetare a parolei trimisă cu succes.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/resetPassword/{token}": {
+            "post": {
+                "summary": "Resetarea parolei unui utilizator.",
+                "tags": [
+                    "Authentication"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "token",
+                        "required": true,
+                        "description": "Tokenul primit prin email pentru resetarea parolei.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "password"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Parola a fost resetată cu succes.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/campaign": {
             "post": {
                 "summary": "Adaugă o nouă campanie.",
@@ -403,6 +506,46 @@
                                 }
                             }
                         }
+                    },
+                    "500": {
+                        "description": "Eroare de server."
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Șterge o campanie.",
+                "tags": [
+                    "Campaign"
+                ],
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Campania a fost ștearsă cu succes."
+                    },
+                    "401": {
+                        "description": "Nu sunteti autorizat."
+                    },
+                    "403": {
+                        "description": "Nu aveti permisiunea de a efectua aceasta actiune."
                     },
                     "500": {
                         "description": "Eroare de server."
@@ -705,6 +848,318 @@
                     },
                     "400": {
                         "description": "Cerește datele pentru filtru sau introducere anul și drogul."
+                    }
+                }
+            }
+        },
+        "/api/filter/confiscari/favorite": {
+            "post": {
+                "summary": "Salvează filtrele favorite pentru confiscări.",
+                "tags": [
+                    "Filters"
+                ],
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "categorie_select": {
+                                        "type": "string",
+                                        "description": "Categoria selectată pentru confiscare."
+                                    },
+                                    "reprezentare": {
+                                        "type": "string",
+                                        "description": "Tipul de reprezentare pentru confiscare."
+                                    },
+                                    "drog": {
+                                        "type": "string",
+                                        "description": "tipul de drog pentru confiscare"
+                                    },
+                                    "confiscari_subcategorie": {
+                                        "type": "string",
+                                        "description": "Subcategoria pentru confiscare."
+                                    },
+                                    "startYearConfiscari": {
+                                        "type": "string",
+                                        "description": "Anul de start pentru confiscări."
+                                    },
+                                    "endYearConfiscari": {
+                                        "type": "string",
+                                        "description": "Anul de final pentru confiscari"
+                                    },
+                                    "token": {
+                                        "type": "string",
+                                        "description": "Tokenul de autentificare."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Filtrul a fost salvat cu succes.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Filtrul a fost salvat cu succes."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Nu s-a putut salva filtrul."
+                    }
+                }
+            },
+            "get": {
+                "summary": "Obține filtrele favorite pentru confiscări.",
+                "tags": [
+                    "Filters"
+                ],
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "requestBody": null,
+                "responses": {
+                    "200": {
+                        "description": "Lista de filtre favorite pentru confiscări.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "filter_id": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/filter/urgente/favorite": {
+            "post": {
+                "summary": "Salvează filtrele favorite pentru urgențe.",
+                "tags": [
+                    "Filters"
+                ],
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "categorie_select": {
+                                        "type": "string",
+                                        "description": "Categoria selectată pentru urgențe."
+                                    },
+                                    "reprezentare": {
+                                        "type": "string",
+                                        "description": "Tipul de reprezentare grafică."
+                                    },
+                                    "token": {
+                                        "type": "string",
+                                        "description": "Tokenul de autentificare."
+                                    },
+                                    "urgente_an": {
+                                        "type": "string",
+                                        "description": "Anul pentru filtrul de urgențe urgente an"
+                                    },
+                                    "urgente_drog": {
+                                        "type": "string",
+                                        "description": "Tipul de drog pentru filtrul de urgențe."
+                                    },
+                                    "urgente_filtru": {
+                                        "type": "string",
+                                        "description": "Filtrul pentru genul urgențelor."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Filtrul a fost salvat cu succes.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Filtrul a fost salvat cu succes."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Nu s-a putut salva filtrul."
+                    }
+                }
+            },
+            "get": {
+                "summary": "Obține filtrele favorite pentru urgențe.",
+                "tags": [
+                    "Filters"
+                ],
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de filtre favorite pentru urgențe.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "filter_id": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/filter/infractiuni/favorite": {
+            "post": {
+                "summary": "Salvează filtrele favorite pentru infracțiuni.",
+                "tags": [
+                    "Filters"
+                ],
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "categorie_select": {
+                                        "type": "string",
+                                        "description": "Categoria selectată pentru infracțiuni."
+                                    },
+                                    "cercetari_filtru_infractiuni": {
+                                        "type": "string",
+                                        "description": "Filtrul de cercetări pentru infracțiuni."
+                                    },
+                                    "endYearInfractiuni": {
+                                        "type": "string",
+                                        "description": "Anul de sfârșit pentru filtrul de infracțiuni."
+                                    },
+                                    "infractiuni_categorie": {
+                                        "type": "string",
+                                        "description": "Categoria infracțiunii."
+                                    },
+                                    "reprezentare": {
+                                        "type": "string",
+                                        "description": "Tipul de reprezentare grafică."
+                                    },
+                                    "startYearInfractiuni": {
+                                        "type": "string",
+                                        "description": "Anul de început pentru filtrul de infracțiuni."
+                                    },
+                                    "token": {
+                                        "type": "string",
+                                        "description": "Tokenul de autentificare."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Filtrul a fost salvat cu succes.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Filtrul a fost salvat cu succes."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Nu s-a putut salva filtrul."
+                    }
+                }
+            },
+            "get": {
+                "summary": "Obține filtrele favorite pentru infracțiuni.",
+                "tags": [
+                    "Filters"
+                ],
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de filtre favorite pentru infracțiuni.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "filter_id": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

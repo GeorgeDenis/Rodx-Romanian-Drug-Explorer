@@ -178,6 +178,8 @@ window.onload = function () {
 };
 deleteBtn.addEventListener("click", function () {
   const selectedOption = deleteDropdown.options[deleteDropdown.selectedIndex];
+  console.log(selectedOption);
+
   if (selectedOption.value) {
     fetch("/api/campaign", {
       method: "DELETE",

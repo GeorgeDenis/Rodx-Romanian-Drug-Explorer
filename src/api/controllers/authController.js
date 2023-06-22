@@ -139,6 +139,67 @@ const nodemailer = require("nodemailer");
  *                   type: string
  *                 token:
  *                   type: string
+ * /api/auth/resetPasswordRequest:
+ *   post:
+ *     summary: Solicită resetarea parolei.
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *             required:
+ *               - email
+ *     responses:
+ *       200:
+ *         description: Solicitare de resetare a parolei trimisă cu succes.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                 message:
+ *                   type: string
+ * /api/auth/resetPassword/{token}:
+ *   post:
+ *     summary: Resetarea parolei unui utilizator.
+ *     tags: [Authentication]
+ *     parameters:
+ *       - in: path
+ *         name: token
+ *         required: true
+ *         description: Tokenul primit prin email pentru resetarea parolei.
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               password:
+ *                 type: string
+ *             required:
+ *               - password
+ *     responses:
+ *       200:
+ *         description: Parola a fost resetată cu succes.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                 message:
+ *                   type: string
  */
 const generateToken = catchAsync(async (user) => {
   const response = await fetch("http://localhost:5000/token", {

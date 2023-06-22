@@ -1,6 +1,7 @@
 Chart.register(ChartDataLabels);
 
 const postConfiscariFilter = async (data) => {
+  console.log(data);
   const token = localStorage.getItem("token");
   if (token === null) {
     alert("Trebuie sa fiti logat pentru a putea salva un filtru!");
@@ -27,6 +28,7 @@ const postConfiscariFilter = async (data) => {
   }
 };
 const postInfractiuniFilter = async (data) => {
+  console.log(data);
   const token = localStorage.getItem("token");
   if (token === null) {
     alert("Trebuie sa fiti logat pentru a putea salva un filtru!");
@@ -54,6 +56,7 @@ const postInfractiuniFilter = async (data) => {
   }
 };
 const postUrgenteFilter = async (data) => {
+  console.log(data);
   const token = localStorage.getItem("token");
   if (token === null) {
     alert("Trebuie sa fiti logat pentru a putea salva un filtru!");

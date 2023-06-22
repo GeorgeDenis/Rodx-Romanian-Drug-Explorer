@@ -13,7 +13,8 @@ CREATE TABLE users (
                        name VARCHAR(255) NOT NULL,
                        email VARCHAR(255) NOT NULL,
                        password VARCHAR(255) NOT NULL,
-                       password_reset_token VARCHAR(255) NOT NULL,
+                       role VARCHAR(255) NOT NULL,
+                       password_reset_token VARCHAR(255),
                        password_reset_expires TIMESTAMP
 );
 

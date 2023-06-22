@@ -68,6 +68,29 @@ const parseRequestBody = require("../utils/parseReq");
  *                     type: string
  *       500:
  *         description: Eroare de server.
+ *   delete:
+ *     summary: Șterge o campanie.
+ *     tags: [Campaign]
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Campania a fost ștearsă cu succes.
+ *       401:
+ *         description: Nu sunteti autorizat.
+ *       403:
+ *         description: Nu aveti permisiunea de a efectua aceasta actiune.
+ *       500:
+ *         description: Eroare de server.
  */
 const insertCampaign = catchAsync(async (req, res) => {
   upload.single("photo")(req, res, async (err) => {
