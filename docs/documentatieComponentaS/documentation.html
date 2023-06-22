@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Documentație</title>
+  <link rel="stylesheet" href="doc_style.css">
+</head>
+
+<body>
+
+  <article>
+    <header>
+      <h1>
+        RoDX (Romanian Drug Explorer)
+      </h1>
+    </header>
+    <h2>Cuprins</h2>
+    <ul>
+      <li>
+        <a href="#authors">Autori</a>
+      </li>
+      <li>
+        <a href="#introduction">1. Introducere</a>
+        <ul>
+          <li><a href="#introduction-purpose">1.1 Scop</a></li>
+          <li><a href=" #conventions">1.2 Convenție de scriere</a></li>
+          <li><a href="#audience">1.3 Publicul țintă</a></li>
+          <li><a href=" #product-scope">1.4 Scopul produsului</a></li>
+          <li><a href="#references">1.5 Referințe</a></li>
+        </ul>
+      </li>
+      <li><a href="#overall">2. Descriere Generală</a>
+        <ul>
+          <li><a href="#product-perspective">2.1 Perspectiva produsului</a></li>
+          <li><a href="#product-functions">2.2 Funcțiile produsului</a></li>
+          <li><a href="#users">2.3 Clase și caracteristici ale utilizatorilor</a></li>
+          <li><a href="#operating-environment">2.4 Mediul de operare</a></li>
+          <li><a href="#documentation">2.5 Documentația pentru utilizator</a></li>
+        </ul>
+      </li>
+      <li><a href="#external">3. Interfețele aplicației </a>
+        <ul>
+          <li><a href="#user-interface">3.1 Interfața utilizatorului </a>
+            <ul>
+              <li><a href="#nav-bar">3.1.1 Bara de navigație </a></li>
+              <li><a href="#login-page">3.1.2 Pagina de autentificare </a></li>
+              <li><a href="#signup-page">3.1.3 Pagina de înregistrare </a></li>
+              <li><a href="#sendMail-page">3.1.4 Pagina de trimitere email pentru resetarea parolei</a></li>
+              <li><a href="#resetPassword-page">3.1.5 Pagina de resetarea parolei</a></li>
+              <li><a href="#home-page">3.1.6 Pagina de acasă </a></li>
+              <li><a href="#filter">3.1.7 Pagina de căutare și filtrare</a></li>
+              <li><a href="#droguri">3.1.8 Pagina cu informații despre droguri</a></li>
+              <li><a href="#campanii">3.1.9 Pagina de campanii</a></li>
+              <li><a href="#about">3.1.10 Pagina About </a></li>
+              <li><a href="#myAccount">3.1.11 Pagina MyAccount </a></li>
+              <li><a href="#notFound">3.1.11 Pagina 404 Not Found </a></li>
+            </ul>
+          </li>
+          <li><a href="#hardware-interface">3.2 Interfața Hardware </a></li>
+          <li><a href="#software-interface">3.3 Interfața Software</a></li>
+          <li><a href="#communication-interface">3.4 Interfața de comunicare</a></li>
+        </ul>
+      </li>
+      <li><a href="#system-features">4. Caracteristici ale sistemului</a>
+        <ul>
+          <li><a href="#management">4.1 Gestionarea contului </a>
+            <ul>
+              <li><a href="#management-1">4.1.1 Descriere și generalități </a></li>
+              <li><a href="#management-2">4.1.2 Actualizarea informațiilor</a></li>
+              <li><a href="#management-3">4.1.3 Condiții de funcționare</a></li>
+            </ul>
+          </li>
+          <li><a href="#history">4.2 Secțiunea de History </a>
+            <ul>
+              <li><a href="#history-1">4.2.1 Descriere și generalități</a></li>
+              <li><a href="#history-2">4.2.2 Actualizarea informațiilor</a></li>
+              <li><a href="#history-3">4.2.3 Condiții de funcționare</a></li>
+            </ul>
+          </li>
+          <li><a href="#utilizatori">4.3 Secțiunea Utilizatori</a>
+            <ul>
+              <li><a href="#utilizatori-1">4.3.1 Descriere și generalități</a></li>
+              <li><a href="#utilizatori-2">4.3.2 Actualizarea informațiilor</a></li>
+              <li><a href="#utilizatori-3">4.3.3 Condiții de funcționare</a></li>
+            </ul>
+          </li>
+          <li><a href="#campaniii">4.4 Secțiunea Campanii</a>
+            <ul>
+              <li><a href="#campaniii-1">4.4.1 Descriere și generalități</a></li>
+              <li><a href="#campaniii-2">4.4.2 Actualizarea informațiilor</a></li>
+              <li><a href="#campaniii-3">4.4.3 Condiții de funcționare</a></li>
+            </ul>
+          </li>
+          <li><a href="#logout">4.5 Secțiunea Logout</a>
+            <ul>
+              <li><a href="#logout-1">4.5.1 Descriere și generalități</a></li>
+              <li><a href="#logout-2">4.5.2 Actualizarea informațiilor</a></li>
+              <li><a href="#logout-3">4.5.3 Condiții de funcționare</a></li>
+            </ul>
+          </li>
+          <li><a href="#filtrare">4.6 Filtrarea și exportarea datelor</a>
+            <ul>
+              <li><a href="#filtrare-1">4.6.1 Descriere și generalități</a></li>
+              <li><a href="#filtrare-2">4.6.2 Actualizarea informațiilor</a></li>
+              <li><a href="#filtrare-3">4.6.3 Condiții de funcționare</a></li>
+            </ul>
+          </li>
+          <li><a href="#other">4.7 Alte funcționalități </a>
+            <ul>
+              <li><a href="#other-1">4.7.1 Descriere și generalități</a></li>
+              <li><a href="#other-2">4.7.2 Actualizarea informațiilor</a></li>
+              <li><a href="#other-3">4.7.3 Condiții de funcționare</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#non-functional">5.Funcționalități pentru protecție și securitate</a>
+        <ul>
+          <li><a href="#safety">5.1 Protecția datelor</a></li>
+          <li><a href="#security">5.2 Securizarea datelor</a></li>
+          <li><a href="#software-attributes">5.3 Calitățile Software </a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <div role="contentinfo">
+      <section id="authors" typeof="sa:AuthorsList">
+        <h2>Autori</h2>
+        <ul>
+          <li typeof="sa:ContributorRole" property="schema:author">
+            <span typeof="schema:Person">
+              <meta property="schema:givenName" content="Marcel">
+              <meta property="schema:familyName" content="Carp">
+              <span property="schema:name">Carp Marcel</span>
+            </span>
+            <ul>
+              <li property="schema:roleContactPoint" typeof="schema:ContactPoint">
+                <a href="mailto:ycarp32@yahoo.com" property="schema:email">ycarp32@yahoo.com</a>
+              </li>
+            </ul>
+          </li>
+
+          <li typeof="sa:ContributorRole" property="schema:author">
+            <span typeof="schema:Person">
+              <meta property="schema:givenName" content="George">
+              <meta property="schema:additionalName" content="Denis">
+              <meta property="schema:familyName" content="Duluță">
+              <span property="schema:name">Duluță George-Denis</span>
+            </span>
+            <ul>
+              <li property="schema:roleContactPoint" typeof="schema:ContactPoint">
+                <a href="mailto:george.duluta@yahoo.com" property="schema:email">george.duluta@yahoo.com</a>
+              </li>
+            </ul>
+          <li typeof="sa:ContributorRole" property="schema:author">
+            <span typeof="schema:Person">
+              <meta property="schema:givenName" content="Mihai">
+              <meta property="schema:familyName" content="Gălățianu">
+              <span property="schema:name">Gălățianu Mihai</span>
+            </span>
+            <ul>
+              <li property="schema:roleContactPoint" typeof="schema:ContactPoint">
+                <a href="mailto:mgalatianu@yahoo.ro" property="schema:email">mgalatianu@yahoo.ro</a>
+              </li>
+            </ul>
+          </li>
+
+        </ul>
+      </section>
+    </div>
+
+    <section id="introduction">
+      <h3>1. Introducere</h3>
+      <section id="introduction-purpose">
+        <h4>1.1 Scop</h4>
+        <p>
+          RoDX (Roumanian Drug Explorer) este o aplicație web dezvoltată de studenții menționați în secțiunea de Autori de la Facultatea de
+          Informatică a Universității Alexandru Ioan Cuza.
+          Scopul acestui document este acela de a prezenta o descriere detaliată a funcționalităților,precum și de
+          specifica cerințele aplicației web.Această aplicație
+          va oferi utilizatorilor posibilitatea de a genera și exporta statistici referitoare la situația drogurilor din
+          România.
+        </p>
+      </section>
+      <section id="conventions">
+        <h4> 1.2 Convenția documentului</h4>
+        <ul>
+          <li>
+            Acest document urmează șablonul de documentație a cerințelor software conform IEEE Software Requirements
+            Specification.</li>
+          <li>
+            Textul <b>îngroșat</b> este folosit pentru a defini noțiuni personalizate sau pentru a accentua concepte
+            importante. </li>
+        </ul>
+      </section>
+      <section id="audience">
+        <h4>1.3 Publicul țintă</h4>
+        <p>
+          Acest document este destinat profesorilor, studenților sau dezvoltatorilor, însă orice utilizator, indiferent
+          de cunoștințele lor tehnologice,
+          poate consulta secțiunile de <b>Interfeța utilizatorului</b> și <b>Caracteristici ale sistemului</b> pentru a
+          obține o mai bună înțelegere a ceea ce oferă aplicația.
+        </p>
+
+      </section>
+      <section id="product-scope">
+        <h4>1.4 Scopul Produsului</h4>
+        <p>
+          Scopul aplicației este acela de a oferi utilizatorilor informații despre situația drogurilor din
+          România.Utilizatorii
+          pot vizualiza grafic informații legate de situația drogurilor din România și să exporte aceste informații în diferite formate (PNG,SVG,CSV), dar și să vizualizeze campanii de prevenire pentru consumul de droguri .De asemenea,
+          utilizatorii își pot crea un cont pentru a beneficia de restul funcționalităților RoDX.
+          RoDX este un proiect educațional dezvoltat pentru materia Tehnologii Web.
+        </p>
+      </section>
+      <section id="references">
+        <h4>1.5 Bibliografie</h4>
+        <ul>
+          <li>Buraga Sabin-Corneliu, Site-ul Tehnologii Web, FII UAIC.</li>
+          <li>H Rick. IEEE-Template. GitHub</li>
+          <li>Berjon Robin. Ballesteros Sebastien. What is Scholarly HTML?</li>
+          <li>https://aws.amazon.com/sdk-for-javascript/</li>
+        </ul>
+      </section>
+    </section>
+
+    <section id="overall">
+      <h3>2. Descriere Generală</h3>
+      <section id="product-perspective">
+        <h4>2.1 Perspectiva produsului</h4>
+        <p>RoDX (Roumanian Drug Explorer) este o aplicație dezvoltată în cadrul cursului de Tehnologii Web, menită să
+          ofere date despre situația statistică a drogurilor din România, dar
+          și informații tehnice despre acestea.
+      </section>
+      <section id="product-functions">
+        <h4>2.2 Funcționalitățile produsului</h4>
+        Fiecare utilizator va avea acces la urmatoarele funcționălități.
+        <ul>
+          <li>Să se înregistreze pe site.</li>
+          <li>Să se autentifice pe site.</li>
+          <li>Să-și reseteze parola in caz că a uitat-o.</li>
+          <li>Să-și modifice credențialele contului dacă este <b>autentificat</b>.</li>
+          <li>Să genereze diagrame bazate pe informații legate de situația drogurilor din România pe trei categorii infracțiuni, confiscări și urgențe medicale .</li>
+          <li>Să-și salveze filtrele favorite in contul său dacă este <b>autentificat</b>.</li>
+          <li>Să vizualizeze informații despre campaniile de prevenire a drogurilor, dar și informații despre diverse.
+            droguri.</li>
+           <li>Să exporte aceste diagrame in format PNG,SVG,CSV.</li>
+          <li>Dacă utilizatorul are rol de <b>admin</b>, acesta poate șterge utilizatori din baza de date. </li>
+          <li>Dacă utilizatorul are rol de <b>admin</b>, acesta poate să adauge campanii de prevenire a drogurilor, dar
+            și să le elimine din baza de date.</li>
+        </ul>
+        <div class="diagrams">
+          <img src="img/useCase1.PNG" id="old" alt="flow diagram" width=800 >
+          <img src="img/useCase3.PNG" id="old2" alt="flow diagram" width=800 >
+          
+        </div>
+        <img src="img/useCase2.PNG" alt="flow diagram" width=800 >
+        <br>
+        Diagramele useCase reprezintă interacțiunile dintre pagini ilustrând funcționalitățile de care beneficiază fiecare utilizator.În prima diagram sunt ilustrate funcționalitățile pe care le are un utilizator care nu deține un cont.În a doua diagramă sunt ilustrate funcționalitățile pe care le are un utilizator care deține un cont.Iar în a treia diagramă sunt ilustrate funcționalitățile la care are acces un utilizator care deține un rol de admin.
+      </section>
+      <section id="users">
+        <h4>2.3 Clase și caracteristici ale utilizatorilor</h4>
+        <h5>2.3.1 Utilizator principal</h5>
+        <ul>
+          <li>Utilizatorii care sunt autentificați pot fii:</li>
+          <li style="list-style: none">
+            <ul>
+              <li>Orice categorie de oameni care doresc să afle informații despre statistica drogurilor, dar și
+                informații despre acestea.</li>
+              <li>Specialiști care se ocupă de  analiza statisticii drogurilor din România.</li>
+
+            </ul>
+          </li>
+          <li>Utilizatori care nu sunt autentificați</li>
+        </ul>
+        <h5>2.3.2 Caracteristici</h5>
+        <ul>
+          <li>Utilizatorii care sunt autentificați pot să-și salveze statististicile de care sunt interesați, atât
+            prin intermediul contului lor de utilizator, cât și în diferite formate cum ar fii PNG,SVG,CSV.
+          </li>
+          <li>Utilizatorii care nu sunt autentificați pot să vizualizeze informațiile despre statisticile despre
+            droguri, dar
+            în schimb aceștia nu au posibilitatea să salveze filtrele într-un cont. De asemenea, aceștia pot să se înregistreze ca și
+            utilizator și să
+            beneficieze pe deplin de toate funcționalitățile.
+          </li>
+        </ul>
+
+      </section>
+      <section id="operating-environment">
+        <h4>2.4 Mediul de operare</h4>
+        <p>
+          Produsul dezvoltat poate fi utilizat pe orice dispozitiv cu un browser web care suportă HTML5, CSS și
+          JavaScript.
+        </p>
+      </section>
+      <section id="documentation">
+        <h4>2.5 Documentația pentru utilizator</h4>
+        <p>
+          Utilizatorii pot consulta acest document pentru explicații detaliate despre funcționalitățile aplicației web.
+        </p>
+      </section>
+      
+    </section>
+
+    <section id="external">
+      <h3>3. Interfețele aplicației</h3>
+
+      <section id="user-interface">
+        <h4>3.1 Interfața utilizatorului</h4>
+        Iată o prezentare generală a fiecărei pagini a aplicației și funcționalităților pe care le oferă: <ul>
+
+          <li id="nav-bar"><b>Bara de navigație</b></li>
+          <li style="list-style: none">
+            <ul>
+              <li>Aceasta reprezintă meniul de navigare către fiecare pagina a aplicației.</li>
+
+              <li style="list-style: none" class="pictures"><img src="img/navBar.png" alt="login" width=800
+                  ></li>
+            </ul>
+          </li>
+
+          <li id="login-page"><b>Pagina de autentificare</b></li>
+          <li style="list-style: none">
+            <ul>
+              <li>Pagina aceasta are rolul de a realiza autentificare utilizatorilor la toate funcționalitățil RoDx.</li>
+              <li>Pentru a se autentifica utilizatorul trebuie să completeze câmpurile de email și parolă <b>corect</b>.
+              </li>
+              <li>În caz că utilizatorul nu are cont pe site acesta poate să-și creeze unul accesând pagina de
+                înregistrare apăsând pe butonul de <b>Register</b>. </li>
+              <li>În caz că utilizatorul și-a uitat parola acesta poate să și-o reseteze selectând opțiunea de <b>Ați
+                  uitat parola?</b> </li>
+              <li style="list-style: none" class="pictures"><img src="img/login.png" alt="login" width=800 height="350">
+              </li>
+            </ul>
+          </li>
+
+          <li id="signup-page"><b>Pagina de înregistrare</b></li>
+          <li style="list-style: none">
+            <ul>
+              <li>Pagina aceasta oferă funcționalitatea de înregistrare  utilizatorilor, ca să beneficieze de toate
+                funcționalitățile RoDX.</li>
+              <li>Pentru a se înregistra utilizatorul trebuie să completeze câmpurile <b>Nume de utilizator</b>,
+                <b>Email</b>, <b>Parolă</b> și <b>Confirmați parola</b>.De asemenea câmpurile <b>Nume de utilizator</b>
+                și <b>Email</b> trebuie să fie <b>unice</b>.</li>
+              <li>În caz că utilizatorul nu dorește să-și creeze un cont sau are deja un cont acesta poate să revină la
+                pagina de autentificare apăsând pe butonul de <b>Login</b> care se află în partea de jos a paginii.
+              </li>
+
+              <li style="list-style: none" class="pictures"><img src="img/signup.png" alt="signup" width=800
+                  height="350">
+
+            </ul>
+          </li>
+
+          <li id="sendMail-page"><b>Pagina de trimitere email pentru resetarea parolei.</b></li>
+          <li style="list-style: none">
+            <ul>
+              <li>Pagina aceasta are rolul de a trimite un email care conține un link care redirecționează utilizatorul
+                către o pagina în care își va introduce noua parolă.La apăsarea butonului de <b>Trimite Email</b>
+                utilizatorul va fi redirecționat către pagina de autentificare.</li>
+              <li style="list-style: none" class="pictures"><img src="img/sendMail.png" alt="login" width=800
+                  height="350"></li>
+            </ul>
+          </li>
+
+          <li id="resetPassword-page"><b>Pagina de resetare a parolei</b></li>
+          <li style="list-style: none">
+            <ul>
+              <li>Pagina aceasta are rolul de a reseta parola utilizatorului.În momentul în care utilizatorul
+                completează câmpurile
+                <b>Parolă</b> și <b>Confirmare Parolă</b> corect, la momentul apăsării butonului <b>Schimbă Parola</b>,
+                parola acestuia va fi modificată și va fi redirecționat către pagina de autentificare.
+              </li>
+
+              <li style="list-style: none" class="pictures"><img src="img/resetPassword.png" alt="login" width=800
+                  height="350"></li>
+            </ul>
+          </li>
+        </ul>
+        
+        <li id="home-page"><b> Pagina de acasă</b></li>
+        <li style="list-style: none">
+          <ul>
+            <li>Pagina aceasta are rolul de a face o scurtă introducere a aplicației RoDx.</li>
+            <li style="list-style: none" class="pictures"><img src="img/homePage1.PNG" alt="overview" width=800
+                >
+              <img src="img/homePage2.PNG" alt="mealtime" width=800>
+            </li>
+          </ul>
+        </li>
+
+        <li id="filter"><b>Pagina de căutare și filtrare</b></li>
+        <li style="list-style: none">
+          <ul>
+            <li>Pagina aceasta are scopul de a ilustra grafic statisticile despre situația drogurilor din România.</li>
+            <li>În momentul în care un utilizator selectează un <b>Tip</b>, acestuia îi sunt generate 3 categorii de
+              filtre, <b>Infracțiuni</b>, <b>Confiscări</b> și <b> Urgențe medicale</b>.</li>
+            <li>După ce una distre aceste 3 categorii este selectă ne sunt generate mai multe câmpuri care reprezintă sub-categorii a
+              categoriei principale, pe care utilizatorul le poate completa după nevoile sale </li>
+            <li>După ce utilizatorul a completat toate campurile, acesta are posibilitatea de a alege din 3 metode de
+              reprezentare grafică <b>Bar</b>, <b>Pie</b> și <b>Line</b></li>
+            <li>La final după apasarea butonului <b>Caută</b>, pe ecran sunt afișate următoarele componente, diagrama
+              care conține informații bazate pe filtrele selectate de utilizator, și butoanele <b>Preferate</b> care are
+              rolul de a salva combinația de filtre în contul utilizatorului, în secțiunea
+              <b>History</b> din pagina <b>MyAccount</b> și butonul <b>Export</b> care are rolul de exporta diagramele
+              în 3 formate, PNG, SVG și CSV.
+            </li>
+            <li style="list-style: none" class="pictures"><img src="img/filtrare1.PNG" alt="editprofile" width=800
+                >
+            </li>
+            <li style="list-style: none" class="pictures"><img src="img/filtrare2.PNG" alt="editprofile" width=800
+                >
+            </li>
+            <li style="list-style: none" class="pictures"><img src="img/filtrare3.PNG" alt="editprofile" width=800
+                >
+            </li>
+          </ul>
+        </li>
+        
+
+        <li id="droguri"><b>Pagina cu informații despre droguri</b></li>
+        <li style="list-style: none">
+          <ul>
+            <li>Pagina aceasta are rolul de oferii informații despre diferite tipuri de droguri. </li>
+            <li>La apăsarea butonului <b>Read more</b> care se află sub articolul corespondent fiecărui de tip de drog,
+              utilizatorul este redirecționat către o pagină care furnizeaza informații detaliate despre drogul
+              respectiv.</li>
+            <li style="list-style: none" class="pictures"><img src="img/droguri.PNG" alt="overview" width=800
+               >
+
+            </li>
+          </ul>
+
+            <li id="campanii"><b>Pagina de campanii</b></li>
+            <li style="list-style: none">
+              <ul>
+                <li>Pagina aceasta are rolul de oferii informații despre diferite campanii de prevenire a consumului de
+                  droguri. </li>
+                <li>La apăsarea butonului <b>Read more</b> care se află sub articolul corespondent fiecărei campanii,
+                  acestuia îi este ilustrat un modal care conține mai multe informații despre campania respectivă.</li>
+                <li style="list-style: none" class="pictures"><img src="img/campanii1.PNG" alt="overview" width=800
+                    ></li>
+                <li style="list-style: none" class="pictures"><img src="img/campanii2.PNG" alt="overview" width=800
+                    ></li>
+              </ul>
+            </li>
+
+            <li id="about"><b>Pagina About</b></li>
+            <li style="list-style: none">
+              <ul>
+                <li>Pagina aceasta are rolul de oferii informații despre creatorii site-ului RoDX. </li>
+              </ul>
+            </li>
+
+            <li id="myAccount"><b>Pagina de MyAccount</b></li>
+            <li style="list-style: none">
+              <ul>
+                <li>Pagina aceasta are 2 moduri de afișare, cel de utilizator și cel de admin.</li>
+                <img src="img/myAccount1.PNG" alt="overview" width=800 >
+            
+            <li style="list-style: none" class="pictures"><img src="img/myAccount2.PNG" alt="overview" width=800
+                ></li>
+            <li>Secțiunea <b>Account</b>, în care utilizatorul poate să-și modifice Username-ul, Email-ul, eventual
+              amândouă la apăsarea butonului <b>Update</b>.Acesta nu are voie să folosească credențiale care există deja
+              în baza de date. </li>
+            <li>Secțiunea <b>Password</b>, în care utilizatorul poate să-și modifice parola la apăsarea butonului
+              <b>Update</b>, cu condiția ca câmpul <b>Old Password</b> să fie completat cu parola cu care utilizatorul
+              s-a conectat și campurile <b>New Password</b> și <b>Confirm New Password</b> să fie identic completate.
+            </li>
+            <li style="list-style: none" class="pictures"><img src="img/myAccount3.PNG" alt="overview" width=800
+                ></li>
+            <li>Secțiunea <b>History</b>, în care utilizatorul poate să-și vizualize filtrele pe care le-a ales ca fiind
+              preferate în urma selectării butonului <b>Preferate</b> din cadrul paginii <b>Căutare și filtrare</b>.De
+              asemenea, acesta are posibilitatea de a elimina filtre din <b>History</b> dacă dorește, prin apăsarea
+              butonului de ștergere din dreptul fiecărui filtru. </li>
+            <li style="list-style: none" class="pictures"><img src="img/myAccount4.PNG" alt="overview" width=800
+                ></li>
+            <li>Secțiunea <b>Utilizatori</b> este destinată <b>adminului</b>, și aceasta îi oferă posibilitatea de a
+              vizualiza o listă cu toți utilizatorii din baza de date.De asemenea, acesta are posibilitatea de a elimina
+              utilizatori din baza de date dacă dorește.</li>
+            <li style="list-style: none" class="pictures"><img src="img/myAccount5.PNG" alt="overview" width=800
+                ></li>
+            <li>Secțiunea <b>Campanii</b> este destinată <b>adminului</b>, și aceasta permite adminului să adauge sau să
+              elimine campanii.În momentul în care adminul creează o campanie informațiile referitoare la conținutul
+              campaniei (titlul și articolul) sunt salvate în baza de date, pe când imaginea de profil a campaniei este
+              salvată in cloud aws.De asemenea, acesta are posibilitatea de a șterge campanii, selectând o campanie din
+              secțiunea <b>Alege un articol</b> și apăsând pe butonul de <b>Sterge</b>.Informațiile despre campania
+              respectivă sunt eliminate din baza de date respectiv din cloud. </li>
+            <li style="list-style: none" class="pictures"><img src="img/myAccount6.PNG" alt="overview" width=800
+                ></li>
+            <li>Secțiunea de <b>Logout</b> are rolul de a deconecta utilizatorul de pe cont, și îl redirecționează către
+              pagina de autentificare, ștergând tokenul din local storage. </li>
+          </ul>
+        </li>
+
+        <li id="notFound"><b>Pagina 404 Not Found</b></li>
+        <li style="list-style: none">
+          <ul>
+            <li>Pagina aceasta are rolul de reprezenta eroarea 404 not found, având tematica RoDX </li>
+            <li style="list-style: none" class="pictures"><img src="img/404.PNG" alt="overview" width=800 >
+            </li>
+
+          </ul>
+        </li>
+
+        <section id="hardware-interface">
+
+          <h4>3.2 Interfața Hardware</h4>
+          <p>
+
+            Acest produs nu necesită interfețe hardware, funcționând pe orice platformă (calculatoare, laptopuri,
+            telefoane etc.) care are instalat un browser.
+          </p>
+        </section>
+
+        <section id="software-interface">
+          <h4>3.3 Interfața Software</h4>
+          <p>
+            Cerințele minime de software includ un browser funcțional, compatibil cu HTML5 și cu JavaScript.
+          <h5>Postgres Database</h5>
+          Aceasta reprezinta baza de date în care stocam informații despre fiecare utilizator și campanie.De asemenea
+          baza de date stochează informațiile referitoare la statisticile despre droguri din România care sunt folosite
+          pentru ilustrarea grafică, dar și pentru a putea fi exportate.
+          <h5>AWS-SDK</h5>
+          Pentru a asigura calitatea înaltă și procesarea rapidă a datelor media ale utilizatorilor noștri, utilizăm
+          serviciul de stocare în cloud AWS, care este open source și ne permite să încărcăm fotografiile pentru
+          campanii și să le păstrăm acolo.
+
+        </section>
+
+        <section id="communication-interface">
+          <h4>3.4 Interfața de comunicare</h4>
+          <p>
+            Aplicația necesită o conexiune la internet. Standardul de comunicare care va fi utilizat este HTTP.
+          </p>
+        </section>
+
+        <section id="system-features">
+          <h3>4. Caracteristici ale sistemului</h3>
+          <section id="management">
+            <h4>4.1 Gestionarea contului</h4>
+
+            <h5 id="management-1">4.1.1 Descriere și generalități</h5>
+            Un utilizator se poate înregistra alegându-și un nume de utilizator, un email și o parolă.Acesta se poate
+            autentifica având nevoie doar de email și de o parolă.Utilizatorul are posibilitatea în timp ce este
+            autentificat să-și modifice credențialele de la cont dacă dorește acest lucru.
+            Aceata este o funcționalitate cu o prioritate ridicată a aplicației.
+            <h5 id="management-2">4.1.2 Actualizarea informațiilor</h5>
+            <ul>
+              <li>
+                În momentul în care un utilizator nou este creat, credențialele acestuia sunt introduse în baza de
+                date.De asemenea, când utilizatorul decide să-și modifice credențialele, noile valori sunt și ele
+                actualizate în baza de date.
+              </li>
+            </ul>
+            <h5 id="management-3">4.1.3 Condiții de funcționare</h5>
+            <ul>
+              <li>
+                Pentru a-și modifica credențialele utilizatorul trebuie să fie autentificat.
+              </li>
+              <li>
+                Pentru a se autentifica utilizatorul are nevoie de un cont care este înregistrat în baza de date.
+              </li>
+            </ul>
+
+          </section>
+          <section id="history">
+            <h4>4.2 Secțiunea de History</h4>
+
+            <h5 id="history-1">4.2.1 Descriere și generalități</h5>
+            În secțiunea de History utilizatorul poate să-și vizualize filtrele
+            pe care le-a ales ca fiind preferate în urma selectării butonului <b>Preferate</b>
+            din cadrul paginii <b>Căutare și filtrare</b>.De asemenea, acesta are posibilitatea de
+            a elimina filtre din <b>History</b> dacă dorește prin
+            apăsarea butonului de ștergere din dreptul fiecărui filtru.
+            Aceata este o funcționalitate cu o prioritate medie a aplicației.
+
+            <h5 id="history-2">4.2.2 Actualizare informațiilor</h5>
+            <ul>
+              <li>
+                Fiecare combinație de filtre este salvată de utilizator ca și "preferată" este stocată în baza de date.
+              </li>
+              <li>La apasărea butonului de ștergere care se află în dreptul fiecărui filtru ales de utilizator ca și
+                "preferat" combinația respectivă de filtre este eliminată din baza de date.</li>
+
+            </ul>
+            <h5 id="history-3">4.2.3 Condiții de funcționare</h5>
+            <ul>
+              <li>
+                Utilizatorul trebuie să fie autentificat.
+              </li>
+
+            </ul>
+
+          </section>
+          <section id="utilizatori">
+            <h4>4.3 Secțiunea de utilizatori</h4>
+
+
+            <h5 id="utilizatori-1">4.3.1 Descriere și generalități</h5>
+            Secțiunea <b>Utilizatori</b> este destinată
+            <b>adminului</b>, și aceasta îi oferă posibilitatea
+            de a vizualiza o listă cu toți utilizatorii din
+            baza de date.De asemenea, acesta are posibilitatea
+            de a elimina utilizatori din baza de date dacă
+            dorește acest lucru.
+            Aceasta este o funcționalitate cu o prioritate medie a aplicației.
+
+            <h5 id="utilizatori-2">4.3.2 Actualizarea informațiilor</h5>
+            <ul>
+              <li>
+                La apăsarea butonului de ștergere din dreptul fiecărui utilizator credențialele utilizatorului care a
+                fost selectat să fie eliminat sunt șterse din baza de date.
+              </li>
+
+            </ul>
+            <h5 id="utilizatori-3">4.3.3 Condiții de funcționare</h5>
+            <ul>
+              <li>
+                Utilizatorul trebuie să fie autentificat.
+              </li>
+              <li>
+                Utilizatorul trebuie să dețină drepturi de admin.
+              </li>
+            </ul>
+
+          </section>
+          <section id="campaniii">
+            <h4>4.4 Secțiunea Campanii</h4>
+            <h5 id="campaniii-1">4.4.1 Descriere și generalități</h5>
+            Secțiunea <b>Campanii</b> este destinată <b>
+                adminului</b>, și aceasta permite adminului să
+              adauge sau să elimine campanii.În momentul în care
+              adminul creează o campanie informațiile referitoare
+              la conținutul campaniei (titlul și articolul) sunt
+              salvate în baza de date, pe când imaginea de profil
+              a campaniei este salvată in cloud aws.De asemenea,
+              acesta are posibilitatea de a șterge campanii,
+              selectând o campanie din secțiunea <b>Alege un articol</b> și apăsând pe butonul 
+              <b>Sterge</b>.Informațiile despre campania respectivă sunt eliminate din baza de date respectiv cloud.
+            
+            Aceata este o funcționalitate cu o prioritate medie a aplicației.
+
+            <h5 id="campaniii-2">4.4.2 Actualizare informațiilor</h5>
+            <ul>
+              <li>
+                În momentul în care adminul adaugă o campanie nouă, informațiile despre acestea sunt inserate în baza de
+                date.
+              </li>
+              <li>
+                În momentul în care adminul șterge o campanie, informațiile despre acestea sunt eliminate din baza de
+                date.
+              </li>
+            </ul>
+            <h5 id="campaniii-3">4.4.3 Condiții de funcționare</h5>
+            <ul>
+              <li>
+                Utilizatorul trebuie să fie autentificat.
+              </li>
+              <li>
+                Utilizatorul trebuie să dețină drepturi de admin.
+              </li>
+            </ul>
+          </section>
+          <section id="logout">
+            <h4>4.5 Secțiunea de Logout</h4>
+            <h5 id="logout-1">4.5.1 Descriere și generalități</h5>
+            Secțiunea de <b>Logout</b> are rolul de a deconecta utilizatorul de pe cont, și îl redirecționează către
+              pagina de autentificare, eliminând tokenul din local storage. 
+
+            <h5 id="logout-2">4.5.2 Actualizare informațiilor</h5>
+            <ul>
+              <li>
+                Tokenul de autentificare este scos din local storage.
+              </li>
+            </ul>
+
+            <h5 id="logout-3">4.5.3 Condiții de funcționare</h5>
+            <ul>
+              <li>
+                Utilizatorul trebuie să fie autentificat.
+              </li>
+
+            </ul>
+          </section>
+          <section id="filtrare">
+            <h4>4.6 Filtrarea și exportarea datelor.</h4>
+            <h5 id="filtrare-1">4.6.1 Descriere și generalități</h5>
+            În momentul în care un utilizator selectează un Tip, acestuia îi sunt generate 3 categorii de filtre,
+            Infracțiuni, Confiscări și Urgențe medicale.
+            După ce una distre aceste 3 categorii este selectată ne sunt generate mai multe câmpuri care reprezintă sub-categorii a
+            categoriei principale, pe care utilizatorul le poate completa după nevoile sale
+            După ce utilizatorul a completat toate campurile, acesta are posibilitatea de a alege din 3 metode de
+            reprezentare grafică Bar, Pie și Line.
+            La final după apasarea butonului Caută, pe ecran sunt afișate următoarele componente, diagrama care conține
+            informații bazate pe filtrele selectate de utilizator, și butoanele Preferate care are rolul de a salva
+            combinația de filtre în contul utilizatorului în secțiunea History din pagina MyAccount și butonul Export
+            care are rolul de exporta diagramele în 3 formate, PNG, SVG și CSV.
+            Aceata este o funcționalitate cu o prioritate ridicată a aplicației.
+
+            <h5 id="filtrare-2">4.6.2 Actualizarea informațiilor</h5>
+            <ul>
+              <li>
+                Pe baza filtrelor selectate de utilizator, sunt extrase informațiile din baza de date si exportate pe
+                ecran sub forma unei diagrame.
+              </li>
+            </ul>
+
+            <h5 id="filtrare-3">4.6.3 Condiții de funcționare</h5>
+            <ul>
+              <li>
+                Pentru a selecta un filtru preferat utilizatorul trebuie să fie autentificat.
+              </li>
+            </ul>
+          </section>
+          <section id="other">
+            <h4>4.7 Alte funcționalități</h4>
+            <h5 id="other-1">4.7.1 Descriere și generalități</h5>
+            In cadrul feed-ului RSS pot fi vizualizate ultimele campanii publicate.
+
+            Aceasta este o funcționalitate cu o prioritate scăzută a aplicației.
+
+            <h5 id="other-2">4.7.2 Actualizarea informațiilor</h5>
+            <ol>
+              <li>
+                Pe baza campaniilor existente sunt extrase din baza de date și exportate pe ecran pe baza unui XML. 
+              </li>
+
+            </ol>
+
+            <h5 id="other-3">4.7.3 Cerințe de funcționare</h5>
+            <ul>
+              <li>
+                Utilizatorul trebuie să fie autentificat.
+              </li>
+              <li>
+                Utilizatorul trebuie să dețină un rol de admin.
+              </li>
+
+            </ul>
+          </section>
+        </section>
+
+        <section id="non-functional">
+          <h3>5. Funcționalități pentru protecție și securitate</h3>
+
+          <section id="safety">
+            <h4>5.1 Protecția datelor</h4>
+            <p>
+              Aplicația va asigura confidențialitatea datelor privind
+              filtrele salvate de fiecare utilizator și campaniilor
+              adăugate de admin.
+            </p>
+          </section>
+
+          <section id="security">
+            <h4>5.2 Securizarea datelor</h4>
+            <p>
+              Conturile utilizatorilor sunt protejate printr-un sistem de autentificare care utilizează criptarea
+              parolelor și tokenurile de acces, în scopul menținerii confidențialității și securității datelor lor.
+
+              Alte măsuri de securitate care sunt implementate includ prevenirea atacurilor de tip SQL-injection și
+              blocarea cererilor multiple consecutive din partea unui utilizator pentru a preveni încetinirea
+              aplicației.
+
+              Aceste măsuri asigură că informațiile utilizatorilor sunt protejate și că aplicația rămâne securizată
+              împotriva amenințărilor potențiale.
+            </p>
+          </section>
+          <section id="software-attributes">
+            <h4>5.3 Calitățile Software</h4>
+            <ul>
+
+              <li>Adaptabilitate</li>
+              <li>Ușurință în utilizare</li>
+              <li>Fiabilitate</li>
+              <li>Flexibilitate</li>
+              <li>Maintenabilitate</li>
+            </ul>
+          </section>
+
+        </section>
+      </section>
+    </section>
+  </article>
+</body>
+
+</html>

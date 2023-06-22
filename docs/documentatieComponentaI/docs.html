@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta content="text/html" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="documentation.css" />
+	<title>Documentation</title>
+</head>
+
+<body>
+	<article>
+		<header>
+			<h1>RoDX (Romanian Drug Explorer)</h1>
+		</header>
+		<h2>Cuprins</h2>
+		<ul>
+			<li>
+				<a href="#authors">Autori</a>
+			</li>
+			<li>
+				<a href="#introduction">1. Introducere</a>
+				<ul>
+					<li><a href="#introduction-purpose">1.1 Motivație</a></li>
+					<li><a href=" #conventions">1.2 Convenție de scriere</a></li>
+					<li>
+						<a href="#audience">1.3 Portretul utilizatorului </a>
+					</li>
+					<li><a href="#product-scope">1.4 Scopul produsului</a></li>
+					<li><a href="#diagrame">1.5 Diagrame Use-Case</a></li>
+					<li><a href="#references">1.6 Referințe</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#overall">2. Descriere generală</a>
+				<ul>
+					<li><a href="#product-perspective">2.1 Perspectiva produsului</a></li>
+					<li><a href="#product-functions">2.2 Funcțiile produsulu</a></li>
+					<li><a href="#users">2.3 Caracteristici</a></li>
+					<li>
+						<a href="#operating-environment">2.4 Mediul de funcționare</a>
+					</li>
+					<li><a href="#design-constraints">2.5 Constrângeri de design și implementare</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#external">3. Cerințele interfaței externe.</a>
+				<ul>
+					<li>
+						<a href="#user-interface">3.1 Interfața utilizatorului</a>
+						<ul>
+							<li><a href="#login-page">3.1.1 Pagina de autentificare </a></li>
+							<li><a href="#signup-page">3.1.2 Pagina de înregistrare </a></li>
+							<li><a href="#main-page">3.1.3 Home Page</a></li>
+							<li><a href="#droguri">3.1.4 Droguri</a></li>
+							<li><a href="#cautare">3.1.5 Căutare&filtrare</a></li>
+							<li><a href="#campanii">3.1.6 Campanii</a></li>
+							<li><a href="#about">3.1.7 About us</a></li>
+						</ul>
+					</li>
+					<li><a href="#software-interface">3.2 Interfață Software</a></li>
+					<li>
+						<a href="#communication-interface">3.3 Interfața de comunicare</a>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<a href="#system-features">4. Funcționalități de sistem</a>
+				<ul>
+					<li>
+						<a href="#management">4.1 Management-ul contului </a>
+						<ul>
+							<li>
+								<a href="#management-1">4.1.1 Descriere </a>
+							</li>
+							<li><a href="#management-2">4.1.2 Utilizare</a></li>
+							<li>
+								<a href="#management-3">4.1.3 Condiții de funcționare</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="#sleep">4.2 Filtrarea multi-criterială</a>
+						<ul>
+							<li><a href="#sleep-1">4.2.1 Descriere</a></li>
+							<li><a href="#sleep-2">4.2.2 Utilizare</a></li>
+							<li><a href="#sleep-3">4.2.3 Condiții de funcționare</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#meal">4.3 Creearea statisticilor</a>
+						<ul>
+							<li><a href="#meal-1">4.3.1 Descriere</a></li>
+							<li><a href="#meal-2">4.3.2 Utilizare</a></li>
+							<li><a href="#meal-3">4.3.3 Condiții de funcționare</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#gallery">4.4 Salvare statisticilor</a>
+						<ul>
+							<li><a href="#gallery-1">4.4.1 Descriere</a></li>
+							<li><a href="#gallery-2">4.4.2 Utilizare</a></li>
+							<li><a href="#gallery-3">4.4.3 Condiții de funcționare</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#medical">4.5 Exportarea statisticilor</a>
+						<ul>
+							<li><a href="#medical-1">4.5.1 Descriere</a></li>
+							<li><a href="#medical-2">4.5.2 Utilizare</a></li>
+							<li><a href="#medical-3">4.5.3 Condiții de funcționare</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#likes">4.6 Autentificarea ca și administrator</a>
+						<ul>
+							<li><a href="#likes-1">4.6.1 Descriere</a></li>
+							<li><a href="#likes-2">4.6.2 Utilizare</a></li>
+							<li><a href="#likes-3">4.6.3 Condiții de funcționare</a></li>
+						</ul>
+					</li>
+
+				</ul>
+			</li>
+			<li>
+				<a href="#non-functional">5. Cerințe nefuncționale</a>
+				<ul>
+					<li><a href="#safety">5.1 Cerințe de securitate</a></li>
+					<li><a href="#security">5.2 Security Requirements</a></li>
+					<li><a href="#atribute">5.3 Atributele Calității Software</a></li>
+				</ul>
+			</li>
+		</ul>
+		<div role="contentinfo">
+			<section id="authors" typeof="sa:AuthorsList">
+				<h2>Autori</h2>
+				<ul>
+					<li typeof="sa:ContributorRole" property="schema:author">
+						<span typeof="schema:Person">
+							<meta property="schema:additionalName" content="Marcel" />
+							<meta property="schema:familyName" content="Carp" />
+							<span property="schema:name">Carp Marcel</span>
+						</span>
+						<ul>
+							<li property="schema:roleContactPoint" typeof="schema:ContactPoint">
+								<a href="mailto:ycarp32@yahoo.com" property="schema:email">ycarp32@yahoo.com</a>
+							</li>
+						</ul>
+					</li>
+
+					<li typeof="sa:ContributorRole" property="schema:author">
+						<span typeof="schema:Person">
+							<meta property="schema:givenName" content="George" />
+							<meta property="schema:additionalName" content="Denis" />
+							<meta property="schema:familyName" content="Duluță" />
+							<span property="schema:name">Duluță George Denis</span>
+						</span>
+						<ul>
+							<li property="schema:roleContactPoint" typeof="schema:ContactPoint">
+								<a href="mailto:george.duluta@yahoo.com"
+									property="schema:email">george.duluta@yahoo.com</a>
+							</li>
+						</ul>
+					</li>
+
+					<li typeof="sa:ContributorRole" property="schema:author">
+						<span typeof="schema:Person">
+							<meta property="schema:givenName" content="Mihai" />
+							<meta property="schema:familyName" content="Gălățianu" />
+							<span property="schema:name">Gălățianu Mihai</span>
+						</span>
+						<ul>
+							<li property="schema:roleContactPoint" typeof="schema:ContactPoint">
+								<a href="mailto:mgalatianu@yahoo.ro" property="schema:email">mgalatianu@yahoo.ro</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+		</div>
+		<section id="introduction">
+			<h3>1. Introducere</h3>
+			<section id="introduction-purpose">
+				<h4>1.1 Motivație</h4>
+				<p>
+					Consumul de droguri afectează nu doar sănătatea individuală, ci și
+					societatea în ansamblu. Problemele asociate cu drogurile includ
+					dependența, bolile transmisibile, supradozele și problemele de
+					sănătate mintală. Prin analiza datelor disponibile, RoDX urmărește
+					să evidențieze aceste probleme și să contribuie la eforturile de
+					prevenire și reducere a impactului consumului de droguri.Scopul
+					acestui instrument este de a ajuta utilizatorii să înțeleagă mai
+					bine evoluția și tendințele consumului de droguri în țară, precum și
+					impactul acestuia asupra infracțiunilor, sănătății și campaniilor de
+					prevenire.
+				</p>
+			</section>
+			<section id="conventions">
+				<h4>1.2 Convenție de scriere</h4>
+				<ul>
+					<li>
+						Acest document urmează standardul IEEE Software Requirements
+						Specification și Scholarly HTML.
+					</li>
+				</ul>
+			</section>
+			<section id="audience">
+				<h4>1.3 Portretul utilizatorului</h4>
+				<p>
+					Audiența acestui site este una diversa aceasta fiind constituită de
+					urmatoarele categorii de oameni: cetățenii interesați de situația
+					drogurilor în România și de evoluția consumului acestora, studenți,
+					cercetători sau profesioniști care studiază sau lucrează în domeniul
+					sănătății, al politicilor publice sau al științelor sociale și care
+					au nevoie de date statistice și de analize relevante pentru munca
+					lor, jurnaliști care scriu despre problemele sociale și de sănătate
+					publică din România și care au nevoie de date și informații
+					actualizate, autorități și organizații guvernamentale și
+					neguvernamentale care lucrează în domeniul prevenirii și combaterii
+					consumului de droguri în România și care au nevoie de date și
+					analize pentru a-și orienta politicile și acțiunile în consecință.
+				</p>
+			</section>
+			<section id="product-scope">
+				<h4>1.4 Scopul produsului</h4>
+				<p>
+					Scopul acestui produs este facilitarea vizualizării informațiilor cu
+					privire la consumul de droguri. Instrumentul va fi creat pe baza
+					unui API REST/GraphQL propriu. Statisticile și vizualizările vor fi
+					generate în minim 3 maniere. Acestea vor putea fi exportate în
+					formatele PNG și SVG. Căutările multi-criteriale și rapoartele
+					aferente generate vor fi expuse ca documente HTML și în format CSV.
+				</p>
+			</section>
+			<section id="diagrame">
+				<h2>1.5 Diagrame Use-Case</h2>
+				<p>Mai jos se află diagramele use-case pentru utilizator și pentru admin.</p>
+				<img src="UseCase.png" alt="UseCase" style="width: 800px;height:600px;">
+			    <img src="UseCaseAdmin.PNG" alt="Admin" style="width: 800px;height:600px;">
+			</section>
+			<section id="references">
+				<h4>1.6 Referințe</h4>
+				<ul>
+					<li>Buraga Sabin-Corneliu, Site-ul Tehnologii Web, FII UAIC.</li>
+					<li>H Rick. IEEE-Template. GitHub</li>
+					<li>
+						Berjon Robin. Ballesteros Sebastien. What is Scholarly HTML?
+					</li>
+				</ul>
+			</section>
+		</section>
+
+		<section id="overall">
+			<h3>2. Descriere generală</h3>
+			<section id="product-perspective">
+				<h4>2.1 Perspectiva produsului</h4>
+				Prin crearea acestui instrument, se urmărește îmbunătățirea înțelegerii
+				situației drogurilor în România, precum și ajutarea autorităților .
+			</section>
+
+			<section id="product-functions">
+				<h4>2.2 Funcțiile produsului</h4>
+				Fiecare utilizator are acces la următoarele opțiuni:
+				<ul>
+					<li>Creează un cont.</li>
+					<li>Autentificare.</li>
+					<li>Informarea cu privire la tipurile de droguri și efectele lor, posibilitatea de vizualizare a
+						statisticilor privind drogul respectiv </li>
+					<li>Vizualizarea campaniilor anti-drog.</li>
+					<li>Căutarea multi-criterială</li>
+					<li>
+						Generarea statisticilor cu forme de vizualizare precum:
+						<ul>
+							<li>Line chart</li>
+							<li>Bar chart</li>
+							<li>Pie chart</li>
+						</ul>
+					</li>
+
+					<li>Generare de redări cartografice</li>
+					<li>
+						Exportarea informațiilor după urmatoarele formate:
+						<ul>
+							<li>CSV</li>
+							<li>SVG</li>
+							<li>PNG</li>
+						</ul>
+					</li>
+					<li>Salvarea statisticilor într-un istoric </li>
+				</ul>
+			</section>
+			<section id="users">
+				<h4>2.3 Clase de utilizatori și caracteristici</h4>
+				<h5>2.3.1 Utilizatori principali</h5>
+				<ul>
+					<li>Utilizatorii autentificați pot fi:</li>
+					<ul>
+						<li>Cetățeni interesați de situația drogurilor in Romania</li>
+						<li>Studenți, cercetători sau profesioniști care studiază sau lucrează în domeniul sănătății
+						</li>
+						<li>Jurnaliști care scriu despre problemele sociale.</li>
+						<li>Publicul larg care dorește să se informeze despre situația consumului de droguri în România
+						</li>
+					</ul>
+				</ul>
+				<h5>2.3.2 Caracteristici</h5>
+				<ul>
+					<li>Utilizatori autentificați au acces la toate funcționalitățile site-ului.
+					</li>
+					<li>Utilizatorii neautentificați posibilitatea de a creea un cont și fără acesta nu au dreptul de a
+						exporta date legate de consumul drogurilor.</li>
+				</ul>
+				<section id="operating-environment">
+					<h4>2.4 Mediul de funcționare</h4>
+					<p>
+						Instrumentul de vizualizare este o aplicație web care poate fi folosită pe orice device care
+						suporă
+						HTML5, CSS și JavaScript(responsive).
+					</p>
+				</section>
+				<section id="design-constraints">
+					<h4>2.5 Constrângeri de design și implementare.</h4>
+					<p>
+					<ul>
+						<li>Generarea de statistici și vizualizari de date.</li>
+						<li>Utilizarea unui API REST/GraphQL propiu.</li>
+						<li>Utilizarea HTML5, CSS și JavaScript.</li>
+						<li>Exportarea datelor in format CSV, PNG și SVG.</li>
+					</ul>
+					</p>
+				</section>
+			</section>
+			<section id="external">
+				<h3>3. Cerințele interfaței externe.</h3>
+
+				<section id="user-interface">
+					<h4>3.1 Interfața utilizatorului</h4>
+
+					<ul>
+						<li id="login-page"><b>Pagina de autentificare</b></li>
+						<li style="list-style: none">
+							<ul>
+								<li>Email</li>
+								<li>Parolă</li>
+								<li>Login</li>
+								<li>Register</li>
+								<li>Ați uitat parola?</li>
+							</ul>
+						</li>
+                        <img src="Login.png" alt="Login" style="width:500px ;height: 300px;">
+						<li id="signup-page"><b>Pagina de înregistrare</b></li>
+						<li style="list-style: none">
+							<ul>
+								<li>Nume de utilizator</li>
+								<li>Email</li>
+								<li>Parolă</li>
+								<li>Confirmați parola</li>
+								<li>Register</li>
+								<li>Aveți deja cont? Login</li>
+							</ul>
+						</li>
+						<img src="Register.png" alt="Register" style="width:500px ;height: 300px;">
+						<li id="main-page"><b>Home Page</b></li>
+						<li style="list-style: none">
+							<ul>
+								<li>Meniu</li>
+								<li>Descrierea aplicației</li>
+								<li>Prezentarea scopului</li>
+								<li>Poze descriptive</li>
+							</ul>
+						</li>
+                         <img src="HomePage.png" alt="Home Page" style="width:500px ;height: 300px;">
+						<li id="cautare"><b>Cautare&filtrare</b></li>
+						<li style="list-style: none">
+							<ul>
+								<li>An</li>
+								<li>Tipul de drog</li>
+								<li>Regiune/Județ</li>
+								<li>Categorie</li>
+								<li>Modalitate de reprezentare</li>
+								<li>Caută</li>
+								<li>Salvare</li>
+								<li>Export</li>
+							</ul>
+						</li>
+						<img src="Cautare.png" alt="Cautare" style="width:500px;height:300px; ">
+						<li id="droguri"><b>Droguri</b></li>
+						<li style="list-style: none">
+							<ul>
+								<li>Imagini</li>
+								<li>Informații despre droguri</li>
+							</ul>
+						</li>
+					</ul>
+					<img src="Droguri.png" alt="Droguri" style="width:500px ;height: 300px;">
+					<li id="campanii"><b>Campanii</b></li>
+					<li style="list-style: none">
+						<ul>
+							<li>Postere</li>
+							<li>Listă de campanii</li>
+							<li>Articole descriptive despre fiecare campanie</li>
+						</ul>
+					</li>
+					<img src="Campanii.png" alt="Home Page" style="width:500px ;height: 300px;">
+					<li id="about"><b>About us</b></li>
+					<li style="list-style: none">
+						<ul>
+							<li>Descrierea fiecărui creator</li>
+						</ul>
+					</li>
+					<img src="About.png" alt="Register" style="width:500px ;height: 300px;">
+				</section>
+				
+				<section id="software-interface">
+					<h4>3.2 Interfață Software</h4>
+					<li>Comunicarea cu o bază de date.</li>
+					<li>Utilizarea Ionicons pentru diferite icon-uri.</li>
+					<li>Utilizarea Canvas.js pentru creearea și exportarea de chart-uri.</li>
+
+
+					<section id="communication-interface">
+						<h4>3.3 Interfață de comunicare</h4>
+						<p>
+							Utilizarea aplicației necesită conexiunea la internet.Pentru creearea conturilor este
+							necesară completarea unui formular.Completarea presupune introducerea unui nume de
+							utilizator, a unei adrese de email și o parolă, aceasta din urmă va fi criptată folosind un
+							algoritm corespunzător.
+						</p>
+					</section>
+					<section id="system-features">
+						<h3>4. Funcționalități de sistem</h3>
+						<section id="management">
+							<h4>4.1 Management-ul contului</h4>
+
+							<h5 id="management-1">4.1.1 Descriere </h5>
+							Un utilizator se poate înregistra prin intermediul unui nume, email și parolă.După ce acesta
+							s-a înregistrat acesta se poate autentifica in aplicație.După ce acesta s-a autentificat
+							acesta poate să exporte date sau să salveze aceste date într-un istoric.Aceasta reprezintă o
+							opțiune de prioritate medie.
+							<h5 id="management-2">4.1.2 Utilizare</h5>
+							<ul>
+								<li>
+									După înregistrare utilizatorul figurează în baza de date, iar sistem îi permite să
+									beneficieaze de opțiunile aplicației.
+								</li>
+							</ul>
+							<h5 id="management-3">4.1.3 Condiții de funcționare</h5>
+							<ul>
+								<li>
+									Utilizatorul trebuie să introducă date valide.
+								</li>
+							</ul>
+
+						</section>
+					</section>
+					<section id="sleep">
+						<h4>4.2 Filtrarea multi-criterială </h4>
+
+						<h5 id="sleep-1">4.2.1 Descriere</h5>
+						După ce utilizatorul s-a autentificat, acesta poate accesa pagina de Cautare&filtrare unde se
+						află urmatoarele campuri după care poate să-și furnizeze statistice referitoare la consumul și
+						arestul drogurilor din România:
+						<li>An</li>
+						<li>Tipul de drog</li>
+						<li>Regiune/Județ</li>
+						<li>Categorie</li>
+						<li>Modalitatea de reprezentare</li>
+						<h5 id="sleep-2">4.2.2 Utilizare</h5>
+						<ul>
+							<li>
+								Utilizatorul completează câmpurile.
+							</li>
+							<li>
+								Apasă pe butonul de căutare.
+							</li>
+							<li>
+								Alege dacă dorește să-și salveze/exporteze datele primite.
+							</li>
+						</ul>
+						<h5 id="sleep-3">4.2.3 Condiții de funcționare</h5>
+						<ul>
+							<li>
+								Utilizatorul trebuie să fie autentificat.
+							</li>
+						</ul>
+
+					</section>
+					<section id="meal">
+						<h4>4.3 Creearea statisticilor</h4>
+
+						<h5 id="meal-1">4.3.1 Descriere</h5>
+						<ul>
+							<li>Constă în informațiile extrase din baza de date, în urma filtrelor completate de
+								utilizator.Aceasta reprezintă o opțiune de prioritate ridicată.
+							</li>
+						</ul>
+						<h5 id="meal-2">4.3.2 Utilizare</h5>
+						<ul>
+							<li>
+								Userul filtrează informațiile in funcție de an, tipul de drog, județ, categorie și
+								modalitatea de reprezentare, iar pe baza acestora primește informațiile corespunzatoare.
+							</li>
+
+						</ul>
+						<h5 id="meal-3">4.3.3 Condiții de funcționare</h5>
+						<ul>
+							<li>
+								Userul trebuie să fie autentificat pentru a genera/exporta date.
+							</li>
+						</ul>
+
+					</section>
+
+					<section id="gallery">
+						<h4>4.4 Salvare statisticilor</h4>
+
+						<h5 id="gallery-1">4.4.1 Descriere</h5>
+						După ce a completat filtrele, utilizatorul are posibilitatea de a salva statisiticile furnizate
+						într-un istoric.
+						<h5 id="gallery-2">4.4.2 Utilizare</h5>
+						<ul>
+							<li>
+								Acesta apasă pe butonul de save care îi salvează statisticile în contul instoricul
+								contului său.
+							</li>
+
+						</ul>
+						<h5 id="gallery-3">4.4.3 Condiții de funcționare</h5>
+						<ul>
+							<li>
+								Userul trebuie să fie autentificat pentru a salva date.
+							</li>
+							<li>
+								Userul trebuie să genereze date.
+							</li>
+						</ul>
+
+					</section>
+
+					<section id="medical">
+						<h4>4.5 Exportarea statisticilor</h4>
+
+						<h5 id="medical-1">4.5.1 Descriere</h5>
+						După ce a completat filtrele, utilizatorul are posibilitatea de a exporta statisiticile sub un
+						anumit format.
+						<h5 id="medical-2">4.5.2 Utilizare</h5>
+						<ul>
+							<li>
+								Acesta apasă pe butonul de export care îi oferă posibilitatea de a exporta statisticile
+								în mai multe formaturi.
+							</li>
+
+						</ul>
+						<h5 id="medical-3">4.5.3 Condiții de funcționare</h5>
+						<ul>
+							<li>
+								Userul trebuie să fie autentificat pentru a salva date.
+							</li>
+							<li>
+								Userul trebuie să genereze date.
+							</li>
+						</ul>
+
+					</section>
+					<section id="likes">
+						<h4>4.6 Autentificarea ca și administrator</h4>
+
+						<h5 id="likes-1">4.6.1 Descriere</h5>
+						Administratorul se autentifică in aplicație și acesta are dreptul de a edita articole, adăuga
+						date referitoare la consumul de droguri.
+						<h5 id="likes-2">4.6.2 Utilizare</h5>
+						<ul>
+							<li>
+								Acesta se autentifică pe cont și are acces la anumite opțiuni
+							</li>
+
+						</ul>
+						<h5 id="likes-3">4.6.3 Condiții de funcționare</h5>
+						<ul>
+							<li>
+								Administratorul trebuie să fie autentificat.
+							</li>
+
+						</ul>
+
+					</section>
+				</section>
+				<section id="non-functional">
+					<h3>5. Cerințe nefuncționale</h3>
+
+					<section id="safety">
+						<h4>5.1 Cerințe de securitate</h4>
+						<ul>
+							<li>Conturile utilizatorilor sunt protejate printr-un sistem de autentificare folosind
+								criptarea bcrypt pentru parole și token-ul de acces, în scopul de a menține
+								confidențialitatea și de a proteja datele lor. Alte măsuri de securitate luate includ
+								prevenirea atacurilor de tip SQL-injection și blocarea mai multor cereri consecutive
+								venite de la același utilizator, pentru a preveni încetinirea aplicației.</li>
+							<li>Prevenirea atacurilor de tip cookie hijacking.</li>
+							<li>Pentru autentificarea unui administrator va fi nevoie de un utilizator si o parola.</li>
+						</ul>
+					</section>
+
+					<section id="security">
+						<h4>5.2 Security Requirements</h4>
+						<p>
+							Conturile utilizatorilor sunt protejate printr-un sistem de autentificare folosind criptarea
+							bcrypt pentru parole și token-ul de acces, în scopul de a menține confidențialitatea și de a
+							proteja datele lor. Alte măsuri de securitate luate includ prevenirea atacurilor de tip
+							SQL-injection și blocarea mai multor cereri consecutive venite de la același utilizator,
+							pentru a preveni încetinirea aplicației.
+						</p>
+					</section>
+					<section id="atribute">
+						<h4>5.3 Atributele Calității Software</h4>
+						<p>
+							Aplicația pune la dispoziție utilizatorilor diverse functionalități cu diferite grade de
+							complexitate în utilizare. Prin interfața oferită aplicația poate fi utilizată cu ușurință
+							de către utilizatori obișnuiți și administratori. Utilizatorii obișnuiți trebuie să aibă
+							cunosțințe minime de interepretare a graficelor și statisticilor puse la dispoziție.
+						</p>
+						<ul>
+							<li>Asigurarea consistentei datelor din baza de date.</li>
+							<li>Asigurarea consistentei datelor afisate/exportate in conformitate cu datele din baza de
+								date.
+							</li>
+						</ul>
+					</section>
+				</section>
+			</section>
+			<h3> Anexa A: Glosar </h3>
+
+			<ul>
+				<li>CSV: Comma Separated Values</li>
+				<li>HTML: Hypertext Markup Language</li>
+				<li>CSS: Cascading Style Sheets</li>
+				<li>SVG: Scalable Vector Graphics</li>
+				<li>API: Application Programming Interface</li>
+				<li>SQL: Structured Query Language</li>
+				<li>REST: Representational state transfer</li>
+				<li>JS: JavaScript</li>
+			</ul>
+
+	</article>
+</body>
+
+</html>
