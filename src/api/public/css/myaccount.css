@@ -22,9 +22,10 @@ body {
   margin: 0;
   background-image: url("../public/poze/background.jpg");
   background-size: cover;
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
 }
-html, body {
+html,
+body {
   min-height: 100vh;
 }
 
@@ -36,7 +37,7 @@ header {
 }
 
 h3 {
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   font-size: 30px;
   text-align: center;
   border-bottom: 1px solid #ccc;
@@ -46,21 +47,22 @@ h3 {
 
 .container2 {
   margin-top: 50px;
-    overflow-y: scroll; 
+  overflow-y: scroll;
   display: flex;
   justify-content: space-around;
   background-color: white;
-  width: 95vw; 
-  max-width: 1024px;  
+  width: 95vw;
+  max-width: 1024px;
   min-height: 70vh;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
-  scroll-padding-top: 100px; 
+  scroll-padding-top: 100px;
 }
-.container2, .sidebar {
-  height: 80vh;  
-  overflow-y: scroll; 
+.container2,
+.sidebar {
+  height: 80vh;
+  overflow-y: scroll;
 }
 
 .selected {
@@ -68,7 +70,7 @@ h3 {
 }
 
 .sidebar {
-  width: 30%; 
+  width: 30%;
   border-right: 1px solid #ccc;
 }
 
@@ -77,50 +79,49 @@ h3 {
   padding: 20px;
 }
 .sidebar ul {
-  list-style: none; 
-  padding-left: 0; 
+  list-style: none;
+  padding-left: 0;
 }
 
 .sidebar ul li {
-  font-family: 'Arial', sans-serif;
-  margin: 10px 0; 
-  border-bottom: 1px solid #ccc; 
-  padding: 10px 20px; 
+  font-family: "Arial", sans-serif;
+  margin: 10px 0;
+  border-bottom: 1px solid #ccc;
+  padding: 10px 20px;
 }
 
-
 #usersTable {
-  width: 100% ;
+  width: 100%;
   border-collapse: collapse;
-  font-family: Arial, sans-serif; 
+  font-family: Arial, sans-serif;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-  border-radius: 5px; 
+  border-radius: 5px;
 }
 
 #usersTable thead tr {
   background-color: #009879;
-  color: #ffffff; 
+  color: #ffffff;
 }
 
-#usersTable th, 
+#usersTable th,
 #usersTable td {
   padding: 12px 15px;
 }
 
 #usersTable tbody tr {
-  border-bottom: thin solid #dddddd; 
+  border-bottom: thin solid #dddddd;
 }
 
 #usersTable tbody tr:nth-of-type(even) {
-  background-color: #f3f3f3; 
+  background-color: #f3f3f3;
 }
 
 #usersTable tbody tr:last-of-type {
-  border-bottom: 2px solid #009879; 
+  border-bottom: 2px solid #009879;
 }
 
 #usersTable tbody tr:hover {
-  background-color: #ededed; 
+  background-color: #ededed;
 }
 
 .tab-content {
@@ -135,7 +136,7 @@ h3 {
   flex-direction: column;
   width: 100%;
   margin: auto;
-  align-items: flex-start;  
+  align-items: flex-start;
 }
 
 .tab-content form label {
@@ -157,20 +158,65 @@ h3 {
   cursor: pointer;
   width: 100px;
   height: 30px;
-
 }
 #table-container {
-  max-height: 610px;  
-  overflow-y: auto;  
-  display: block;   
-  
+  max-height: 610px;
+  overflow-y: auto;
+  display: block;
 }
-th, td {
+th,
+td {
   text-align: center;
-  vertical-align: middle; 
+  vertical-align: middle;
 }
 table {
-  width: 100%; 
+  width: 100%;
+}
+#infractiuniFilters,
+#confiscariFilters,
+#urgenteFilters {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.myButton {
+  background-color: var(--primary);
+  border-radius: 5px;
+  border: 1px solidvar(--primary);
+  display: block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 13px;
+  padding: 6px 12px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #2f6627;
+  margin-bottom: 10px;
+  margin: 10px auto; /* Adjust this line */
+  width: 80%; /* Add this line */
+}
+.myButton:hover {
+  background-color: var(--dark);
+}
+.myButton:active {
+  position: relative;
+  top: 1px;
+}
+
+#loadConfiscariFilters,
+#loadInfractiuniFilters,
+#loadUrgenteFilters {
+  margin-top: 15px;
+  background-color: var(--dark);
+  border: none;
+  color: white;
+  padding: 6px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 2px 1px;
+  cursor: pointer;
 }
 
 #campaignForm {
@@ -202,8 +248,8 @@ table {
   border-radius: 5px;
   border: 1px solid var(--primary);
   width: 100%;
-  height: 100px; 
-  resize: none; 
+  height: 100px;
+  resize: none;
 }
 
 .dropdown {
@@ -216,7 +262,7 @@ table {
   position: absolute;
   background-color: #f9f9f9;
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   padding: 12px 16px;
   z-index: 1;
 }
@@ -235,7 +281,7 @@ table {
 .dropdown {
   display: flex;
   flex-direction: row-reverse;
-  justify-content: start; 
+  justify-content: start;
 }
 #deleteBtn {
   margin-right: 20px;
@@ -243,29 +289,28 @@ table {
 
 .upload-container {
   display: flex;
-  align-items: center; 
+  align-items: center;
 }
 #uploadBtn {
-  margin-right: 10px; 
+  margin-right: 10px;
 }
 
 ul li {
   user-select: none;
   cursor: pointer;
-
 }
 
-@media  (max-height: 840px) {
+@media (max-height: 840px) {
   .container2 {
-    margin-top: 10vh; 
-    height: calc(100vh - 100px); 
+    margin-top: 10vh;
+    height: calc(100vh - 100px);
   }
 }
 
-@media  (max-height: 739px) {
+@media (max-height: 739px) {
   .container2 {
     margin-top: 10vh;
-    height: calc(100vh - 100px); 
+    height: calc(100vh - 100px);
   }
 }
 
@@ -274,15 +319,15 @@ ul li {
     flex-direction: column;
     width: 100%;
     height: auto;
-    padding: 10px; 
-    box-sizing: border-box;  
+    padding: 10px;
+    box-sizing: border-box;
   }
 
-  .sidebar  {
+  .sidebar {
     width: 100%;
   }
 
-  .content{
+  .content {
     width: max-content;
   }
 
@@ -293,28 +338,33 @@ ul li {
     max-height: 40vh;
   }
 }
-@media (max-width: 375px){
+@media (max-width: 375px) {
+  #infractiuniFilters,
+  #confiscariFilters {
+    max-height: 100px;
+  }
   #table-contai ner {
     max-height: 28vh;
   }
- 
- 
 }
 @media only screen and (max-width: 768px) {
+  #infractiuniFilters,
+  #confiscariFilters,
+  #urgenteFilters {
+    max-height: 100px;
+  }
   .container2 {
-    margin-top: 10vh; 
+    margin-top: 10vh;
     height: calc(100vh - 100px);
   }
 }
 
-
 @media (min-width: 769px) and (max-width: 1024px) {
   .sidebar {
-    width: 40%; 
+    width: 40%;
   }
 
   .content {
     width: 60%;
   }
- 
 }

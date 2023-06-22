@@ -201,8 +201,7 @@ const { promisify } = require("util");
  *                         type: string
  *       400:
  *         description: Cerește datele pentru filtru sau introducere anul și drogul.
- */  
-
+ */
 
 const getUrgente = catchAsync(async (req, res) => {
   const urgenteData = await parseRequestBody(req);
@@ -221,6 +220,81 @@ const getUrgente = catchAsync(async (req, res) => {
   const urgente = await filters.getUrgenteByFilter(urgenteData);
   res.statusCode = 200;
   res.end(JSON.stringify({ data: urgente }));
+});
+const getConfiscariFavorite = catchAsync(async (req, res) => {
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    token = req.headers.authorization.split(" ")[1];
+  }
+  if (!token) {
+    return errorController(
+      res,
+      new AppError(
+        "Trebuie sa fiti autentificat pentru a salvat un filtru!",
+        401
+      )
+    );
+  }
+  const decoded = await promisify(jwt.verify)(
+    token,
+    process.env.JWT_SECRET_KEY
+  );
+  const confiscari = await filters.getAllConfiscariFilter(decoded.email);
+  res.statusCode = 200;
+  res.end(JSON.stringify({ data: confiscari }));
+});
+const getInfractiuniFavorite = catchAsync(async (req, res) => {
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    token = req.headers.authorization.split(" ")[1];
+  }
+  if (!token) {
+    return errorController(
+      res,
+      new AppError(
+        "Trebuie sa fiti autentificat pentru a salvat un filtru!",
+        401
+      )
+    );
+  }
+  const decoded = await promisify(jwt.verify)(
+    token,
+    process.env.JWT_SECRET_KEY
+  );
+  const infractiuni = await filters.getAllInfractiuniFilter(decoded.email);
+  res.statusCode = 200;
+  res.end(JSON.stringify({ data: infractiuni }));
+});
+const getUrgenteFavorite = catchAsync(async (req, res) => {
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    token = req.headers.authorization.split(" ")[1];
+  }
+  if (!token) {
+    return errorController(
+      res,
+      new AppError(
+        "Trebuie sa fiti autentificat pentru a salvat un filtru!",
+        401
+      )
+    );
+  }
+  const decoded = await promisify(jwt.verify)(
+    token,
+    process.env.JWT_SECRET_KEY
+  );
+  const infractiuni = await filters.getAllUrgenteFilter(decoded.email);
+  res.statusCode = 200;
+  res.end(JSON.stringify({ data: infractiuni }));
 });
 const getUrgenteInterval = catchAsync(async (req, res) => {
   const urgenteData = await parseRequestBody(req);
@@ -246,6 +320,7 @@ const getConfiscariInterval = catchAsync(async (req, res) => {
   res.statusCode = 200;
   res.end(JSON.stringify({ data: confiscari }));
 });
+getUrgenteFavorite;
 const getInfractiuniInterval = catchAsync(async (req, res) => {
   const intervalData = await parseRequestBody(req);
   if (!intervalData) {
@@ -258,7 +333,8 @@ const getInfractiuniInterval = catchAsync(async (req, res) => {
   res.statusCode = 200;
   res.end(JSON.stringify({ data: infractiuni }));
 });
-const saveFilter = catchAsync(async (req, res) => {
+
+const saveConfiscariFilter = catchAsync(async (req, res) => {
   const filter = await parseRequestBody(req);
   if (!filter) {
     return errorController(
@@ -266,7 +342,14 @@ const saveFilter = catchAsync(async (req, res) => {
       new AppError("Introduceti un filtru valid!", 400)
     );
   }
-  if (!filter.categorie || !filter.an || !filter.tip || !filter.reprezentare) {
+  if (
+    !filter.categorie_select ||
+    !filter.reprezentare ||
+    !filter.confiscari_subcategorie ||
+    !filter.startYearConfiscari ||
+    !filter.endYearConfiscari ||
+    !filter.drog
+  ) {
     return errorController(
       res,
       new AppError("Trebuie sa introduceti toate datele!", 400)
@@ -292,16 +375,104 @@ const saveFilter = catchAsync(async (req, res) => {
     token,
     process.env.JWT_SECRET_KEY
   );
-  if (filter.categorie === "infractiuni") {
-    const result = await filters.addInfractiuniFilter(filter, decoded.email);
-    if (result === null) {
-      return errorController(res, new AppError("Filtrul exista deja!", 400));
-    }
-  } else if (filter.categorie === "confiscari") {
-    const result = await filters.addConfiscariFilter(filter, decoded.email);
-    if (result === null) {
-      return errorController(res, new AppError("Filtrul exista deja!", 400));
-    }
+  const result = await filters.addConfiscariFilter(filter, decoded.email);
+  if (result === null) {
+    return errorController(res, new AppError("Filtrul exista deja!", 400));
+  }
+  res.statusCode = 200;
+  res.end(JSON.stringify({ message: "Filtrul a fost adăugat cu succes" }));
+});
+
+const saveInfractiuniFilter = catchAsync(async (req, res) => {
+  const filter = await parseRequestBody(req);
+  if (!filter) {
+    return errorController(
+      res,
+      new AppError("Introduceti un filtru valid!", 400)
+    );
+  }
+  if (
+    !filter.categorie_select ||
+    !filter.reprezentare ||
+    !filter.infractiuni_categorie ||
+    !filter.startYearInfractiuni ||
+    !filter.endYearInfractiuni
+  ) {
+    return errorController(
+      res,
+      new AppError("Trebuie sa introduceti toate datele!", 400)
+    );
+  }
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    token = req.headers.authorization.split(" ")[1];
+  }
+  if (!token) {
+    return errorController(
+      res,
+      new AppError(
+        "Trebuie sa fiti autentificat pentru a salvat un filtru!",
+        401
+      )
+    );
+  }
+  const decoded = await promisify(jwt.verify)(
+    token,
+    process.env.JWT_SECRET_KEY
+  );
+  const result = await filters.addInfractiuniFilter(filter, decoded.email);
+  if (result === null) {
+    return errorController(res, new AppError("Filtrul exista deja!", 400));
+  }
+  res.statusCode = 200;
+  res.end(JSON.stringify({ message: "Filtrul a fost adăugat cu succes" }));
+});
+
+const saveUrgenteFilter = catchAsync(async (req, res) => {
+  const filter = await parseRequestBody(req);
+  if (!filter) {
+    return errorController(
+      res,
+      new AppError("Introduceti un filtru valid!", 400)
+    );
+  }
+  if (
+    !filter.categorie_select ||
+    !filter.reprezentare ||
+    !filter.urgente_drog ||
+    !filter.urgente_filtru
+  ) {
+    return errorController(
+      res,
+      new AppError("Trebuie sa introduceti toate datele!", 400)
+    );
+  }
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    token = req.headers.authorization.split(" ")[1];
+  }
+  if (!token) {
+    return errorController(
+      res,
+      new AppError(
+        "Trebuie sa fiti autentificat pentru a salvat un filtru!",
+        401
+      )
+    );
+  }
+  const decoded = await promisify(jwt.verify)(
+    token,
+    process.env.JWT_SECRET_KEY
+  );
+  const result = await filters.addUrgenteFiltru(filter, decoded.email);
+  if (result === null) {
+    return errorController(res, new AppError("Filtrul exista deja!", 400));
   }
   res.statusCode = 200;
   res.end(JSON.stringify({ message: "Filtrul a fost adăugat cu succes" }));
@@ -316,14 +487,20 @@ const filterController = catchAsync(async (req, res) => {
     getUrgente(req, res);
   } else if (url === "/api/filter/confiscari/interval" && method === "POST") {
     getConfiscariInterval(req, res);
+  } else if (url === "/api/filter/confiscari/favorite" && method === "POST") {
+    saveConfiscariFilter(req, res);
+  } else if (url === "/api/filter/confiscari/favorite" && method === "GET") {
+    getConfiscariFavorite(req, res);
+  } else if (url === "/api/filter/urgente/favorite" && method === "POST") {
+    saveUrgenteFilter(req, res);
+  } else if (url === "/api/filter/urgente/favorite" && method === "GET") {
+    getUrgenteFavorite(req, res);
+  } else if (url === "/api/filter/infractiuni/favorite" && method === "POST") {
+    saveInfractiuniFilter(req, res);
+  } else if (url === "/api/filter/infractiuni/favorite" && method === "GET") {
+    getInfractiuniFavorite(req, res);
   } else if (url === "/api/filter/infractiuni/interval" && method === "POST") {
     getInfractiuniInterval(req, res);
-  } else if (url === "/api/filter" && method === "POST") {
-    const response = await verifyToken(req, res);
-    if (!response) {
-      return;
-    }
-    saveFilter(req, res);
   }
 });
 module.exports = filterController;

@@ -1,20 +1,104 @@
 Chart.register(ChartDataLabels);
 
-const postFilterData = async (data) => {
+const postConfiscariFilter = async (data) => {
   const token = localStorage.getItem("token");
-  const response = await fetch("http://localhost:3000/api/filter", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(data),
-  });
+  if (token === null) {
+    alert("Trebuie sa fiti logat pentru a putea salva un filtru!");
+    return;
+  }
+  const response = await fetch(
+    "http://localhost:3000/api/filter/confiscari/favorite",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    }
+  );
 
   const result = await response.json();
 
   if (response.ok) {
-    console.log("Cererea POST a fost executată cu succes!");
+    alert(result.message);
+  } else {
+    alert(result.message);
+  }
+};
+const postInfractiuniFilter = async (data) => {
+  const token = localStorage.getItem("token");
+  if (token === null) {
+    alert("Trebuie sa fiti logat pentru a putea salva un filtru!");
+    return;
+  }
+
+  const response = await fetch(
+    "http://localhost:3000/api/filter/infractiuni/favorite",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    }
+  );
+
+  const result = await response.json();
+
+  if (response.ok) {
+    alert(result.message);
+  } else {
+    alert(result.message);
+  }
+};
+const postUrgenteFilter = async (data) => {
+  const token = localStorage.getItem("token");
+  if (token === null) {
+    alert("Trebuie sa fiti logat pentru a putea salva un filtru!");
+    return;
+  }
+
+  const response = await fetch(
+    "http://localhost:3000/api/filter/urgente/favorite",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    }
+  );
+
+  const result = await response.json();
+
+  if (response.ok) {
+    alert(result.message);
+  } else {
+    alert(result.message);
+  }
+};
+const postUrgenteIntervalFilter = async (data) => {
+  console.log("data", data);
+  const token = localStorage.getItem("token");
+  const response = await fetch(
+    "http://localhost:3000/api/filter/urgenteinterval/favorite",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    }
+  );
+
+  const result = await response.json();
+
+  if (response.ok) {
+    alert(result.message);
   } else {
     alert(result.message);
   }
@@ -332,7 +416,6 @@ var subcategories = {
 };
 
 async function fetchUrgenteData(urgenteValues) {
-  console.log(urgenteValues);
   const response = await fetch("/api/filter/urgente", {
     method: "POST",
     headers: {
@@ -347,7 +430,6 @@ async function fetchUrgenteData(urgenteValues) {
   }
 }
 async function fetchUrgenteIntervalData(urgenteValues) {
-  console.log(urgenteValues);
   const response = await fetch("/api/filter/urgente/interval", {
     method: "POST",
     headers: {
@@ -362,7 +444,6 @@ async function fetchUrgenteIntervalData(urgenteValues) {
   }
 }
 async function fetchConfiscariIntervalData(confiscariValues) {
-  console.log(confiscariValues);
   const response = await fetch("/api/filter/confiscari/interval", {
     method: "POST",
     headers: {
@@ -377,7 +458,6 @@ async function fetchConfiscariIntervalData(confiscariValues) {
   }
 }
 async function fetchInfractiuniIntervalData(infractiuniValues) {
-  console.log(infractiuniValues);
   const response = await fetch("/api/filter/infractiuni/interval", {
     method: "POST",
     headers: {
@@ -405,6 +485,8 @@ const predefinedColors = [
 
 let globalResponseData = null;
 let selectedCategory = null;
+let globalSelectedValues = null;
+
 async function handleSearchButtonClick(event) {
   event.preventDefault();
 
@@ -431,11 +513,12 @@ async function handleSearchButtonClick(event) {
   const token = localStorage.getItem("token");
 
   const allSelectedValues = {
-    categorie: categorieSelectValue,
+    categorie_select: categorieSelectValue,
     reprezentare: reprezentareSelectValue,
     token: token,
     ...specificValues,
   };
+  globalSelectedValues = allSelectedValues;
 
   let chartData = null;
 
@@ -460,6 +543,7 @@ async function handleSearchButtonClick(event) {
             chartCurent.destroy();
           }
           deletePlot();
+          globalSelectedValues = null;
           globalResponseData = null;
           selectedCategory = null;
           document.getElementById("chartDescription").innerText =
@@ -534,14 +618,18 @@ async function handleSearchButtonClick(event) {
             chartCurent.destroy();
           }
           deletePlot();
+          globalSelectedValues = null;
           globalResponseData = null;
           selectedCategory = null;
           document.getElementById("chartDescription").innerText =
             "Nu exista valori pentru generarea graficului pentru aceste filtre";
           return;
         }
-
-        const description = `Confiscari: numarul de ${confiscariValues.confiscari_subcategorie} de ${confiscariValues.drog} intre ${confiscariValues.startYearConfiscari} si ${confiscariValues.endYearConfiscari}.`;
+        let confiscariSubcategorie =
+          confiscariValues.confiscari_subcategorie === "nr_capturi"
+            ? "capturi"
+            : confiscariValues.confiscari_subcategorie;
+        const description = `Confiscari: numarul de ${confiscariSubcategorie} de ${confiscariValues.drog} intre ${confiscariValues.startYearConfiscari} si ${confiscariValues.endYearConfiscari}.`;
 
         document.getElementById("chartDescription").innerText = "";
         document.getElementById("chartDescription").innerText = description;
@@ -576,7 +664,7 @@ async function handleSearchButtonClick(event) {
     const urgenteSelects = document.querySelectorAll("#urgente_options select");
     const urgenteValues = getSelectedValues(urgenteSelects);
     if (!urgenteValues) return;
-    if (urgenteValues.urgente_an !== "interval") {
+    if (urgenteValues.urgente_an !== "Interval") {
       fetchUrgenteData(urgenteValues)
         .then((response) => {
           const allZero = response.data.every((item) => item.cantitate === 0);
@@ -585,6 +673,7 @@ async function handleSearchButtonClick(event) {
               chartCurent.destroy();
             }
             deletePlot();
+            globalSelectedValues = null;
             globalResponseData = null;
             selectedCategory = null;
             document.getElementById("chartDescription").innerText =
@@ -631,6 +720,7 @@ async function handleSearchButtonClick(event) {
               chartCurent.destroy();
             }
             deletePlot();
+            globalSelectedValues = null;
             globalResponseData = null;
             selectedCategory = null;
             document.getElementById("chartDescription").innerText =
@@ -644,6 +734,9 @@ async function handleSearchButtonClick(event) {
           }
           if (urgenteValues.administrare_filtru) {
             description += `, ${urgenteValues.administrare_filtru}.`;
+          }
+          if (urgenteValues.gen_filtru) {
+            description += `, ${urgenteValues.gen_filtru}.`;
           }
           if (urgenteValues.varsta_filtru) {
             description += `, ${urgenteValues.varsta_filtru}.`;
@@ -687,9 +780,9 @@ async function handleSearchButtonClick(event) {
 
   const favoriteButton = document.getElementById("favorite-button");
   favoriteButton.style.display = "inline-block";
-  favoriteButton.addEventListener("click", async () => {
-    await postFilterData(allSelectedValues);
-  });
+  favoriteButton.removeEventListener("click", handleFavoriteClick);
+  favoriteButton.addEventListener("click", handleFavoriteClick);
+
   const exportButton = document.getElementById("export-button");
   exportButton.style.display = "inline-block";
 
@@ -698,12 +791,28 @@ async function handleSearchButtonClick(event) {
     item.addEventListener("click", handleExportClick);
   });
 }
+const handleFavoriteClick = async function () {
+  if (globalSelectedValues === null) {
+    console.error("Nu exista valori pentru generarea graficului");
+    alert("Nu exista valori pentru generarea graficului pentru aceste filtre");
+    return;
+  } else if (globalSelectedValues.categorie_select === "confiscari") {
+    await postConfiscariFilter(globalSelectedValues);
+  } else if (globalSelectedValues.categorie_select === "urgente") {
+    await postUrgenteFilter(globalSelectedValues);
+  } else if (globalSelectedValues.categorie_select === "infractiuni") {
+    await postInfractiuniFilter(globalSelectedValues);
+  }
+};
 const handleExportClick = function () {
   if (this.textContent === "PNG") {
     var imgData = chartCurent.toBase64Image();
     var a = document.createElement("a");
     a.href = imgData;
-    a.download = document.getElementById("chartDescription").innerText;
+    var fileName = document.getElementById("chartDescription").innerText;
+    fileName = fileName.replace(/[\/*?:"<>|.,]/g, "-");
+    fileName += ".png";
+    a.download = fileName;
     a.click();
   } else if (this.textContent === "SVG") {
     Plotly.downloadImage("myChartsvg", {

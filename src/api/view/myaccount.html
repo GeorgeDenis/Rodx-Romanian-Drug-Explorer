@@ -4,7 +4,8 @@
 <head>
   <link rel="stylesheet" href="../../public/css/nav.css">
   <link rel="stylesheet" href="../../public/css/myaccount.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,7 +29,7 @@
           <a href="/cautare">Cautare&filtrare</a>
           <a href="/droguri">Droguri</a>
           <a href="/campanii">Campanii</a>
-          <a href="/about" >About us</a>
+          <a href="/about">About us</a>
           <a href="#" class="is-active" id="login-link">Login</a>
         </div>
         <button class="hamburger">
@@ -44,7 +45,7 @@
       <a href="/droguri">Droguri</a>
       <a href="/campanii">Campanii</a>
       <a href="/about">About us</a>
-      <a href="#"  class="is-active" id="login-link">Login</a>
+      <a href="#" class="is-active" id="login-link">Login</a>
     </div>
   </header>
 
@@ -59,94 +60,106 @@
         </ul>
       </div>
 
-      
-      
+
+
       <div class="content">
         <div id="account" class="tab-content">
           <!-- Conținut pentru secțiunea "Account" -->
           <h2>Account Information</h2>
-        
+
           <form id="update-account-form">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username">
-          
+
             <label for="email">Email:</label>
             <input type="email" id="email" name="email">
-        
+
             <input type="submit" value="Update">
           </form>
         </div>
-        
+
         <div id="password" class="tab-content" style="display: none;">
           <!-- Conținut pentru secțiunea "Password" -->
           <h2>Password Settings</h2>
           <form id="password-form">
             <label for="old-password">Old Password</label>
             <input type="password" id="old-password" name="old-password" required>
-            
+
             <label for="new-password">New Password</label>
             <input type="password" id="new-password" name="new-password" required>
-        
+
             <label for="confirm-new-password">Confirm New Password</label>
             <input type="password" id="confirm-new-password" name="confirm-new-password" required>
-        
+
             <input type="submit" value="Update">
           </form>
         </div>
-        
+
         <div id="history" class="tab-content" style="display: none;">
-          <h2>History</h2>
+
+          <h3>Filtre confiscari</h3>
+          <div id="confiscariFilters"></div>
+          <button id="loadConfiscariFilters" type="button">Confiscari</button>
+
+          <h3>Filtre infractiuni</h3>
+          <div id="infractiuniFilters"></div>
+          <button id="loadInfractiuniFilters" type="button">Infractiuni</button>
+
+          <h3>Filtre urgente</h3>
+          <div id="urgenteFilters"></div>
+          <button id="loadUrgenteFilters" type="button">Urgente</button>
         </div>
-       
+
+
+
         <div id="utilizatori" class="tab-content" style="display: none;">
           <div id="table-container">
- 
-          <table class="table table-striped" id="usersTable">
+            <table class="table table-striped" id="usersTable">
               <thead>
-                  <tr>
-                      <th>ID</th>
-                      <th>Nume</th>
-                      <th>Sterge</th>
-                  </tr>
+                <tr>
+                  <th>ID</th>
+                  <th>Nume</th>
+                  <th>Sterge</th>
+                </tr>
               </thead>
               <tbody>
 
               </tbody>
-          </table>
+            </table>
           </div>
 
-      </div>
-     
-      <div class="centrareButoane">
-
-      <div id="campanii" class="tab-content" style="display: none;">
-    <div class="campaniiAdmin">
-      <form id="campaignForm">
-        <input type="file" id="fileInput" accept=".jpg, .jpeg" style="display: none;">
-        <div class="upload-container">
-
-        <button id="uploadBtn" type="button">Poza <span>+</span></button>
-        <span id="checkMark" style="display: none; color: green;">&#10004;</span>
-      </div>
-
-        <input type="text" id="title" placeholder="Write a title" />
-        <textarea id="article" placeholder="Write an article"></textarea>
-        <button id="addBtn" type="submit">Add</button>
-        <div class="dropdown">
-          <select id="deleteDropdown">
-            <option value="" disabled selected hidden>Alege un articol</option>
-          </select>
-          <button id="deleteBtn" type="button">Sterge</button>
         </div>
-      </form>
+
+        <div class="centrareButoane">
+
+          <div id="campanii" class="tab-content" style="display: none;">
+            <div class="campaniiAdmin">
+              <form id="campaignForm">
+                <input type="file" id="fileInput" accept=".jpg, .jpeg" style="display: none;">
+                <div class="upload-container">
+
+                  <button id="uploadBtn" type="button">Poza <span>+</span></button>
+                  <span id="checkMark" style="display: none; color: green;">&#10004;</span>
+                </div>
+
+                <input type="text" id="title" placeholder="Write a title" />
+                <textarea id="article" placeholder="Write an article"></textarea>
+                <button id="addBtn" type="submit">Add</button>
+                <div class="dropdown">
+                  <select id="deleteDropdown">
+                    <option value="" disabled selected hidden>Alege un articol</option>
+                  </select>
+                  <button id="deleteBtn" type="button">Sterge</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-        </div>
-        </div>
-      </div>
+
     </div>
-        
-      </div>
-      
+
     </div>
   </main>
 
@@ -156,5 +169,7 @@
   <script src="../public/js/resetPassword.js"></script>
   <script src="../public/js/resetAccount.js"></script>
   <script src="../public/js/myaccount.js"></script>
+  <script src="../public/js/favoriteFilter.js"></script>
 </body>
+
 </html>

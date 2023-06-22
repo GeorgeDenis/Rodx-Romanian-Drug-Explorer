@@ -32,7 +32,7 @@ document
   .addEventListener("change", function () {
     let urgentAnValue = document.getElementById("urgente_an").value;
 
-    if (urgentAnValue === "interval") {
+    if (urgentAnValue === "Interval") {
       document.getElementById("gen_filtru").style.display = "none";
       document.getElementById("varsta_filtru").style.display = "none";
       document.getElementById("administrare_filtru").style.display = "none";
@@ -58,7 +58,7 @@ document.getElementById("urgente_an").addEventListener("change", function () {
   let selectElement = document.getElementById("urgente_an");
   let startYearSelect, endYearSelect;
 
-  if (!document.getElementById("startYear") && this.value === "interval") {
+  if (!document.getElementById("startYear") && this.value === "Interval") {
     startYearSelect = document.createElement("select");
     startYearSelect.id = "startYear";
     startYearSelect.classList.add("filter-select");
@@ -106,7 +106,7 @@ document.getElementById("urgente_an").addEventListener("change", function () {
     }
   } else if (
     document.getElementById("startYear") &&
-    this.value !== "interval"
+    this.value !== "Interval"
   ) {
     document.getElementById("startYear").remove();
     document.getElementById("endYear").remove();

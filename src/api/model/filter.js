@@ -1,17 +1,36 @@
 const pool = require("../database/connection");
+const { getUserId } = require("../model/user");
 
-exports.addInfractiuniFilter = async (filterData, email) => {
-  const { categorie, an, tip, reprezentare } = filterData;
+exports.addConfiscariFilter = async (filterData, email) => {
+  const {
+    categorie_select,
+    confiscari_subcategorie,
+    startYearConfiscari,
+    reprezentare,
+    endYearConfiscari,
+    drog,
+  } = filterData;
+  const user_id = await getUserId(email);
 
   const checkQueryText = `
-    SELECT * FROM filtru_confiscari
-    WHERE confiscari_subcategorie = $1
-    AND confiscari_an = $2
-    AND tip = $3
-    AND reprezentare = $4
-    AND email = $5
+    SELECT * FROM confiscari_filtru
+    WHERE categorie_select = $1 AND
+    confiscari_subcategorie = $2
+    AND drog = $3
+    AND startYearConfiscari = $4
+    AND endYearConfiscari = $5
+    AND reprezentare = $6
+    AND user_id = $7
   `;
-  const checkValues = [categorie, an, tip, reprezentare, email];
+  const checkValues = [
+    categorie_select,
+    confiscari_subcategorie,
+    drog,
+    startYearConfiscari,
+    endYearConfiscari,
+    reprezentare,
+    user_id,
+  ];
 
   try {
     const checkResult = await pool.query(checkQueryText, checkValues);
@@ -21,8 +40,16 @@ exports.addInfractiuniFilter = async (filterData, email) => {
     }
 
     const insertQueryText =
-      "INSERT INTO filtru_confiscari (confiscari_subcategorie, confiscari_an, tip, reprezentare, email) VALUES ($1, $2, $3, $4, $5) RETURNING *";
-    const insertValues = [categorie, an, tip, reprezentare, email];
+      "INSERT INTO confiscari_filtru (categorie_select,confiscari_subcategorie, drog, startYearConfiscari, endYearConfiscari, reprezentare,user_id) VALUES ($1, $2, $3, $4, $5,$6,$7) RETURNING *";
+    const insertValues = [
+      categorie_select,
+      confiscari_subcategorie,
+      drog,
+      startYearConfiscari,
+      endYearConfiscari,
+      reprezentare,
+      user_id,
+    ];
     const result = await pool.query(insertQueryText, insertValues);
     return result.rows[0];
   } catch (err) {
@@ -30,6 +57,227 @@ exports.addInfractiuniFilter = async (filterData, email) => {
     throw err;
   }
 };
+exports.addUrgenteFiltru = async (filterData, email) => {
+  const {
+    categorie_select,
+    urgente_an,
+    urgente_drog,
+    urgente_filtru,
+    reprezentare,
+    startYear,
+    endYear,
+    varsta_filtru,
+    administrare_filtru,
+    consum_filtru,
+    gen_filtru,
+    diagnostic_filtru,
+  } = filterData;
+  const user_id = await getUserId(email);
+  const checkQueryText = `
+  SELECT * FROM urgente_filtru
+  WHERE categorie_select IS NOT DISTINCT FROM $1 AND
+  urgente_an IS NOT DISTINCT FROM $2 AND
+  urgente_drog IS NOT DISTINCT FROM $3 AND
+  urgente_filtru IS NOT DISTINCT FROM $4 AND
+  reprezentare IS NOT DISTINCT FROM $5 AND
+  startYear IS NOT DISTINCT FROM $6 AND
+  endYear IS NOT DISTINCT FROM $7 AND
+  varsta_filtru IS NOT DISTINCT FROM $8 AND
+  administrare_filtru IS NOT DISTINCT FROM $9 AND
+  consum_filtru IS NOT DISTINCT FROM $10 AND
+  gen_filtru IS NOT DISTINCT FROM $11 AND
+  diagnostic_filtru IS NOT DISTINCT FROM $12 AND
+  user_id IS NOT DISTINCT FROM $13
+`;
+  const checkValues = [
+    categorie_select,
+    urgente_an,
+    urgente_drog,
+    urgente_filtru,
+    reprezentare,
+    startYear,
+    endYear,
+    varsta_filtru,
+    administrare_filtru,
+    consum_filtru,
+    gen_filtru,
+    diagnostic_filtru,
+    user_id,
+  ];
+
+  try {
+    const checkResult = await pool.query(checkQueryText, checkValues);
+
+    if (checkResult.rows.length > 0) {
+      return null;
+    }
+
+    const insertQueryText =
+      "INSERT INTO urgente_filtru (categorie_select,urgente_an,urgente_drog,urgente_filtru,reprezentare,startYear,endYear,varsta_filtru,administrare_filtru,consum_filtru,gen_filtru,diagnostic_filtru,user_id) VALUES ($1, $2, $3, $4, $5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING *";
+    const insertValues = [
+      categorie_select,
+      urgente_an,
+      urgente_drog,
+      urgente_filtru,
+      reprezentare,
+      startYear,
+      endYear,
+      varsta_filtru,
+      administrare_filtru,
+      consum_filtru,
+      gen_filtru,
+      diagnostic_filtru,
+      user_id,
+    ];
+    const result = await pool.query(insertQueryText, insertValues);
+    return result.rows[0];
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+exports.addInfractiuniFilter = async (filterData, email) => {
+  const {
+    categorie_select,
+    infractiuni_categorie,
+    startYearInfractiuni,
+    reprezentare,
+    endYearInfractiuni,
+    incadrare_filtru_infractiuni,
+    cercetari_filtru_infractiuni,
+    gen_filtru_infractiuni,
+    grupari_filtru_infractiuni,
+    pedepse_filtru_infractiuni,
+    lege_filtru_infractiuni,
+    varsta_filtru_infractiuni,
+  } = filterData;
+  const user_id = await getUserId(email);
+  const checkQueryText = `
+    SELECT * FROM infractiuni_filtru
+    WHERE categorie_select IS NOT DISTINCT FROM $1 AND
+    infractiuni_categorie IS NOT DISTINCT FROM $2 AND
+    startYearInfractiuni IS NOT DISTINCT FROM $3 AND
+    reprezentare IS NOT DISTINCT FROM $4 AND
+    endYearInfractiuni IS NOT DISTINCT FROM $5 AND
+    incadrare_filtru_infractiuni IS NOT DISTINCT FROM $6 AND
+    cercetari_filtru_infractiuni IS NOT DISTINCT FROM $7 AND
+    gen_filtru_infractiuni IS NOT DISTINCT FROM $8 AND
+    grupari_filtru_infractiuni IS NOT DISTINCT FROM $9 AND
+    pedepse_filtru_infractiuni IS NOT DISTINCT FROM $10 AND
+    lege_filtru_infractiuni IS NOT DISTINCT FROM $11 AND
+    varsta_filtru_infractiuni IS NOT DISTINCT FROM $12 AND
+    user_id IS NOT DISTINCT FROM $13
+  `;
+
+  const checkValues = [
+    categorie_select,
+    infractiuni_categorie,
+    startYearInfractiuni,
+    reprezentare,
+    endYearInfractiuni,
+    incadrare_filtru_infractiuni,
+    cercetari_filtru_infractiuni,
+    gen_filtru_infractiuni,
+    grupari_filtru_infractiuni,
+    pedepse_filtru_infractiuni,
+    lege_filtru_infractiuni,
+    varsta_filtru_infractiuni,
+    user_id,
+  ];
+
+  try {
+    const checkResult = await pool.query(checkQueryText, checkValues);
+
+    if (checkResult.rows.length > 0) {
+      return null;
+    }
+
+    const insertQueryText =
+      "INSERT INTO infractiuni_filtru (categorie_select,infractiuni_categorie, startYearInfractiuni, reprezentare, endYearInfractiuni,incadrare_filtru_infractiuni,cercetari_filtru_infractiuni,gen_filtru_infractiuni,grupari_filtru_infractiuni,pedepse_filtru_infractiuni,lege_filtru_infractiuni,varsta_filtru_infractiuni,user_id) VALUES ($1, $2, $3, $4, $5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING *";
+    const insertValues = [
+      categorie_select,
+      infractiuni_categorie,
+      startYearInfractiuni,
+      reprezentare,
+      endYearInfractiuni,
+      incadrare_filtru_infractiuni,
+      cercetari_filtru_infractiuni,
+      gen_filtru_infractiuni,
+      grupari_filtru_infractiuni,
+      pedepse_filtru_infractiuni,
+      lege_filtru_infractiuni,
+      varsta_filtru_infractiuni,
+      user_id,
+    ];
+    const result = await pool.query(insertQueryText, insertValues);
+    return result.rows[0];
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+exports.getAllConfiscariFilter = async (email) => {
+  const user_id = await getUserId(email);
+
+  const queryText = `
+    SELECT categorie_select,confiscari_subcategorie,drog,startYearConfiscari,endYearConfiscari,reprezentare FROM confiscari_filtru
+    WHERE user_id = $1
+  `;
+  const values = [user_id];
+
+  try {
+    const result = await pool.query(queryText, values);
+    return result.rows;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+exports.getAllUrgenteFilter = async (email) => {
+  const user_id = await getUserId(email);
+  const queryText = `
+    SELECT categorie_select,urgente_an,urgente_drog,urgente_filtru,reprezentare,startYear,endYear,varsta_filtru,administrare_filtru,consum_filtru,gen_filtru,diagnostic_filtru,user_id FROM urgente_filtru WHERE user_id = $1
+  `;
+  const values = [user_id];
+
+  try {
+    const result = await pool.query(queryText, values);
+    return result.rows;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+exports.getAllInfractiuniFilter = async (email) => {
+  const user_id = await getUserId(email);
+  const queryText = `
+  SELECT  categorie_select,
+  infractiuni_categorie,
+  startYearInfractiuni,
+  reprezentare,
+  endYearInfractiuni,
+  incadrare_filtru_infractiuni,
+  cercetari_filtru_infractiuni,
+  gen_filtru_infractiuni,
+  grupari_filtru_infractiuni,
+  pedepse_filtru_infractiuni,
+  lege_filtru_infractiuni,
+  varsta_filtru_infractiuni FROM infractiuni_filtru WHERE 
+  user_id=$1
+`;
+  const values = [user_id];
+
+  try {
+    const result = await pool.query(queryText, values);
+    return result.rows;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
 exports.getUrgenteByFilter = async (urgenteData) => {
   const { urgente_an, urgente_drog, urgente_filtru } = urgenteData;
   const allowedDrogs = ["canabis", "stimulanti", "opioide", "nsp"];
